@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace ImpulseControl.Modifiers {
-	[CreateAssetMenu(fileName = "Modifiers")]
-	public class Modifiers : ScriptableObject {
+	[CreateAssetMenu(fileName = "Modifier Preset")]
+	public class ModifierPreset : ScriptableObject {
 		[Header("Properties")]
 		[SerializeField] private AngerSpellModifiers angerSpellModifiers;
 		[SerializeField] private FearSpellModifiers fearSpellModifiers;
@@ -33,7 +33,7 @@ namespace ImpulseControl.Modifiers {
 		/// Set default data to this spell modifier based on a different scriptable object preset
 		/// </summary>
 		/// <param name="modifiersPreset">The scriptable object preset to load from</param>
-		public void LoadValuesFromPreset (Modifiers modifiersPreset) {
+		public void LoadValuesFromPreset (ModifierPreset modifiersPreset) {
 			angerSpellModifiers = modifiersPreset.angerSpellModifiers;
 			fearSpellModifiers = modifiersPreset.fearSpellModifiers;
 			envySpellModifiers = modifiersPreset.envySpellModifiers;
