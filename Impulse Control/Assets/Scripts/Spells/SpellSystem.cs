@@ -1,4 +1,5 @@
 using ImpulseControl.Input;
+using ImpulseControl.Modifiers;
 using ImpulseControl.Spells.Strategies;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace ImpulseControl
         [Header("References")]
         [SerializeField] private GameInputReader inputReader;
         [SerializeField] private PlayerMovement playerMovement;
+        [SerializeField] private LiveModifiers modifiers;
 
         [SerializeField] private SpellStrategy[] availableSpells;
         [SerializeField] private SpellStrategy currentSpell;
@@ -30,13 +32,26 @@ namespace ImpulseControl
         {
             // Get components
             playerMovement = GetComponent<PlayerMovement>();
+            modifiers = GetComponent<LiveModifiers>();
 
             // Iterate through each Spell Strategy
             foreach (SpellStrategy spell in availableSpells)
             {
                 // Link the Spell to the Spell System
-                spell.Link(this, playerMovement);
+                spell.Link(this, playerMovement, modifiers);
             }
+
+            // Set the first Spell
+            SetSpell(0);
+        }
+
+        /// <summary>
+        /// Set the current Spell given an index
+        /// </summary>
+        private void SetSpell(int spellIndex)
+        {
+            currentSpellIndex = spellIndex;
+            currentSpell = availableSpells[currentSpellIndex];
         }
 
         /// <summary>
@@ -47,11 +62,11 @@ namespace ImpulseControl
             // Exit case - the button has been lifted
             if (!started) return;
 
-            // Set the Spell index
-            currentSpellIndex = (currentSpellIndex + availableSpells.Length + direction) % availableSpells.Length;
+            // Calculate the swap index
+            int swapIndex = (currentSpellIndex + availableSpells.Length + direction) % availableSpells.Length;
 
-            // Set the current Spell
-            currentSpell = availableSpells[currentSpellIndex];
+            // Set the Spell at the swap index
+            SetSpell(swapIndex);
         }
 
         /// <summary>

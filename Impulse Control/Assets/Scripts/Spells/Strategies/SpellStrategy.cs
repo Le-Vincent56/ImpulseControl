@@ -1,3 +1,4 @@
+using ImpulseControl.Modifiers;
 using ImpulseControl.Timers;
 using UnityEngine;
 
@@ -5,9 +6,9 @@ namespace ImpulseControl.Spells.Strategies
 {
     public abstract class SpellStrategy : ScriptableObject
     {
-
         protected PlayerMovement playerMovement;
         protected SpellSystem spellSystem;
+        protected LiveModifiers modifiers;
         [SerializeField] protected string spellName;
         [SerializeField] protected string spellDescription;
         [SerializeField] protected int spellLevel;
@@ -19,10 +20,11 @@ namespace ImpulseControl.Spells.Strategies
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
-        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement)
+        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, LiveModifiers modifiers)
         {
             this.spellSystem = spellSystem;
             this.playerMovement = playerMovement;
+            this.modifiers = modifiers;
         }
 
         /// <summary>

@@ -28,16 +28,5 @@ namespace ImpulseControl.Modifiers {
 		/// All modifiers that pertain to the player
 		/// </summary>
 		public PlayerModifiers PlayerModifiers => playerModifiers;
-
-		/// <summary>
-		/// Set default data to this spell modifier based on a different scriptable object preset
-		/// </summary>
-		/// <param name="modifiersPreset">The scriptable object preset to load from</param>
-		public void LoadValuesFromPreset (ModifierPreset modifiersPreset) {
-			angerSpellModifiers = modifiersPreset.angerSpellModifiers;
-			fearSpellModifiers = modifiersPreset.fearSpellModifiers;
-			envySpellModifiers = modifiersPreset.envySpellModifiers;
-			playerModifiers = modifiersPreset.playerModifiers;
-		}
 	}
 }
