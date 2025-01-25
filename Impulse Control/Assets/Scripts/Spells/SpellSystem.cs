@@ -40,7 +40,7 @@ namespace ImpulseControl
         }
 
         /// <summary>
-        /// Swap spells
+        /// Swap the current Spell
         /// </summary>
         private void SwapSpell(int direction, bool started)
         {
@@ -54,6 +54,9 @@ namespace ImpulseControl
             currentSpell = availableSpells[currentSpellIndex];
         }
 
+        /// <summary>
+        /// Cast a Spell
+        /// </summary>
         private void CastSpell(bool started)
         {
             // Exit case - the button has been lifted
