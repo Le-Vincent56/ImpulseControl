@@ -36,7 +36,7 @@ namespace ImpulseControl.Spells.Objects
             // Initialize the Timer
             livingTimer = new CountdownTimer(livingTime);
 
-            livingTimer.OnTimerTick += Grow;
+            livingTimer.OnTimerTick += ExtendHitbox;
             livingTimer.OnTimerStop += Deactivate;
         }
 
@@ -70,16 +70,12 @@ namespace ImpulseControl.Spells.Objects
         /// <summary>
         /// Update the Anger Spell
         /// </summary>
-        public override void TickUpdate(float time, float delta) { /* Noop */}
+        public override void TickUpdate(float time, float delta) { /* Noop */ }
 
-        private void Grow()
-        {
-            float currentLength = Mathf.Lerp(0f, 3f, 1 - livingTimer.Progress);
-            AdjustHeight(currentLength);
-            AdjustPosition(currentLength);
-        }
-
-        public void SetPosition(Vector2 upVector, float offset)
+        /// <summary>
+        /// Set the position of the spell
+        /// </summary>
+        public void SetTransform(Vector2 upVector, float offset)
         {
             // Offset towards the direction
             transform.Translate(direction * offset);
@@ -91,6 +87,22 @@ namespace ImpulseControl.Spells.Objects
             initialPosition = transform.position;
         }
 
+        /// <summary>
+        /// Extend the length of the hitbox
+        /// </summary>
+        private void ExtendHitbox()
+        {
+            // Calculate the length
+            float currentLength = Mathf.Lerp(0f, 3f, 1 - livingTimer.Progress);
+
+            // Adjust the height and the position
+            AdjustHeight(currentLength);
+            AdjustPosition(currentLength);
+        }
+
+        /// <summary>
+        /// Adjust the height of the hitbox
+        /// </summary>
         private void AdjustHeight(float height)
         {
             // Retrieve the original scale
@@ -103,15 +115,22 @@ namespace ImpulseControl.Spells.Objects
             transform.localScale = newScale;
         }
 
+        /// <summary>
+        /// Adjust the position of the hitbox
+        /// </summary>
         private void AdjustPosition(float height)
         {
+            // Set the initial position
             Vector3 newPosition = initialPosition;
 
+            // Get the length to adjust by
             float length = height / 2f;
 
+            // Multiply the length by the normalized direction components
             newPosition.x += length * direction.x;
             newPosition.y += length * direction.y;
 
+            // Set the new position
             transform.position = newPosition;
         }
     }

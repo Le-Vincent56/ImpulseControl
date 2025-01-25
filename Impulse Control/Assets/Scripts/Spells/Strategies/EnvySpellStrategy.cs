@@ -13,9 +13,10 @@ namespace ImpulseControl.Spells.Strategies
         public override void Cast()
         {
             // Get an envy spell
-            SpellObject spell = spellPool.Pool.Get();
-            
-            // Set damage
+            EnvySpell spell = (EnvySpell)spellPool.Pool.Get();
+
+            // Set the follow transform of the Envy Spell
+            spell.SetTarget(spellSystem.transform);
         }
     }
 }

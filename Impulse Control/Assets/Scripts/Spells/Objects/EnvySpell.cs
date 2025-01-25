@@ -4,6 +4,8 @@ namespace ImpulseControl.Spells.Objects
 {
     public class EnvySpell : SpellObject
     {
+        private Transform followTarget;
+
         /// <summary>
         /// Initialize the Envy Spell
         /// </summary>
@@ -36,6 +38,15 @@ namespace ImpulseControl.Spells.Objects
         public override void TickUpdate(float time, float delta)
         {
 
+        }
+
+        /// <summary>
+        /// Set the target to follow
+        /// </summary>
+        public void SetTarget(Transform target)
+        {
+            // Set the follow target
+            followTarget = target;
         }
     }
 }

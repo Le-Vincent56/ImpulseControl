@@ -12,10 +12,11 @@ namespace ImpulseControl.Spells.Strategies
         /// </summary>
         public override void Cast()
         {
-            // Get an anger spell
+            // Get an Anger Spell
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
 
-            angerSpell.SetPosition(Vector2.right, 0.5f);
+            // Set the transform of the Anger Spell
+            angerSpell.SetTransform(Vector2.right, 0.5f);
         }
     }
 }
