@@ -1,1 +1,2 @@
-# ImpulseControl
+# IMPULSE CONTROL
+The Id needs to break free. In this 2D, top-down, shoot-em-up game in which players are given three emotions: Anger, Fear, and Envy. As they tear down waves of monsters, their emotions will bubble. They can regulate an emotion by using a corresponding speed, which will drain that emotion as a resource. If an emotion bubbles to a certain threshold, the player will be overwhelmed by that emotion, invoking a strong effect that will aid them in combat for a certain amount of time. However, when the effect runs out, a following emotion will take its place and weaken the player as they recover.
