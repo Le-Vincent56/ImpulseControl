@@ -12,24 +12,24 @@ namespace ImpulseControl {
 		[SerializeField] private GameObject rangedEnemyObjectPrefab;
 		[SerializeField] private List<GameObject> rangedEnemyObjectPool;
 		[Header("Properties")]
-		[SerializeField] private int currentWave;
-		[SerializeField] private int remainingEnemies;
+		[SerializeField] private int _currentWave;
+		[SerializeField] private int _remainingEnemies;
 
 		/// <summary>
 		/// The current wave of the game
 		/// </summary>
-		public int CurrentWave { get => currentWave; private set => currentWave = value; }
+		public int CurrentWave { get => _currentWave; private set => _currentWave = value; }
 
 		/// <summary>
 		/// The number of enemies that remain in the scene
 		/// </summary>
 		public int RemainingEnemies {
-			get => remainingEnemies;
+			get => _remainingEnemies;
 			set {
-				remainingEnemies = value;
+				_remainingEnemies = value;
 
 				// If there are no more remaining enemies, spawn the next wave
-				if (remainingEnemies == 0) {
+				if (_remainingEnemies == 0) {
 					SpawnWaveEnemies( );
 				}
 			}
