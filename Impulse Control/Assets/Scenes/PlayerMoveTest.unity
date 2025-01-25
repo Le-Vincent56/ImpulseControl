@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 614226575}
   - component: {fileID: 614226574}
   - component: {fileID: 614226577}
+  - component: {fileID: 614226578}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -387,6 +388,36 @@ MonoBehaviour:
   gameInputReader: {fileID: 11400000, guid: 4e4088a88ade5ea45879435b79f30db5, type: 2}
   rigidbody2d: {fileID: 614226574}
   speed: 1
+--- !u!114 &614226578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614226573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691af1f35b9cd9c4a9b89c10c9a61258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anger:
+    startingLevel: 0.5
+    maxLevel: 1
+    rateOfIncrease: 0.01
+    emotionType: 0
+    currentLevel: 0
+  fear:
+    startingLevel: 0.5
+    maxLevel: 1
+    rateOfIncrease: 0.01
+    emotionType: 1
+    currentLevel: 0
+  envy:
+    startingLevel: 0.5
+    maxLevel: 1
+    rateOfIncrease: 0.01
+    emotionType: 2
+    currentLevel: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
