@@ -39,27 +39,18 @@ namespace ImpulseControl.Input
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Spell One"",
-                    ""type"": ""Button"",
-                    ""id"": ""25404efa-ac14-499b-8b80-e06c36a1d8bc"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Swap Spell"",
+                    ""type"": ""Value"",
+                    ""id"": ""8c3522f5-905e-4c4a-989c-2bbc2b3bc60d"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Spell Two"",
+                    ""name"": ""Cast Spell"",
                     ""type"": ""Button"",
-                    ""id"": ""3741ef55-99ef-4868-bc77-8cb44ec051d6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Spell Three"",
-                    ""type"": ""Button"",
-                    ""id"": ""191d2db3-1751-44fd-85e3-78e069e447ce"",
+                    ""id"": ""f7779016-fe8e-4f68-9903-15f3b1f63f2e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -123,35 +114,46 @@ namespace ImpulseControl.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""4a91763b-a212-4348-96a4-410cb99ee6de"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""af4ecc9c-7ad1-4313-a2fc-022409e50211"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spell One"",
-                    ""isComposite"": false,
+                    ""action"": ""Swap Spell"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""88d5dad4-14be-47a8-b79a-fe6e1f038d53"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""name"": ""left"",
+                    ""id"": ""d4ee44c8-1a80-42f9-b429-acc2af893c98"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spell Two"",
+                    ""action"": ""Swap Spell"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1c05a237-6bf8-4f65-a3fd-fc560d5c6600"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Swap Spell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
-                    ""id"": ""55df8f5b-23e3-43c7-875b-c82354d1349d"",
-                    ""path"": ""<Keyboard>/3"",
+                    ""id"": ""a01998a0-198b-49c3-a4df-596007265c46"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spell Three"",
+                    ""action"": ""Cast Spell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -163,9 +165,8 @@ namespace ImpulseControl.Input
             // Gameplay
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-            m_Gameplay_SpellOne = m_Gameplay.FindAction("Spell One", throwIfNotFound: true);
-            m_Gameplay_SpellTwo = m_Gameplay.FindAction("Spell Two", throwIfNotFound: true);
-            m_Gameplay_SpellThree = m_Gameplay.FindAction("Spell Three", throwIfNotFound: true);
+            m_Gameplay_SwapSpell = m_Gameplay.FindAction("Swap Spell", throwIfNotFound: true);
+            m_Gameplay_CastSpell = m_Gameplay.FindAction("Cast Spell", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -228,17 +229,15 @@ namespace ImpulseControl.Input
         private readonly InputActionMap m_Gameplay;
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
         private readonly InputAction m_Gameplay_Move;
-        private readonly InputAction m_Gameplay_SpellOne;
-        private readonly InputAction m_Gameplay_SpellTwo;
-        private readonly InputAction m_Gameplay_SpellThree;
+        private readonly InputAction m_Gameplay_SwapSpell;
+        private readonly InputAction m_Gameplay_CastSpell;
         public struct GameplayActions
         {
             private @GameInputActions m_Wrapper;
             public GameplayActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-            public InputAction @SpellOne => m_Wrapper.m_Gameplay_SpellOne;
-            public InputAction @SpellTwo => m_Wrapper.m_Gameplay_SpellTwo;
-            public InputAction @SpellThree => m_Wrapper.m_Gameplay_SpellThree;
+            public InputAction @SwapSpell => m_Wrapper.m_Gameplay_SwapSpell;
+            public InputAction @CastSpell => m_Wrapper.m_Gameplay_CastSpell;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -251,15 +250,12 @@ namespace ImpulseControl.Input
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @SpellOne.started += instance.OnSpellOne;
-                @SpellOne.performed += instance.OnSpellOne;
-                @SpellOne.canceled += instance.OnSpellOne;
-                @SpellTwo.started += instance.OnSpellTwo;
-                @SpellTwo.performed += instance.OnSpellTwo;
-                @SpellTwo.canceled += instance.OnSpellTwo;
-                @SpellThree.started += instance.OnSpellThree;
-                @SpellThree.performed += instance.OnSpellThree;
-                @SpellThree.canceled += instance.OnSpellThree;
+                @SwapSpell.started += instance.OnSwapSpell;
+                @SwapSpell.performed += instance.OnSwapSpell;
+                @SwapSpell.canceled += instance.OnSwapSpell;
+                @CastSpell.started += instance.OnCastSpell;
+                @CastSpell.performed += instance.OnCastSpell;
+                @CastSpell.canceled += instance.OnCastSpell;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -267,15 +263,12 @@ namespace ImpulseControl.Input
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @SpellOne.started -= instance.OnSpellOne;
-                @SpellOne.performed -= instance.OnSpellOne;
-                @SpellOne.canceled -= instance.OnSpellOne;
-                @SpellTwo.started -= instance.OnSpellTwo;
-                @SpellTwo.performed -= instance.OnSpellTwo;
-                @SpellTwo.canceled -= instance.OnSpellTwo;
-                @SpellThree.started -= instance.OnSpellThree;
-                @SpellThree.performed -= instance.OnSpellThree;
-                @SpellThree.canceled -= instance.OnSpellThree;
+                @SwapSpell.started -= instance.OnSwapSpell;
+                @SwapSpell.performed -= instance.OnSwapSpell;
+                @SwapSpell.canceled -= instance.OnSwapSpell;
+                @CastSpell.started -= instance.OnCastSpell;
+                @CastSpell.performed -= instance.OnCastSpell;
+                @CastSpell.canceled -= instance.OnCastSpell;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -296,9 +289,8 @@ namespace ImpulseControl.Input
         public interface IGameplayActions
         {
             void OnMove(InputAction.CallbackContext context);
-            void OnSpellOne(InputAction.CallbackContext context);
-            void OnSpellTwo(InputAction.CallbackContext context);
-            void OnSpellThree(InputAction.CallbackContext context);
+            void OnSwapSpell(InputAction.CallbackContext context);
+            void OnCastSpell(InputAction.CallbackContext context);
         }
     }
 }
