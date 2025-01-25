@@ -5,7 +5,7 @@ using static ImpulseControl.Input.GameInputActions;
 
 namespace ImpulseControl.Input
 {
-    [CreateAssetMenu(fileName = "GameInputReader", menuName = "ImpulseControl/Input/GameInputReader")]
+    [CreateAssetMenu(fileName = "GameInputReader", menuName = "Input/GameInputReader")]
     public class GameInputReader : ScriptableObject, IGameplayActions
     {
         public event UnityAction<Vector2, bool> Move = delegate { };
