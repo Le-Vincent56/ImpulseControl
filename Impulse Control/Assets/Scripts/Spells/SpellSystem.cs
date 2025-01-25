@@ -1,4 +1,3 @@
-using ImpulseControl.Events;
 using ImpulseControl.Input;
 using ImpulseControl.Spells.Strategies;
 using UnityEngine;
@@ -15,8 +14,6 @@ namespace ImpulseControl
         [SerializeField] private SpellStrategy currentSpell;
         [SerializeField] private int currentSpellIndex;
 
-
-
         private void OnEnable()
         {
             inputReader.SwapSpell += SwapSpell;
@@ -26,7 +23,7 @@ namespace ImpulseControl
         private void OnDisable()
         {
             inputReader.SwapSpell -= SwapSpell;
-            inputReader.CastSpell += CastSpell;
+            inputReader.CastSpell -= CastSpell;
         }
 
         private void Start()

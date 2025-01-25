@@ -35,6 +35,20 @@ namespace ImpulseControl
             fear.Update();
             envy.Update();
         }
+
+        /// <summary>
+        /// Get an Emotion by an Emotion Type
+        /// </summary>
+        public Emotion GetEmotionByType(EmotionType emotionType)
+        {
+            return emotionType switch
+            {
+                EmotionType.Anger => anger,
+                EmotionType.Fear => fear,
+                EmotionType.Envy => envy,
+                _ => null
+            };
+        }
     }
 
     [System.Serializable]
