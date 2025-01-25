@@ -86,7 +86,6 @@ namespace ImpulseControl
             //check for crash and update each emotion
             foreach ((Emotion emotion, System.Action crashAction) in emotionSorted)
             {
-                Debug.Log((emotion.EmotionType));
                 if (emotion.Update())
                 {
                     crashAction();
