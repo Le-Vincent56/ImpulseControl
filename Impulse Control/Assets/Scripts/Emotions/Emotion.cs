@@ -1,7 +1,21 @@
+using ImpulseControl.Modifiers;
+using ImpulseControl.Timers;
+using Unity.VisualScripting;
 using UnityEngine;
+using Timer = System.Timers.Timer;
+
 
 namespace ImpulseControl
 {
+    
+    public enum EmotionStates
+    {
+        Exhausted,
+        ExhaustedFear,
+        CrashingOut,
+        Paused,
+        Normal
+    }
     [System.Serializable]
     public class Emotion
     {
@@ -11,43 +25,24 @@ namespace ImpulseControl
         [Range(0,1)]
         [SerializeField] float maxLevel = 1f;
         [Range(0,1)]
-        [SerializeField] float rateOfIncrease = .01f;
         [SerializeField] private EmotionType emotionType;
 
         [Header("View")]
-        [SerializeField] float currentLevel;
-        
-        public float  StartingLevel { get; set; }
-        public float  MaxLevel { get; set; }
-        public float  RateOfIncrease { get; set; }
+        [SerializeField] private float currentLevel;
+        [SerializeField] private float rateOfIncrease;
+        [SerializeField] private LiveModifiers liveModifiers;
+        [SerializeField] private EmotionStates state = EmotionStates.Normal;
+        [SerializeField] private float crashOutDuration;
+
         public EmotionType EmotionType => emotionType;
 
-        public void Start() => currentLevel = startingLevel;
-
-        /// <summary>
-        /// Called when another emotion crashes out
-        /// </summary>
-        public void CrashOut()
+        public void Start(LiveModifiers mods)
         {
-            currentLevel = 0;
-            rateOfIncrease = 0;
+            state = EmotionStates.Normal;
+            liveModifiers = mods;
+            currentLevel = startingLevel;
         }
-        /// <summary>
-        /// removes from emotion : checks if negative and sets to 0
-        /// </summary>
-        /// <param name="reduction"></param>
-        public void RemoveBubbles(float reduction)
-        {
-            currentLevel -= reduction;
-            if (currentLevel < 0) currentLevel = 0;
-        }
-
-        /// <summary>
-        /// Adds to the emotion.
-        /// </summary>
-        /// <param name="addition"></param>
-        public void AddBubbles(float addition) => currentLevel += addition;
-
+        
         /// <summary>
         /// Adds to the emotion based on its rate of increase each frame
         /// If crash out return true
@@ -55,12 +50,97 @@ namespace ImpulseControl
         /// <returns>bool crash out</returns>
         public bool Update()
         {
-            AddBubbles(rateOfIncrease * Time.deltaTime);
-           
-            //check for crash out
-            if (currentLevel >= maxLevel) return true;
+            //update normal rate
+            rateOfIncrease = emotionType switch
+            {
+                EmotionType.Anger => liveModifiers.Anger.angerFillPerSecond,
+                EmotionType.Fear => liveModifiers.Fear.fearFillPerSecond,
+                EmotionType.Envy => liveModifiers.Envy.envyFillPerSecond,
+                _ => liveModifiers.Anger.angerFillPerSecond
+            };
 
+            switch(state)
+            {
+                case EmotionStates.Exhausted:
+                    break;
+                case EmotionStates.Normal:
+                    AddOrRemoveBubblesRate(rateOfIncrease * Time.deltaTime);
+                    if (currentLevel >= maxLevel) return true;
+                    break;
+                case EmotionStates.Paused:
+                    break;
+                case EmotionStates.CrashingOut:
+                    AddOrRemoveBubblesRate(-1/crashOutDuration * Time.deltaTime);
+                    break;
+                case EmotionStates.ExhaustedFear:
+                    AddOrRemoveBubblesRate(rateOfIncrease * liveModifiers.Fear.exhaustionEmotionFillPercentage * Time.deltaTime);
+                    if (currentLevel >= maxLevel) return true;
+                    break;
+                
+            }
             return false;
         }
+
+        #region ModifyStates
+        /// <summary>
+        /// Called when another emotion crashes out
+        /// </summary>
+        public void Exhausted()
+        {
+            Debug.Log(emotionType + " Exhausted");
+            currentLevel = 0;
+            state = EmotionStates.Exhausted;
+        }
+        
+        public void Pause()
+        {
+            Debug.Log(emotionType + " Paused");
+            currentLevel = 0;
+            state = EmotionStates.Paused;
+        }
+        
+        //Called to exhaust fear, caches the fear rate
+        public void ExhaustedFear()
+        {
+            Debug.Log(emotionType + " Exhausted fear");
+            currentLevel = 0;
+            state = EmotionStates.ExhaustedFear;
+        }
+        
+        //called to crasj out, decreases the rate.
+        public void CrashOut(float duration)
+        {
+            Debug.Log(emotionType + " Crash Out");
+            crashOutDuration = duration;
+            state = EmotionStates.CrashingOut;
+        }
+
+        public void ResetToNormal()
+        {
+            state = EmotionStates.Normal;
+            Debug.Log(emotionType + "Normal");
+        }
+
+        #endregion
+       
+        #region Modify Amount
+        /// <summary>
+        /// Adds or removes to the emotion. Input has to have - to subtrace
+        /// </summary>
+        /// <param name="addition"></param>
+        public void AddOrRemoveBubblesRate(float change)
+        {
+            currentLevel += change;
+            if (currentLevel < 0) currentLevel = 0;
+        }
+        
+        public void RemoveBubbles(float change)
+        {
+            currentLevel -= change;
+            if (currentLevel < 0) currentLevel = 0;
+        }
+        
+
+        #endregion
     }
 }
