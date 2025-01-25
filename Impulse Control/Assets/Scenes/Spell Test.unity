@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 348044939}
   - component: {fileID: 348044938}
+  - component: {fileID: 348044940}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 4e4088a88ade5ea45879435b79f30db5, type: 2}
+  playerMovement: {fileID: 0}
   availableSpells:
   - {fileID: 11400000, guid: e8a381a68680a524ca478589eeae18b7, type: 2}
   - {fileID: 11400000, guid: fab1b6881a1e9fd40b69e098e0e4bb09, type: 2}
@@ -173,6 +175,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &348044940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348044937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b91590883629cb4491179c6a8d01254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preset: {fileID: 11400000, guid: 6d0d86bb283f2e443a579059727210d9, type: 2}
+  angerSpellModifiers:
+    angerFillPerSecond: 0
+    spellBaseDamage: 0
+    spellDamagePercentageIncrease: 0
+    spellDashDistance: 0
+    spellRadius: 0
+    spellAngerCost: 0
+    fireBaseDamage: 0
+    fireDamagePercentageIncrease: 0
+    fireEffectLength: 0
+    fireTickSpeed: 0
+    explosionBaseDamage: 0
+    explosionDamagePercentageIncrease: 0
+    explosionRadius: 0
+    crashOutDuration: 0
+    crashOutAttackSpeed: 0
+    crashOutRange: 0
+    exhaustionDuration: 0
+    exhaustionMoveSpeed: 0
+    exhaustionWeaknessMultiplier: 0
+  fearSpellModifiers:
+    fearFillPerSecond: 0
+    spellBaseDamage: 0
+    spellDamagePercentageIncrease: 0
+    spellEnemyPierceCount: 0
+    spellEnemyStunDuration: 0
+    spellRadius: 0
+    spellFearCost: 0
+    crashOutDuration: 0
+    crashOutMoveSpeedIncrease: 0
+    crashOutBaseDamage: 0
+    crashOutDamagePercentageIncrease: 0
+    crashOutDamageRadius: 0
+    exhaustionDuration: 0
+    exhaustionEmotionFillPercentage: 0
+  envySpellModifiers:
+    envyFillPerSecond: 0
+    spellBaseDamage: 0
+    spellDamagePercentageIncrease: 0
+    spellRadius: 0
+    spellTickSpeed: 0
+    spellHealingPercentage: 0
+    spellEnvyCostPerSecond: 0
+    crashOutDuration: 0
+    crashOutSpellBaseDamageIncrease: 0
+    crashOutSpellRadiusIncrease: 0
+    summonedBaseDamage: 0
+    summonedDamagePercentageIncrease: 0
+    exhaustionDuration: 0
+    exhaustionHealthPercentage: 0
+  playerModifiers:
+    moveSpeed: 0
+    maxHealth: 0
+    spellBufferCooldown: 0
+    baseDefense: 0
 --- !u!1 &1987772607
 GameObject:
   m_ObjectHideFlags: 0
