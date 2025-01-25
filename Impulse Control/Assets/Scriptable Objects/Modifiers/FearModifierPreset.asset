@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2bbc8cac9f296547b8c126da85e175d, type: 3}
-  m_Name: Fear Spell
+  m_Script: {fileID: 11500000, guid: 6e29996be50e6344f9779f2d4a2aa76e, type: 3}
+  m_Name: FearModifierPreset
   m_EditorClassIdentifier: 
-  spellName: 
-  spellDescription: 
-  spellLevel: 1
-  correspondingEmotion: 1

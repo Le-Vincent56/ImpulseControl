@@ -15,3 +15,4 @@ MonoBehaviour:
   spellName: 
   spellDescription: 
   spellLevel: 1
+  correspondingEmotion: 2

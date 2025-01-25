@@ -5,9 +5,13 @@ namespace ImpulseControl.Spells.Strategies
 {
     public abstract class SpellStrategy : ScriptableObject
     {
+
+        protected PlayerMovement playerMovement;
+        protected SpellSystem spellSystem;
         [SerializeField] protected string spellName;
         [SerializeField] protected string spellDescription;
         [SerializeField] protected int spellLevel;
+        [SerializeField] protected EmotionType correspondingEmotion;
 
         // Set a reference to the Spell Modifiers
         protected CountdownTimer cooldownTimer;
@@ -15,7 +19,11 @@ namespace ImpulseControl.Spells.Strategies
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
-        public abstract void Link();
+        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement)
+        {
+            this.spellSystem = spellSystem;
+            this.playerMovement = playerMovement;
+        }
 
         /// <summary>
         /// Cast the Spell
