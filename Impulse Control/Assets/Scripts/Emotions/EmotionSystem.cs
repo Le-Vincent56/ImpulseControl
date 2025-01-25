@@ -18,9 +18,9 @@ namespace ImpulseControl
         [SerializeField] private Emotion fear;
         [SerializeField] private Emotion envy;
 
-        private int angerPriority = 3;
-        private int fearPriority = 1;
-        private int envyPriority = 2;
+       [SerializeField] private int angerPriority = 3;
+       [SerializeField] private int fearPriority = 1;
+       [SerializeField] private int envyPriority = 2;
 
         private Dictionary<Emotion, int> emotionPriority;
         private List<(Emotion emotion, System.Action crashAction)> emotions;
