@@ -1,34 +1,25 @@
 using ImpulseControl.Input;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ImpulseControl
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Input Reader")]
-        [SerializeField] private GameInputReader gameInputReader;
+        [Header("References")] [SerializeField]
+        private GameInputReader gameInputReader;
+        [SerializeField] private Rigidbody2D rigidbody2d;
 
-        [Header("References")]
-        [SerializeField] private Rigidbody2D rgb;
+        [Header("Attributes")] 
+        [SerializeField] private float speed = 1.0f;
 
-        private void OnEnable()
+        private void FixedUpdate()
         {
-            gameInputReader.Move += OnMove;
+            Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY);
         }
-
-
-        private void OnDisable()
+        
+        private void Move(float xNorm, float yNorm)
         {
-            gameInputReader.Move -= OnMove;
+            rigidbody2d.velocity = new Vector2(xNorm * speed, yNorm * speed);
         }
-
-        private void OnMove(Vector2 rawMoveementinput, bool contextStarted)
-        {
-            
-        }
-
-
     }
 }
