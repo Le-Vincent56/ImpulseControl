@@ -1,4 +1,3 @@
-using System;
 using ImpulseControl.Events;
 using UnityEngine;
 
@@ -16,7 +15,10 @@ namespace ImpulseControl
         [SerializeField] private Emotion anger;
         [SerializeField] private Emotion fear;
         [SerializeField] private Emotion envy;
-        
+
+        private int priorityA = 1;
+        private int priorityF = 2;
+        private int priorityE = 3;
 
         public Emotion Anger => anger;
         public Emotion Fear => fear;
@@ -31,47 +33,35 @@ namespace ImpulseControl
 
         private void Update()
         {
-            anger.Update();
-            fear.Update();
-            envy.Update();
-        }
-    }
-
-    [System.Serializable]
-    public class Emotion
-    {
-        [Header("Editable")]
-        [Range(0,1)]
-        [SerializeField] float startingLevel = .5f;
-        [Range(0,1)]
-        [SerializeField] float maxLevel = 1f;
-        [Range(0,1)]
-        [SerializeField] float rateOfIncrease = .01f;
-        [SerializeField] private EmotionType emotionType;
-
-        [Header("View")]
-        [SerializeField] float currentLevel;
-        
-        public float  StartingLevel { get; set; }
-        public float  MaxLevel { get; set; }
-        public float  RateOfIncrease { get; set; }
-        public void Start() => currentLevel = startingLevel;
-        
-        public void RemoveBubbles(float reduction)
-        {
-            currentLevel -= reduction;
-            if (currentLevel < 0) currentLevel = 0;
-        }
-
-        public void AddBubbles(float addition)
-        {
-            currentLevel += addition;
-            if (currentLevel >= 1.0)
+            if (anger.Update())
             {
-                
-            }
+                EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
+                {
+                    emotionType = anger.EmotionType
+                });
+                envy.CrashOut();
+                fear.CrashOut();
+                return;
+            };
+            if (fear.Update())
+            {
+                EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
+                {
+                    emotionType = fear.EmotionType
+                });
+                envy.CrashOut();
+                anger.CrashOut();
+                return;
+            };
+            if(envy.Update())
+            {
+                EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
+                {
+                    emotionType = fear.EmotionType
+                });
+                fear.CrashOut();
+                anger.CrashOut();
+            };
         }
-
-        public void Update() => AddBubbles(rateOfIncrease * Time.deltaTime);
     }
 }
