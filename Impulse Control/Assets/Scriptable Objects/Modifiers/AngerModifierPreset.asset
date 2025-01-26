@@ -12,3 +12,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e29996be50e6344f9779f2d4a2aa76e, type: 3}
   m_Name: AngerModifierPreset
   m_EditorClassIdentifier: 
+  angerSpellModifiers:
+    angerFillPerSecond: 0.05
+    spellBaseDamage: 10
+    spellDamagePercentageIncrease: 1
+    spellDashDistance: 5
+    spellStartingOffset: 1
+    spellRadius: 0
+    spellAngerCost: 0.05
+    spellCooldownTime: 0.5
+    fireBaseDamage: 0
+    fireDamagePercentageIncrease: 0
+    fireEffectLength: 0
+    fireTickSpeed: 0
+    explosionBaseDamage: 0
+    explosionDamagePercentageIncrease: 0
+    explosionRadius: 0
+    crashOutDuration: 5
+    crashOutAttackSpeed: 0.2
+    crashOutRange: 0
+    crashOutDamageReduction: 0.5
+    crashOutOffset: 1.5
+    crashOutLifetime: 3
+    crashOutProjectileSpeed: 10
+    exhaustionDuration: 3
+    exhaustionMoveSpeed: 1
+    exhaustionWeaknessMultiplier: 0.4
+  fearSpellModifiers:
+    fearFillPerSecond: 0
+    spellBaseDamage: 5
+    spellDamagePercentageIncrease: 0
+    spellEnemyPierceCount: 5
+    spellEnemyStunDuration: 0
+    spellRadius: 5
+    spellFearCost: 0
+    spellProjectileSpeed: 7
+    spellCooldownTime: 0.35
+    crashOutDuration: 5
+    crashOutMoveSpeedIncrease: 0
+    crashOutBaseDamage: 0
+    crashOutDamagePercentageIncrease: 0
+    crashOutDamageRadius: 0
+    exhaustionDuration: 0
+    exhaustionEmotionFillPercentage: 0
+  envySpellModifiers:
+    envyFillPerSecond: 0
+    spellBaseDamage: 5
+    spellDamagePercentageIncrease: 1
+    spellRadius: 1
+    spellTickSpeed: 0
+    spellHealingPercentage: 0
+    spellEnvyCostPerSecond: 0
+    spellCooldownTime: 0.2
+    crashOutDuration: 5
+    crashOutSpellBaseDamageIncrease: 3
+    crashOutSpellRadius: 3
+    summonedBaseDamage: 0
+    summonedDamagePercentageIncrease: 0
+    exhaustionDuration: 0
+    exhaustionHealthPercentage: 0
+  playerModifiers:
+    moveSpeed: 3
+    maxHealth: 0
+    baseDefense: 0
