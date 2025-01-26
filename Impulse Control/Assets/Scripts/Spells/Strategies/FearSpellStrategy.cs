@@ -11,7 +11,8 @@ namespace ImpulseControl.Spells.Strategies
         /// </summary>
         public override void Cast()
         {
-            Debug.Log("Cast the Fear Spell");
+            // Get a fear spell
+            spellPool.Pool.Get();
         }
     }
 }

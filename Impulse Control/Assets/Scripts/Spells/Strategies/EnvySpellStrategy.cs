@@ -1,4 +1,5 @@
 using ImpulseControl.Modifiers;
+using ImpulseControl.Spells.Objects;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Strategies
@@ -11,7 +12,11 @@ namespace ImpulseControl.Spells.Strategies
         /// </summary>
         public override void Cast()
         {
-            Debug.Log("Cast the Envy Spell");
+            // Get an envy spell
+            EnvySpell spell = (EnvySpell)spellPool.Pool.Get();
+
+            // Set the follow transform of the Envy Spell
+            spell.SetTarget(spellSystem.transform);
         }
     }
 }

@@ -1,6 +1,10 @@
 using ImpulseControl.Input;
 using ImpulseControl.Modifiers;
+using ImpulseControl.Spells;
+using ImpulseControl.Spells.Objects;
 using ImpulseControl.Spells.Strategies;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ImpulseControl
@@ -11,10 +15,20 @@ namespace ImpulseControl
         [SerializeField] private GameInputReader inputReader;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private LiveModifiers modifiers;
+        [SerializeField] private SpellAimer spellAimer;
 
+        [Header("Spells")]
+        [SerializeField] private SpellPool[] spellPools;
         [SerializeField] private SpellStrategy[] availableSpells;
+        [SerializeField] private List<SpellObject> livingSpells;
         [SerializeField] private SpellStrategy currentSpell;
         [SerializeField] private int currentSpellIndex;
+
+        [Header("Time")]
+        [SerializeField] private float time;
+        [SerializeField] private float delta;
+
+        public Vector2 SpellDirection { get => spellAimer.AimDirection; }
 
         private void OnEnable()
         {
@@ -33,16 +47,38 @@ namespace ImpulseControl
             // Get components
             playerMovement = GetComponent<PlayerMovement>();
             modifiers = GetComponent<LiveModifiers>();
+            spellPools = GetComponentsInChildren<SpellPool>();
+            spellAimer = GetComponent<SpellAimer>();
 
-            // Iterate through each Spell Strategy
-            foreach (SpellStrategy spell in availableSpells)
+            // Limit the amount of Spell Pools by the number of available Spells
+            spellPools = spellPools.Take(availableSpells.Length).ToArray();
+
+            // Iterate through each available Spell
+            for(int i = 0; i < availableSpells.Length; i++)
             {
-                // Link the Spell to the Spell System
-                spell.Link(this, playerMovement, modifiers);
+                spellPools[i].CreateSpellPool(this);
+                availableSpells[i].Link(this, playerMovement, modifiers, spellPools[i]);
             }
 
             // Set the first Spell
             SetSpell(0);
+        }
+
+        private void Update()
+        {
+            // Exit case - there are no living Spells
+            if (livingSpells.Count == 0) return;
+
+            // Set time variables
+            time = Time.time;
+            delta = Time.deltaTime;
+
+            // Iterate through each living Spell
+            foreach (SpellObject spellObject in livingSpells)
+            {
+                // Tick the Spell
+                spellObject.TickUpdate(time, delta);
+            }
         }
 
         /// <summary>
@@ -79,6 +115,30 @@ namespace ImpulseControl
 
             // Cast the current Spell
             currentSpell.Cast();
+        }
+
+        /// <summary>
+        /// Register a Spell to be tracked
+        /// </summary>
+        public void RegisterSpell(SpellObject spell)
+        {
+            // Exit case - if the Spell is already being tracked
+            if (livingSpells.Contains(spell)) return;
+
+            // Add the spell
+            livingSpells.Add(spell);
+        }
+
+        /// <summary>
+        /// Deregister a Spell from being tracked
+        /// </summary>
+        public void DeregisterSpell(SpellObject spell)
+        {
+            // Exit case - if the Spell is not being tracked
+            if (!livingSpells.Contains(spell)) return;
+
+            // Remove the spell
+            livingSpells.Remove(spell);
         }
     }
 }

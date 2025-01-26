@@ -12,6 +12,12 @@ namespace ImpulseControl
         [Header("Attributes")] 
         [SerializeField] private float speed = 1.0f;
 
+        private void Awake()
+        {
+            // Get components
+            rigidbody2d = GetComponent<Rigidbody2D>();
+        }
+
         private void FixedUpdate()
         {
             Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY);

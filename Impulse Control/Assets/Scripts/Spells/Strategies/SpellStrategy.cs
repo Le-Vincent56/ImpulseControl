@@ -1,11 +1,14 @@
 using ImpulseControl.Modifiers;
+using ImpulseControl.Spells.Objects;
 using ImpulseControl.Timers;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace ImpulseControl.Spells.Strategies
 {
     public abstract class SpellStrategy : ScriptableObject
     {
+        protected SpellPool spellPool;
         protected PlayerMovement playerMovement;
         protected SpellSystem spellSystem;
         protected LiveModifiers modifiers;
@@ -20,11 +23,12 @@ namespace ImpulseControl.Spells.Strategies
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
-        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, LiveModifiers modifiers)
+        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, LiveModifiers modifiers, SpellPool spellPool)
         {
             this.spellSystem = spellSystem;
             this.playerMovement = playerMovement;
             this.modifiers = modifiers;
+            this.spellPool = spellPool;
         }
 
         /// <summary>
