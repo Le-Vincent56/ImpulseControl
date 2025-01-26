@@ -2,7 +2,6 @@ using ImpulseControl.Modifiers;
 using ImpulseControl.Spells.Objects;
 using ImpulseControl.Timers;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace ImpulseControl.Spells.Strategies
 {

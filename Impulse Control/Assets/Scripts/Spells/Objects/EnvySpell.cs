@@ -37,7 +37,8 @@ namespace ImpulseControl.Spells.Objects
         /// </summary>
         public override void TickUpdate(float time, float delta)
         {
-
+            // Match the follow target's position
+            transform.position = followTarget.position;
         }
 
         /// <summary>
