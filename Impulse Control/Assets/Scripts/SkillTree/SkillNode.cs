@@ -60,6 +60,16 @@ namespace ImpulseControl {
 		public int SkillPointCost => _skillPointCost;
 
 		/// <summary>
+		/// The title of this skill node
+		/// </summary>
+		public string Title => _title;
+
+		/// <summary>
+		/// The description of this skill node
+		/// </summary>
+		public string Description => _description;
+
+		/// <summary>
 		/// A list of all the child skill nodes of this skill node
 		/// </summary>
 		public List<SkillNode> ChildSkillNodes => childSkillNodes;
@@ -101,6 +111,19 @@ namespace ImpulseControl {
 			if (IsBought) {
 				UnlockChildNodes( );
 			}
+		}
+
+		private void OnMouseEnter ( ) {
+			// Show no tooltip if the skill node is not unlocked yet
+			if (!IsUnlocked) {
+				return;
+			}
+
+			FindObjectOfType<SkillNodeInfoBox>( )?.LinkToSkillTreeNode(this);
+		}
+
+		private void OnMouseExit ( ) {
+			FindObjectOfType<SkillNodeInfoBox>( )?.UnlinkFromSkillNode( );
 		}
 
 		private void OnMouseDown ( ) {
