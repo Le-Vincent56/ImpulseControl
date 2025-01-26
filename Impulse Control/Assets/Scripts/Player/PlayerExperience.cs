@@ -1,9 +1,14 @@
+using ImpulseControl.Input;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ImpulseControl {
 	public class PlayerExperience : MonoBehaviour {
+		[Header("References")]
+		[SerializeField] private GameInputReader inputReader;
+		[SerializeField] private UIInputReader inputReaderUI;
+		[SerializeField] private SkillNodeManager skillNodeManager;
 		[Header("Properties")]
 		[SerializeField] private int _experiencePoints;
 		[SerializeField] private int _skillPoints;
@@ -23,6 +28,11 @@ namespace ImpulseControl {
 					_experiencePoints -= ExperienceForNextLevel;
 					Level++;
 					SkillPoints++;
+
+					skillNodeManager.transform.GetChild(0).gameObject.SetActive(true);
+					inputReader.Disable( );
+					inputReaderUI.Enable( );
+					Time.timeScale = 0;
 				}
 			}
 		}

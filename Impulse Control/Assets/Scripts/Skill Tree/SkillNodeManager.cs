@@ -12,6 +12,7 @@ namespace ImpulseControl {
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private LiveModifiers liveModifiers;
 		[SerializeField] private GameInputReader inputReader;
+		[SerializeField] private UIInputReader inputReaderUI;
 		[SerializeField] private GameObject skillTreeContainer;
 		[SerializeField] private SpriteRenderer backgroundSpriteRenderer;
 
@@ -30,6 +31,13 @@ namespace ImpulseControl {
 
 		private void OnDisable ( ) {
 			inputReader.PanSkillTree -= PanSkillTree;
+		}
+
+		public void LiterallyDisable ( ) {
+			skillTreeContainer.gameObject.SetActive(false);
+			inputReader.Enable( );
+			inputReaderUI.Disable( );
+			Time.timeScale = 1;
 		}
 
 		private void Awake ( ) {
@@ -113,13 +121,13 @@ namespace ImpulseControl {
 				{
 					liveModifiers.Envy.spellEnvyCostPerSecond *= .95f;
 				},
-				
-				
+
+
 			};
 		}
 
 		private void Update ( ) {
-			if (isPanning) {
+			if (isPanning && skillTreeContainer.activeInHierarchy) {
 				// Calculate the position of the center of the skill tree based on the panning offset
 				Vector2 panPosition = startingPosition + (Vector2) mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue( )) - startingMousePosition;
 
