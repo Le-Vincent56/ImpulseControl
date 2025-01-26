@@ -26,8 +26,6 @@ namespace ImpulseControl.Spells.Objects
         {
             if (!collision.gameObject.TryGetComponent(out Enemy enemy)) return;
 
-            Debug.Log($"Taking Damage: {damage}");
-
             enemy.GetComponent<Health>().TakeDamage(damage);
         }
 
