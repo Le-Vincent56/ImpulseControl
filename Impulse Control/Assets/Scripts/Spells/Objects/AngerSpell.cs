@@ -14,17 +14,18 @@ namespace ImpulseControl.Spells.Objects
         [SerializeField] private float projectileSpeed;
         private Vector3 initialScale;
         private Vector3 initialPosition;
+        [SerializeField] private LayerMask enemyLayer;
 
         protected override void OnDestroy()
         {
             // Dispose of the Timer
             livingTimer.Dispose();
         }
-
+        
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // damage enemy if its the enemy
-            if (collision.gameObject.GetComponent<IEnemy>() != null) {
+            if(collision.gameObject.layer == enemyLayer)
+            {
                 collision.gameObject.GetComponent<Health>().TakeDamage(damage);
             }
         }
