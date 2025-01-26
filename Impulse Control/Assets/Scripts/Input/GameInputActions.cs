@@ -55,6 +55,15 @@ namespace ImpulseControl.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pan Skill Tree"",
+                    ""type"": ""Button"",
+                    ""id"": ""4095cdd5-0df9-4b06-a919-fca07d45f26b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -156,6 +165,17 @@ namespace ImpulseControl.Input
                     ""action"": ""Cast Spell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""560dd5b5-fcae-477f-b161-585cd82ff973"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pan Skill Tree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -167,6 +187,7 @@ namespace ImpulseControl.Input
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
             m_Gameplay_SwapSpell = m_Gameplay.FindAction("Swap Spell", throwIfNotFound: true);
             m_Gameplay_CastSpell = m_Gameplay.FindAction("Cast Spell", throwIfNotFound: true);
+            m_Gameplay_PanSkillTree = m_Gameplay.FindAction("Pan Skill Tree", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -231,6 +252,7 @@ namespace ImpulseControl.Input
         private readonly InputAction m_Gameplay_Move;
         private readonly InputAction m_Gameplay_SwapSpell;
         private readonly InputAction m_Gameplay_CastSpell;
+        private readonly InputAction m_Gameplay_PanSkillTree;
         public struct GameplayActions
         {
             private @GameInputActions m_Wrapper;
@@ -238,6 +260,7 @@ namespace ImpulseControl.Input
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
             public InputAction @SwapSpell => m_Wrapper.m_Gameplay_SwapSpell;
             public InputAction @CastSpell => m_Wrapper.m_Gameplay_CastSpell;
+            public InputAction @PanSkillTree => m_Wrapper.m_Gameplay_PanSkillTree;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -256,6 +279,9 @@ namespace ImpulseControl.Input
                 @CastSpell.started += instance.OnCastSpell;
                 @CastSpell.performed += instance.OnCastSpell;
                 @CastSpell.canceled += instance.OnCastSpell;
+                @PanSkillTree.started += instance.OnPanSkillTree;
+                @PanSkillTree.performed += instance.OnPanSkillTree;
+                @PanSkillTree.canceled += instance.OnPanSkillTree;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -269,6 +295,9 @@ namespace ImpulseControl.Input
                 @CastSpell.started -= instance.OnCastSpell;
                 @CastSpell.performed -= instance.OnCastSpell;
                 @CastSpell.canceled -= instance.OnCastSpell;
+                @PanSkillTree.started -= instance.OnPanSkillTree;
+                @PanSkillTree.performed -= instance.OnPanSkillTree;
+                @PanSkillTree.canceled -= instance.OnPanSkillTree;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -291,6 +320,7 @@ namespace ImpulseControl.Input
             void OnMove(InputAction.CallbackContext context);
             void OnSwapSpell(InputAction.CallbackContext context);
             void OnCastSpell(InputAction.CallbackContext context);
+            void OnPanSkillTree(InputAction.CallbackContext context);
         }
     }
 }
