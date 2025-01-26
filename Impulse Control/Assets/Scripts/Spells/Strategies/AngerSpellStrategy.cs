@@ -21,7 +21,12 @@ namespace ImpulseControl.Spells.Strategies
 
             crashOutCooldownTimer = new CountdownTimer(modifiers.Anger.crashOutAttackSpeed);
 
-            crashOutCooldownTimer.OnTimerStart += () => CrashOutCast();
+            crashOutCooldownTimer.OnTimerStop += () =>
+            {
+                Debug.Log("Timer stopped");
+
+                CrashOutCast();
+            };
         }
 
         /// <summary>
@@ -41,7 +46,7 @@ namespace ImpulseControl.Spells.Strategies
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
 
             // Set the attributes of the Anger Spell
-            float damage = modifiers.Anger.spellBaseDamage * modifiers.Anger.spellBaseDamage;
+            float damage = modifiers.Anger.spellBaseDamage * modifiers.Anger.spellDamagePercentageIncrease;
             angerSpell.SetAttributes(emotionSystem.Anger, 
                 playerMovement, 
                 damage, 
@@ -52,12 +57,17 @@ namespace ImpulseControl.Spells.Strategies
                 modifiers.Anger.crashOutLifetime
             );
 
+            // Remove bubbles
+            emotionSystem.Anger.RemoveBubbles(modifiers.Anger.spellAngerCost);
+
             // Start the cooldown timer
             cooldownTimer.Start();
         }
 
         public void CrashOutCast()
         {
+            Debug.Log("Crashing Out!");
+
             // Get an Anger Spell
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
 
@@ -83,15 +93,13 @@ namespace ImpulseControl.Spells.Strategies
             crashOutCooldownTimer.Reset(modifiers.Anger.crashOutAttackSpeed);
 
             // Start the Crash Out Timer
-            crashOutCooldownTimer.Start();
+            CrashOutCast();
         }
 
         public override void Exhaust()
         {
-            Debug.Log("Exhaust");
-
             // Stop the Crash Out Timer
-            crashOutCooldownTimer.Stop();
+            crashOutCooldownTimer.Pause(true);
         }
     }
 }

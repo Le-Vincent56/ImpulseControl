@@ -123,8 +123,6 @@ namespace ImpulseControl.Spells.Objects
 
             // Check if crashing
             crashing = emotion.EmotionState == EmotionStates.CrashingOut;
-            Debug.Log($"Crashing: {crashing}");
-            //crashing = true;
 
             // Exit case - if crashing
             if (crashing)
