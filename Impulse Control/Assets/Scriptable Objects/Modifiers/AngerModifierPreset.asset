@@ -57,7 +57,7 @@ MonoBehaviour:
     exhaustionEmotionFillPercentage: 0
   envySpellModifiers:
     envyFillPerSecond: 0.05
-    spellBaseDamage: 5
+    spellBaseDamage: 1
     spellDamagePercentageIncrease: 1
     spellRadius: 1
     spellTickSpeed: 0
@@ -73,5 +73,5 @@ MonoBehaviour:
     exhaustionHealthPercentage: 0
   playerModifiers:
     moveSpeed: 3
-    maxHealth: 0
+    maxHealth: 100
     baseDefense: 0
