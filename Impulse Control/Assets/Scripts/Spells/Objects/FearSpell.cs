@@ -1,5 +1,7 @@
+using ImpulseControl.AI;
 using ImpulseControl.Timers;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Objects
@@ -26,8 +28,8 @@ namespace ImpulseControl.Spells.Objects
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // Exit case - if the collision the Player
-            if (collision.gameObject.CompareTag("Player")) return;
+            // Exit case - if the collision is not an enemy
+            if (!collision.gameObject.TryGetComponent(out Enemy enemy)) return;
 
             // Disable the sprite renderer
             spriteRenderer.enabled = false;
@@ -36,7 +38,10 @@ namespace ImpulseControl.Spells.Objects
             boxCollider.enabled = false;
 
             // Add the collision to the hit enemies list
-            hitEnemies.Add(collision.gameObject);
+            hitEnemies.Add(enemy.gameObject);
+
+            // Damage the hit enemy
+            enemy.GetComponent<Health>().TakeDamage(damage);
 
             // Start chaining through enemies
             ChainThroughEnemies(1);
@@ -48,10 +53,12 @@ namespace ImpulseControl.Spells.Objects
             else
             {
                 // Get all enemies within a circle
-                Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, chainDistance);
+                List<Collider2D> collisions = Physics2D.OverlapCircleAll(transform.position, chainDistance, enemyLayer)
+                                                .Where(collision => !hitEnemies.Contains(collision.gameObject))
+                                                .ToList();
 
                 // Exit case - the number of remaining collisions is less than the chain index
-                if (collisions.Length < timesToChain) return;
+                if (collisions.Count < timesToChain) return;
 
                 // Set default values
                 GameObject enemyToChain = collisions[0].gameObject;
@@ -78,6 +85,9 @@ namespace ImpulseControl.Spells.Objects
                 // Add the enemy to the hit enemies list
                 hitEnemies.Add(enemyToChain);
 
+                // Damage the enemy
+                enemyToChain.GetComponent<Health>().TakeDamage(damage);
+
                 // Continue to chain through enemies
                 ChainThroughEnemies(timesToChain + 1);
             }
@@ -96,7 +106,7 @@ namespace ImpulseControl.Spells.Objects
             boxCollider = GetComponent<BoxCollider2D>();
 
             // Initialize the list
-            hitEnemies = new List<GameObject>();
+            hitEnemies = new List<Enemy>();
 
             // Initialize the Timer
             livingTimer = new CountdownTimer(livingTime);
