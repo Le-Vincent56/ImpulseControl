@@ -17,6 +17,7 @@ namespace ImpulseControl.AI
         protected StateMachine stateMachine;
 
         protected bool withinAttackRange;
+        private float spherecastAttackRadius = 2f;
 
         public float Damage { get; set; } 
         protected float Speed { get; set; }
@@ -90,6 +91,17 @@ namespace ImpulseControl.AI
             withinAttackRange = (squrDistance <= StoppingDistance * StoppingDistance
                                   && this.transform.position.y <= playerYUpperBound && this.transform.position.y >= playerYLowerBound) ? true : false;
         }
+        // Hook this up as an animation event
+        public void AttackAnimEvent()
+        {
+            RaycastHit hit;
+            bool spherecast = Physics.SphereCast(this.transform.position, spherecastAttackRadius, dirToPlayer, out hit, StoppingDistance + 2f);
+            if(spherecast && hit.transform.gameObject.tag == "Player")
+            {
+                hit.transform.gameObject.GetComponent<Health>().TakeDamage(Damage);
+            }
+            Debug.Log("Attack Spherecast hit?: " + spherecast);
+        }
         
         void ChangeDeathStatus()
         {
@@ -97,5 +109,11 @@ namespace ImpulseControl.AI
         }
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
         void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(this.transform.position, dirToPlayer);
+            Gizmos.DrawSphere(this.transform.position + dirToPlayer, spherecastAttackRadius);
+        }
     }
 }

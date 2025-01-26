@@ -20,7 +20,11 @@ namespace ImpulseControl
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            if (currentHealth <= 0) Death?.Invoke();
+            if (currentHealth <= 0)
+            {
+                Death?.Invoke();
+                if (this.transform.gameObject.tag == "Player") { Debug.Log("Player died a sussy death"); }
+            }
         }
     }
 }
