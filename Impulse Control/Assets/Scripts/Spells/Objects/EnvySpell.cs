@@ -1,34 +1,36 @@
-using System;
-using ImpulseControl.AI;
-using ImpulseControl.Events;
-using ImpulseControl.Modifiers;
+using ImpulseControl.Timers;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Objects
 {
     public class EnvySpell : SpellObject
     {
+        private HealthPlayer health;
         private Transform followTarget;
         private Vector3 scale;
         [SerializeField] private LayerMask enemyLayer;
 
         private float damageIncreasePercentage;
         private float radiusIncrease;
+        private float healPercentage;
         private bool crashedOut;
         
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.gameObject.TryGetComponent(out PlayerMovement player)) return;
+            if (collision.gameObject.Equals(health.gameObject)) return;
             if (!collision.gameObject.TryGetComponent(out Health enemyHealth)) return;
 
             // Deal damage
-            enemyHealth.TakeDamage(damage);
+            if (!enemyHealth.TakeDamage(damage)) return;
+
+            // Heal the player
+            health.Heal(damage * healPercentage);
         }
 
-        public void SetAttributes(Emotion emotion, float damage, float radius, float crashOutDamage, float crashOutRadius)
+        public void SetAttributes(Emotion emotion, float damage, float radius, float crashOutDamage, float crashOutRadius, float healPercentage)
         {
-            //reset scale 
-            transform.localScale = scale;
+            // Reset scale 
+            // transform.localScale = scale;
             this.emotion = emotion;
 
             crashedOut = emotion.EmotionState == EmotionStates.CrashingOut;
@@ -68,7 +70,6 @@ namespace ImpulseControl.Spells.Objects
         /// </summary>
         public override void Activate(Vector2 direction)
         {
-
         }
 
         /// <summary>
@@ -92,10 +93,11 @@ namespace ImpulseControl.Spells.Objects
         /// <summary>
         /// Set the target to follow
         /// </summary>
-        public void SetTarget(Transform target)
+        public void SetTarget(HealthPlayer target)
         {
             // Set the follow target
-            followTarget = target;
+            health = target;
+            followTarget = (health == null) ? null : target.transform;
         }
     }
 }

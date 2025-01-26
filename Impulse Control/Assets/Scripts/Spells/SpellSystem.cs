@@ -17,6 +17,7 @@ namespace ImpulseControl {
 		[SerializeField] private EmotionSystem emotionSystem;
 		[SerializeField] private LiveModifiers modifiers;
 		[SerializeField] private SpellAimer spellAimer;
+        [SerializeField] private HealthPlayer playerHealth;
 
         [Header("Spells")]
         [SerializeField] private SpellPool[] spellPools;
@@ -67,6 +68,7 @@ namespace ImpulseControl {
 			emotionSystem = GetComponent<EmotionSystem>( );
 			spellPools = GetComponentsInChildren<SpellPool>( );
 			spellAimer = GetComponent<SpellAimer>( );
+            playerHealth = GetComponent<HealthPlayer>();
 
 			// Limit the amount of Spell Pools by the number of available Spells
 			spellPools = spellPools.Take(availableSpells.Length).ToArray( );
@@ -75,7 +77,7 @@ namespace ImpulseControl {
             for(int i = 0; i < availableSpells.Length; i++)
             {
                 spellPools[i].CreateSpellPool(this);
-                availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i]);
+                availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i], playerHealth);
 
                 // Assign spells
                 switch (availableSpells[i].Emotion)

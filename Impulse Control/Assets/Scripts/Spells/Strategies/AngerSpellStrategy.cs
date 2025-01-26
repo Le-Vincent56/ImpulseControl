@@ -9,6 +9,13 @@ namespace ImpulseControl.Spells.Strategies
     {
         private CountdownTimer crashOutCooldownTimer;
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            crashOutCooldownTimer.Dispose();
+        }
+
         /// <summary>
         /// Set up the cooldown for the Anger Spell cooldown
         /// </summary>
