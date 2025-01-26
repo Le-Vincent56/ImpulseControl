@@ -387,8 +387,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInputReader: {fileID: 11400000, guid: 4e4088a88ade5ea45879435b79f30db5, type: 2}
-  rigidbody2d: {fileID: 614226574}
-  speed: 1
+  dashing: 0
+  dashDirection: {x: 0, y: 0}
+  dashSpeed: 0
 --- !u!114 &614226578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,13 +446,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preset: {fileID: 0}
-  angerSpellModifiers:
+  Anger:
     angerFillPerSecond: 0.1
     spellBaseDamage: 0
     spellDamagePercentageIncrease: 0
     spellDashDistance: 0
+    spellStartingOffset: 0
     spellRadius: 0
     spellAngerCost: 0
+    spellCooldownTime: 0
     fireBaseDamage: 0
     fireDamagePercentageIncrease: 0
     fireEffectLength: 0
@@ -462,43 +465,46 @@ MonoBehaviour:
     crashOutDuration: 10
     crashOutAttackSpeed: 0
     crashOutRange: 0
+    crashOutDamageReduction: 0
     exhaustionDuration: 10
     exhaustionMoveSpeed: 0
     exhaustionWeaknessMultiplier: 0
-  fearSpellModifiers:
-    fearFillPerSecond: 0.01
+  Fear:
+    fearFillPerSecond: 0
     spellBaseDamage: 0
     spellDamagePercentageIncrease: 0
     spellEnemyPierceCount: 0
     spellEnemyStunDuration: 0
     spellRadius: 0
     spellFearCost: 0
-    crashOutDuration: 10
+    spellProjectileSpeed: 0
+    spellCooldownTime: 0
+    crashOutDuration: 0
     crashOutMoveSpeedIncrease: 0
     crashOutBaseDamage: 0
     crashOutDamagePercentageIncrease: 0
     crashOutDamageRadius: 0
-    exhaustionDuration: 10
-    exhaustionEmotionFillPercentage: 0.25
-  envySpellModifiers:
-    envyFillPerSecond: 0.01
+    exhaustionDuration: 0
+    exhaustionEmotionFillPercentage: 0
+  Envy:
+    envyFillPerSecond: 0
     spellBaseDamage: 0
     spellDamagePercentageIncrease: 0
     spellRadius: 0
     spellTickSpeed: 0
     spellHealingPercentage: 0
     spellEnvyCostPerSecond: 0
-    crashOutDuration: 10
+    spellCooldownTime: 0
+    crashOutDuration: 0
     crashOutSpellBaseDamageIncrease: 0
     crashOutSpellRadiusIncrease: 0
     summonedBaseDamage: 0
     summonedDamagePercentageIncrease: 0
-    exhaustionDuration: 10
+    exhaustionDuration: 0
     exhaustionHealthPercentage: 0
-  playerModifiers:
+  Player:
     moveSpeed: 0
     maxHealth: 0
-    spellBufferCooldown: 0
     baseDefense: 0
 --- !u!1 &619394800
 GameObject:
