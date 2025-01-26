@@ -30,8 +30,6 @@ namespace ImpulseControl.Spells.Strategies
 
             crashOutCooldownTimer.OnTimerStop += () =>
             {
-                Debug.Log("Timer stopped");
-
                 CrashOutCast();
             };
         }
@@ -42,12 +40,21 @@ namespace ImpulseControl.Spells.Strategies
         protected override bool OnCooldown() => cooldownTimer.IsRunning;
 
         /// <summary>
+        /// Check if the Envy Spell can be cast
+        /// </summary>
+        /// <returns></returns>
+        private bool CanCast() => emotionSystem.Anger.CurrentLevel >= modifiers.Anger.spellAngerCost;
+
+        /// <summary>
         /// Cast the Anger Spell
         /// </summary>
         public override void Cast()
         {
             // Exit case - the Anger Spell is on cooldown
             if (OnCooldown()) return;
+
+            // Exit case - not enough Anger
+            if (!CanCast()) return;
 
             // Get an Anger Spell
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
@@ -73,8 +80,6 @@ namespace ImpulseControl.Spells.Strategies
 
         public void CrashOutCast()
         {
-            Debug.Log("Crashing Out!");
-
             // Get an Anger Spell
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
 

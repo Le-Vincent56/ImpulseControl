@@ -24,12 +24,21 @@ namespace ImpulseControl.Spells.Strategies
         protected override bool OnCooldown() => cooldownTimer.IsRunning;
 
         /// <summary>
+        /// Check if the Envy Spell can be cast
+        /// </summary>
+        /// <returns></returns>
+        private bool CanCast() => emotionSystem.Fear.CurrentLevel >= modifiers.Fear.spellFearCost;
+
+        /// <summary>
         /// Cast the Fear Spell
         /// </summary>
         public override void Cast()
         {
             // Exit case - if on cooldown
             if (OnCooldown()) return;
+
+            // Exit case - not enough Envy
+            if (!CanCast()) return;
 
             // Get a fear spell
             FearSpell spell = (FearSpell)spellPool.Pool.Get();

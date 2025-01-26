@@ -10,7 +10,6 @@ namespace ImpulseControl.Spells.Strategies
     [CreateAssetMenu(fileName = "Envy Spell", menuName = "Spells/Envy Spell")]
     public class EnvySpellStrategy : SpellStrategy
     {
-        private HealthPlayer health;
         private EnvySpell spell;
         private CountdownTimer costTimer;
         private bool activated;
@@ -73,12 +72,21 @@ namespace ImpulseControl.Spells.Strategies
         protected override bool OnCooldown() => cooldownTimer.IsRunning;
 
         /// <summary>
+        /// Check if the Envy Spell can be cast
+        /// </summary>
+        /// <returns></returns>
+        private bool CanCast() => emotionSystem.Envy.CurrentLevel >= modifiers.Envy.spellEnvyCostPerSecond;
+
+        /// <summary>
         /// Cast the Envy Spell
         /// </summary>
         public override void Cast()
         {
             // Exit case - the Envy Spell is on cooldown
             if (OnCooldown()) return;
+
+            // Exit case - not enough Envy
+            if (!CanCast()) return;
 
             // Check if the spell is already active
             if(activated)
@@ -104,7 +112,7 @@ namespace ImpulseControl.Spells.Strategies
                 spell = (EnvySpell)spellPool.Pool.Get();
 
                 // Set the follow transform of the Envy Spell
-                spell.SetTarget(health);
+                spell.SetTarget(playerHealth);
 
                 float damage = modifiers.Envy.spellBaseDamage * modifiers.Envy.spellDamagePercentageIncrease;
                 float crashDamage = modifiers.Envy.spellBaseDamage * modifiers.Envy.crashOutSpellBaseDamageIncrease;
@@ -145,7 +153,7 @@ namespace ImpulseControl.Spells.Strategies
             spell = (EnvySpell)spellPool.Pool.Get();
 
             // Set the follow transform of the Envy Spell
-            spell.SetTarget(health);
+            spell.SetTarget(playerHealth);
 
             float damage = modifiers.Envy.spellBaseDamage * modifiers.Envy.spellDamagePercentageIncrease;
             float crashDamage = modifiers.Envy.spellBaseDamage * modifiers.Envy.crashOutSpellBaseDamageIncrease;
