@@ -33,7 +33,7 @@ namespace ImpulseControl
 
             tolerance = 1f;
         }
-        
+
         float GetRandVal()
         {
             return Random.Range(0f, 1f);
