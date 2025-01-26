@@ -8,6 +8,11 @@ namespace ImpulseControl
         [SerializeField] protected float startingHealth = 100f;
         protected float currentHealth;
         public Action Death;
+
+        /// <summary>
+        /// The current health of this object
+        /// </summary>
+        public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
         
         // Start is called before the first frame update
         protected virtual void Start()
