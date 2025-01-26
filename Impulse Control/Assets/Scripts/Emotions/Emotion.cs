@@ -35,6 +35,7 @@ namespace ImpulseControl
         [SerializeField] private float crashOutDuration;
 
         public EmotionType EmotionType => emotionType;
+        public EmotionStates EmotionState => state;
 
         public void Start(LiveModifiers mods)
         {
@@ -139,8 +140,6 @@ namespace ImpulseControl
             currentLevel -= change;
             if (currentLevel < 0) currentLevel = 0;
         }
-        
-
         #endregion
     }
 }
