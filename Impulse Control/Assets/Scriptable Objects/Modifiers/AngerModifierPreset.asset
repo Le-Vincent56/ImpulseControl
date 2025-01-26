@@ -48,7 +48,7 @@ MonoBehaviour:
     spellFearCost: 0
     spellProjectileSpeed: 7
     spellCooldownTime: 0.35
-    crashOutDuration: 0
+    crashOutDuration: 5
     crashOutMoveSpeedIncrease: 0
     crashOutBaseDamage: 0
     crashOutDamagePercentageIncrease: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
     spellHealingPercentage: 0
     spellEnvyCostPerSecond: 0
     spellCooldownTime: 0.2
-    crashOutDuration: 0
+    crashOutDuration: 5
     crashOutSpellBaseDamageIncrease: 0
     crashOutSpellRadiusIncrease: 0
     summonedBaseDamage: 0
