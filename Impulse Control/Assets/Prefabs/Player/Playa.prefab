@@ -11,16 +11,13 @@ GameObject:
   - component: {fileID: 6828671081798900650}
   - component: {fileID: 8722424397179033442}
   - component: {fileID: 7113375692283168823}
-  - component: {fileID: 8156571830228425408}
   - component: {fileID: 7444057701561251078}
   - component: {fileID: 5852013119682560652}
   - component: {fileID: 4656604634329559470}
   - component: {fileID: 2720832480151698991}
-  - component: {fileID: 8017223754914646823}
-  - component: {fileID: 5943440291789875425}
-  - component: {fileID: 2284912770381102274}
+  - component: {fileID: 2232735773383291394}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Playa
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,8 +35,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7874135272710866726}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8722424397179033442
@@ -80,9 +76,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1100392977
-  m_SortingLayer: 2
-  m_SortingOrder: 5
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -121,51 +117,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8156571830228425408
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937170775288368062}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &7444057701561251078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,9 +209,6 @@ MonoBehaviour:
     crashOutAttackSpeed: 0
     crashOutRange: 0
     crashOutDamageReduction: 0
-    crashOutOffset: 0
-    crashOutLifetime: 0
-    crashOutProjectileSpeed: 0
     exhaustionDuration: 10
     exhaustionMoveSpeed: 0.1
     exhaustionWeaknessMultiplier: 0
@@ -314,139 +262,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
---- !u!114 &8017223754914646823
-MonoBehaviour:
+--- !u!58 &2232735773383291394
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2937170775288368062}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41e683aee88404428dc925cb25b71e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: 4e4088a88ade5ea45879435b79f30db5, type: 2}
-  playerMovement: {fileID: 0}
-  emotionSystem: {fileID: 0}
-  modifiers: {fileID: 0}
-  spellAimer: {fileID: 0}
-  spellPools: []
-  availableSpells:
-  - {fileID: 11400000, guid: e8a381a68680a524ca478589eeae18b7, type: 2}
-  - {fileID: 11400000, guid: fab1b6881a1e9fd40b69e098e0e4bb09, type: 2}
-  - {fileID: 11400000, guid: dc96d5ddbf531af4b9df16d6e71abdf0, type: 2}
-  livingSpells: []
-  currentSpell: {fileID: 0}
-  angerSpell: {fileID: 0}
-  fearSpell: {fileID: 0}
-  envySpell: {fileID: 0}
-  currentSpellIndex: 0
-  crashing: 0
-  time: 0
-  delta: 0
---- !u!114 &5943440291789875425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937170775288368062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e31f6d74873764680600588ac7efc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursorPosition: {x: 0, y: 0}
-  cursorBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
---- !u!114 &2284912770381102274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937170775288368062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0987fecefd0c3854c9ca7ec73347e801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _experiencePoints: 0
-  _skillPoints: 0
-  _level: 0
-  _experienceForNextLevel: 0
---- !u!1 &6912906976658630509
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7874135272710866726}
-  - component: {fileID: 6962818735954792457}
-  - component: {fileID: 2988383209294433164}
-  - component: {fileID: 9029158128214856066}
-  m_Layer: 0
-  m_Name: Spell Pools
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7874135272710866726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6912906976658630509}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6828671081798900650}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6962818735954792457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6912906976658630509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d272e58a37cf6524db8263f1b41eeb16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellPrefab: {fileID: 5546866631664015246, guid: 60cc9afe0a4280c468cd0266e165ca25, type: 3}
---- !u!114 &2988383209294433164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6912906976658630509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d272e58a37cf6524db8263f1b41eeb16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellPrefab: {fileID: 7600794271011158566, guid: 71b07d246ca5ed244bdd377d48d9721e, type: 3}
---- !u!114 &9029158128214856066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6912906976658630509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d272e58a37cf6524db8263f1b41eeb16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellPrefab: {fileID: 1974974574099836096, guid: 3da41467d611a714eb00d7de71aa329c, type: 3}
+  m_Radius: 0.5
