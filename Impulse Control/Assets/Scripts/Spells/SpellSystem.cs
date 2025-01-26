@@ -9,16 +9,14 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace ImpulseControl
-{
-    public class SpellSystem : MonoBehaviour
-    {
-        [Header("References")]
-        [SerializeField] private GameInputReader inputReader;
-        [SerializeField] private PlayerMovement playerMovement;
-        [SerializeField] private EmotionSystem emotionSystem;
-        [SerializeField] private LiveModifiers modifiers;
-        [SerializeField] private SpellAimer spellAimer;
+namespace ImpulseControl {
+	public class SpellSystem : MonoBehaviour {
+		[Header("References")]
+		[SerializeField] private GameInputReader inputReader;
+		[SerializeField] private PlayerMovement playerMovement;
+		[SerializeField] private EmotionSystem emotionSystem;
+		[SerializeField] private LiveModifiers modifiers;
+		[SerializeField] private SpellAimer spellAimer;
 
         [Header("Spells")]
         [SerializeField] private SpellPool[] spellPools;
@@ -31,9 +29,9 @@ namespace ImpulseControl
         [SerializeField] private int currentSpellIndex;
         [SerializeField] private bool crashing;
 
-        [Header("Time")]
-        [SerializeField] private float time;
-        [SerializeField] private float delta;
+		[Header("Time")]
+		[SerializeField] private float time;
+		[SerializeField] private float delta;
 
         private EventBinding<Event_CrashOut> onCrashOut;
         private EventBinding<Event_CrashOutEnd> onCrashOutEnd;
@@ -61,17 +59,16 @@ namespace ImpulseControl
             inputReader.CastSpell -= CastSpell;
         }
 
-        private void Start()
-        {
-            // Get components
-            playerMovement = GetComponent<PlayerMovement>();
-            modifiers = GetComponent<LiveModifiers>();
-            emotionSystem = GetComponent<EmotionSystem>();
-            spellPools = GetComponentsInChildren<SpellPool>();
-            spellAimer = GetComponent<SpellAimer>();
+		private void Start ( ) {
+			// Get components
+			playerMovement = GetComponent<PlayerMovement>( );
+			modifiers = GetComponent<LiveModifiers>( );
+			emotionSystem = GetComponent<EmotionSystem>( );
+			spellPools = GetComponentsInChildren<SpellPool>( );
+			spellAimer = GetComponent<SpellAimer>( );
 
-            // Limit the amount of Spell Pools by the number of available Spells
-            spellPools = spellPools.Take(availableSpells.Length).ToArray();
+			// Limit the amount of Spell Pools by the number of available Spells
+			spellPools = spellPools.Take(availableSpells.Length).ToArray( );
 
             // Iterate through each available Spell
             for(int i = 0; i < availableSpells.Length; i++)
@@ -94,50 +91,48 @@ namespace ImpulseControl
                 }
             }
 
-            // Set the first Spell
-            SetSpell(0);
-        }
+			// Set the first Spell
+			SetSpell(0);
+		}
 
-        private void Update()
-        {
-            // Exit case - there are no living Spells
-            if (livingSpells.Count == 0) return;
+		private void Update ( ) {
+			// Exit case - there are no living Spells
+			if (livingSpells.Count == 0)
+				return;
 
-            // Set time variables
-            time = Time.time;
-            delta = Time.deltaTime;
+			// Set time variables
+			time = Time.time;
+			delta = Time.deltaTime;
 
-            // Iterate through each living Spell
-            foreach (SpellObject spellObject in livingSpells)
-            {
-                // Tick the Spell
-                spellObject.TickUpdate(time, delta);
-            }
-        }
+			// Iterate through each living Spell
+			foreach (SpellObject spellObject in livingSpells) {
+				// Tick the Spell
+				spellObject.TickUpdate(time, delta);
+			}
+		}
 
-        /// <summary>
-        /// Set the current Spell given an index
-        /// </summary>
-        private void SetSpell(int spellIndex)
-        {
-            currentSpellIndex = spellIndex;
-            currentSpell = availableSpells[currentSpellIndex];
-        }
+		/// <summary>
+		/// Set the current Spell given an index
+		/// </summary>
+		private void SetSpell (int spellIndex) {
+			currentSpellIndex = spellIndex;
+			currentSpell = availableSpells[currentSpellIndex];
+		}
 
-        /// <summary>
-        /// Swap the current Spell
-        /// </summary>
-        private void SwapSpell(int direction, bool started)
-        {
-            // Exit case - the button has been lifted
-            if (!started) return;
+		/// <summary>
+		/// Swap the current Spell
+		/// </summary>
+		private void SwapSpell (int direction, bool started) {
+			// Exit case - the button has been lifted
+			if (!started)
+				return;
 
-            // Calculate the swap index
-            int swapIndex = (currentSpellIndex + availableSpells.Length + direction) % availableSpells.Length;
+			// Calculate the swap index
+			int swapIndex = (currentSpellIndex + availableSpells.Length + direction) % availableSpells.Length;
 
-            // Set the Spell at the swap index
-            SetSpell(swapIndex);
-        }
+			// Set the Spell at the swap index
+			SetSpell(swapIndex);
+		}
 
         /// <summary>
         /// Cast a Spell
@@ -147,29 +142,29 @@ namespace ImpulseControl
             // Exit case - the button has been lifted or if in the middle of crashing
             if (!started || crashing) return;
 
-            // Cast the current Spell
-            currentSpell.Cast();
-        }
+			// Cast the current Spell
+			currentSpell.Cast( );
+		}
 
-        /// <summary>
-        /// Register a Spell to be tracked
-        /// </summary>
-        public void RegisterSpell(SpellObject spell)
-        {
-            // Exit case - if the Spell is already being tracked
-            if (livingSpells.Contains(spell)) return;
+		/// <summary>
+		/// Register a Spell to be tracked
+		/// </summary>
+		public void RegisterSpell (SpellObject spell) {
+			// Exit case - if the Spell is already being tracked
+			if (livingSpells.Contains(spell))
+				return;
 
-            // Add the spell
-            livingSpells.Add(spell);
-        }
+			// Add the spell
+			livingSpells.Add(spell);
+		}
 
-        /// <summary>
-        /// Deregister a Spell from being tracked
-        /// </summary>
-        public void DeregisterSpell(SpellObject spell)
-        {
-            // Exit case - if the Spell is not being tracked
-            if (!livingSpells.Contains(spell)) return;
+		/// <summary>
+		/// Deregister a Spell from being tracked
+		/// </summary>
+		public void DeregisterSpell (SpellObject spell) {
+			// Exit case - if the Spell is not being tracked
+			if (!livingSpells.Contains(spell))
+				return;
 
             // Remove the spell
             livingSpells.Remove(spell);

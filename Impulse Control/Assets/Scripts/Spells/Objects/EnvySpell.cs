@@ -13,24 +13,12 @@ namespace ImpulseControl.Spells.Objects
         private float radiusIncrease;
         private bool crashedOut;
         
-        private void OnCrashOut()
-        {
-            transform.localScale *= radiusIncrease;
-        }
-        
-        private void OnCrashOutEnded()
-        {
-            transform.localScale *= radiusIncrease;
-        }
-
-        
-   
         private void OnTriggerStay2D(Collider2D collision)
         {
             Debug.Log($"Colliding with: {collision.gameObject.name}");
             if (collision.gameObject.layer == enemyLayer)
             {
-                if(emotion.EmotionState != EmotionStates.CrashingOut)
+                if(crashedOut)
                     collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime);
                 else
                     collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime * damageIncreasePercentage);
@@ -43,8 +31,11 @@ namespace ImpulseControl.Spells.Objects
             crashedOut = emotion.EmotionState == EmotionStates.CrashingOut;
             if (crashedOut)
             {
-                transform.localScale *= radiusIncrease;
+                transform.localScale = new Vector3(transform.localScale.x + radiusIncrease, transform.localScale.y + radiusIncrease, 1.0f);
+                return;
             }
+
+  
         }
 
         /// <summary>

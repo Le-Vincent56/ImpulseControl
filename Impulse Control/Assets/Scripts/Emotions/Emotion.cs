@@ -36,6 +36,7 @@ namespace ImpulseControl
 
         public EmotionType EmotionType => emotionType;
         public EmotionStates EmotionState => state;
+        public float CurrentLevel => currentLevel;
 
         public void Start(LiveModifiers mods)
         {
