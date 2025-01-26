@@ -13,12 +13,13 @@ namespace ImpulseControl
         private Rigidbody2D rigidbody2d;
         private LiveModifiers liveModifiers;
         private EmotionSystem emotionSystem;
-        
+
         [Header("Dashing")]
         [SerializeField] private bool dashing;
         [SerializeField] private CountdownTimer dashTime;
         [SerializeField] private Vector2 dashDirection;
         [SerializeField] private float dashSpeed;
+
 
         private void Awake()
         {
@@ -26,7 +27,6 @@ namespace ImpulseControl
             rigidbody2d = GetComponent<Rigidbody2D>();
             liveModifiers = GetComponent<LiveModifiers>();
             emotionSystem = GetComponent<EmotionSystem>();
-
 
             dashTime = new CountdownTimer(0.25f);
 

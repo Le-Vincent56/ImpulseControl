@@ -9,7 +9,7 @@ namespace ImpulseControl.AI
     public abstract class Enemy : MonoBehaviour, IEnemy
     {
         protected static GameObject player;
-        Vector3 dirToPlayer;
+        protected Vector3 dirToPlayer;
         protected Animator animator;
         protected Health enemyHealth;
         protected bool isDead;
@@ -17,7 +17,7 @@ namespace ImpulseControl.AI
         protected StateMachine stateMachine;
 
         protected bool withinAttackRange;
-        private float tolerance = 2f;
+        protected float tolerance = 2f;
 
         public float Damage { get; set; } 
         protected float Speed { get; set; }
@@ -98,8 +98,6 @@ namespace ImpulseControl.AI
             RaycastHit2D raycast = Physics2D.Raycast(this.transform.position, dirToPlayer, StoppingDistance + 2f);
             if (raycast && raycast.transform.gameObject.tag == "Player")
             {
-                Debug.DrawRay(this.transform.position, dirToPlayer, Color.green);
-
                 raycast.transform.gameObject.GetComponent<Health>().TakeDamage(Damage);
             }
         }
@@ -108,7 +106,7 @@ namespace ImpulseControl.AI
         {
             isDead = true;
         }
-        void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
-        void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
+        protected void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
+        protected void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
     }
 }

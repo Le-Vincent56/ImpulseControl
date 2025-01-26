@@ -10,6 +10,11 @@ namespace ImpulseControl {
 		[SerializeField] private Transform angerIconTransform;
 		[SerializeField] private Transform iconBackgroundTransform;
 
+		private void Awake ( ) {
+			emotionSystem = FindObjectOfType<EmotionSystem>( );
+			spellSystem = FindObjectOfType<SpellSystem>( );
+		}
+
 		private void Update ( ) {
 			Progress = emotionSystem.Anger.CurrentLevel;
 			

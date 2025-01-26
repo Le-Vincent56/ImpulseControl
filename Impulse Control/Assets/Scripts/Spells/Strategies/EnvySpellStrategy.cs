@@ -65,8 +65,10 @@ namespace ImpulseControl.Spells.Strategies
 
                 // Set the follow transform of the Envy Spell
                 spell.SetTarget(spellSystem.transform);
-                
-                spell.SetAttributes(emotionSystem.Envy, modifiers.Envy.crashOutSpellBaseDamageIncrease, modifiers.Envy.crashOutSpellRadiusIncrease);
+
+                float damage = modifiers.Envy.spellBaseDamage * modifiers.Envy.spellDamagePercentageIncrease;
+                float crashDamage = modifiers.Envy.spellBaseDamage * modifiers.Envy.crashOutSpellBaseDamageIncrease;
+                spell.SetAttributes(emotionSystem.Envy, damage, modifiers.Envy.spellRadius, crashDamage, modifiers.Envy.crashOutSpellRadius);
 
                 // Set activated
                 activated = true;

@@ -20,7 +20,6 @@ namespace ImpulseControl {
 		[Space]
 		[SerializeField] private string _title;
 		[SerializeField] private string _description;
-		[SerializeField] private int _skillPointCost;
 		[SerializeField] private int id;
 		[Space]
 		[SerializeField] private AngerSpellModifiers angerSpellModifiers;
@@ -68,11 +67,6 @@ namespace ImpulseControl {
 				skillNodeManager.SkillNodeFunctionList[id]( );
 			}
 		}
-
-		/// <summary>
-		/// The number of skill points that this skill node costs
-		/// </summary>
-		public int SkillPointCost => _skillPointCost;
 
 		/// <summary>
 		/// The title of this skill node
@@ -159,14 +153,12 @@ namespace ImpulseControl {
 				return;
 			}
 
-			// PlayerExperience playerExperience = FindObjectOfType<PlayerExperience>( );
-
 			// If the player does not have enough skill points to buy this skill node, then return and do nothing
-			// if (playerExperience == null || playerExperience.SkillPoints < SkillPointCost) {
-			// return;
-			// }
+			if (playerExperience == null || playerExperience.SkillPoints < 1) {
+				return;
+			}
 
-			// playerExperience.SkillPoints -= SkillPointCost;
+			playerExperience.SkillPoints--;
 
 			IsBought = true;
 		}

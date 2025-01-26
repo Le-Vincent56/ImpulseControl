@@ -6,7 +6,11 @@ using UnityEngine;
 namespace ImpulseControl {
 	public class HealthHUDLiquid : HUDLiquid {
 		[Header("References - HealthHUDLiquid")]
-		[SerializeField] private Health playerHealth;
+		[SerializeField] private HealthPlayer playerHealth;
+
+		private void Awake ( ) {
+			playerHealth = FindObjectOfType<HealthPlayer>( );
+		}
 
 		private void Update ( ) {
 			Progress = playerHealth.CurrentHealth / liveModifiers.Player.maxHealth;
