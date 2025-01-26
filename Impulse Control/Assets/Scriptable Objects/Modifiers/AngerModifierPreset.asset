@@ -41,7 +41,7 @@ MonoBehaviour:
     spellDamagePercentageIncrease: 0
     spellEnemyPierceCount: 5
     spellEnemyStunDuration: 0
-    spellRadius: 1
+    spellRadius: 5
     spellFearCost: 0
     spellProjectileSpeed: 7
     spellCooldownTime: 0.35
