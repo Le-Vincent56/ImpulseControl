@@ -144,7 +144,7 @@ namespace ImpulseControl
                     fear.Pause();
                     timerExhausted.Pause(true);
                     currentCrashOut = EmotionType.Anger;
-                    timer.Reset(liveModifiers.Fear.crashOutDuration);
+                    timer.Reset(liveModifiers.Anger.crashOutDuration);
                     timer.Start();
                 }),
                 (fear, () =>
