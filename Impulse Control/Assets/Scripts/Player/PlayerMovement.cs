@@ -20,6 +20,7 @@ namespace ImpulseControl
         [SerializeField] private Vector2 dashDirection;
         [SerializeField] private float dashSpeed;
 
+
         private void Awake()
         {
             // Get components
