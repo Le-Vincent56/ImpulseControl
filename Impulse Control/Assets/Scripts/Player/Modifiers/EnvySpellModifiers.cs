@@ -28,7 +28,7 @@ namespace ImpulseControl.Modifiers
         [Tooltip("How much to increase the base damage of the spell while the player is crashing out")]
         public float crashOutSpellBaseDamageIncrease;
         [Tooltip("How much to increase the radius of the spell by when crashing out")]
-        public float crashOutSpellRadiusIncrease;
+        public float crashOutSpellRadius;
         [Space]
         [Tooltip("The base damaged of all summoned enemies")]
         public float summonedBaseDamage;

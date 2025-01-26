@@ -1,4 +1,5 @@
 using System;
+using ImpulseControl.AI;
 using ImpulseControl.Events;
 using ImpulseControl.Modifiers;
 using UnityEngine;
@@ -17,31 +18,38 @@ namespace ImpulseControl.Spells.Objects
         
         private void OnTriggerStay2D(Collider2D collision)
         {
-            Debug.Log($"Colliding with: {collision.gameObject.name}");
-            if (collision.gameObject.layer == enemyLayer)
-            {
-                if(crashedOut)
-                    collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime);
-                else
-                    collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime * damageIncreasePercentage);
-            }
+            if (collision.gameObject.TryGetComponent(out PlayerMovement player)) return;
+            if (!collision.gameObject.TryGetComponent(out Health enemyHealth)) return;
+
+            // Deal damage
+            enemyHealth.TakeDamage(damage);
         }
 
-        private void Start()
-        {
-            scale = transform.localScale;
-        }
-
-        public void SetAttributes(Emotion emotion, float percentage, float radius)
+        public void SetAttributes(Emotion emotion, float damage, float radius, float crashOutDamage, float crashOutRadius)
         {
             //reset scale 
             transform.localScale = scale;
             this.emotion = emotion;
+
             crashedOut = emotion.EmotionState == EmotionStates.CrashingOut;
             if (crashedOut)
             {
-                transform.localScale = new Vector3(transform.localScale.x + radiusIncrease, transform.localScale.y + radiusIncrease, 1.0f);
+                // Set radius and damage
+                radiusIncrease = crashOutRadius;
+                this.damage = crashOutDamage;
+
+                // Set the radius
+                transform.localScale = new Vector3(scale.x * radiusIncrease, scale.y * radiusIncrease, 1.0f);
+
+                return;
             }
+
+            // Set default radius and damage
+            radiusIncrease = radius;
+            this.damage = damage;
+
+            // Set the radius
+            transform.localScale = new Vector3(scale.x * radiusIncrease, scale.x * radiusIncrease, 1.0f);
         }
 
         /// <summary>
@@ -51,6 +59,8 @@ namespace ImpulseControl.Spells.Objects
         {
             // Call the parent Initialize()
             base.Initialize(spellPool);
+
+            scale = transform.localScale;
         }
 
         /// <summary>
