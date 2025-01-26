@@ -31,18 +31,20 @@ namespace ImpulseControl.Spells.Strategies
             // Exit case - the Anger Spell is on cooldown
             if (OnCooldown()) return;
 
-            // Translate the player
-            playerMovement.SetDash(spellSystem.SpellDirection, modifiers.Anger.spellDashDistance);
-
             // Get an Anger Spell
             AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
 
-            // Set the transform of the Anger Spell
-            angerSpell.SetTransform(Vector2.right, modifiers.Anger.spellStartingOffset);
-
             // Set the attributes of the Anger Spell
             float damage = modifiers.Anger.spellBaseDamage * modifiers.Anger.spellBaseDamage;
-            angerSpell.SetAttributes(emotionSystem.Anger, damage);
+            angerSpell.SetAttributes(emotionSystem.Anger, 
+                playerMovement, 
+                damage, 
+                modifiers.Anger.spellDashDistance,
+                modifiers.Anger.crashOutProjectileSpeed,
+                modifiers.Anger.spellStartingOffset, 
+                modifiers.Anger.crashOutOffset,
+                modifiers.Anger.crashOutLifetime
+            );
 
             // Start the cooldown timer
             cooldownTimer.Start();

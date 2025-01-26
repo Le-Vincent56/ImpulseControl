@@ -20,6 +20,8 @@ namespace ImpulseControl.Spells.Strategies
         // Set a reference to the Spell Modifiers
         protected CountdownTimer cooldownTimer;
 
+        public EmotionType Emotion { get => correspondingEmotion; }
+
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
@@ -43,5 +45,10 @@ namespace ImpulseControl.Spells.Strategies
         /// Cast the Spell
         /// </summary>
         public abstract void Cast();
+
+        /// <summary>
+        /// Crashout the Strategy
+        /// </summary>
+        public abstract void CrashOut();
     }
 }

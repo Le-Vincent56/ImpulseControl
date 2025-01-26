@@ -47,6 +47,12 @@ namespace ImpulseControl.Modifiers
         public float crashOutRange;
         [Tooltip("Percentage that is multiplied by the incoming damage from an enemy. Should reduce damage")]
         public float crashOutDamageReduction;
+        [Tooltip("The offset of the crash out spell")]
+        public float crashOutOffset;
+        [Tooltip("The life time of the crash out spell")]
+        public float crashOutLifetime;
+        [Tooltip("The projectile speed of the crash out spell")]
+        public float crashOutProjectileSpeed;
         [Space]
         [Tooltip("The number of seconds that the exhaustion happens for")]
         public float exhaustionDuration;

@@ -1,3 +1,4 @@
+using ImpulseControl.Events;
 using ImpulseControl.Input;
 using ImpulseControl.Modifiers;
 using ImpulseControl.Spells;
@@ -5,6 +6,7 @@ using ImpulseControl.Spells.Objects;
 using ImpulseControl.Spells.Strategies;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ImpulseControl
@@ -23,22 +25,33 @@ namespace ImpulseControl
         [SerializeField] private SpellStrategy[] availableSpells;
         [SerializeField] private List<SpellObject> livingSpells;
         [SerializeField] private SpellStrategy currentSpell;
+        [SerializeField] private SpellStrategy angerSpell;
+        [SerializeField] private SpellStrategy fearSpell;
+        [SerializeField] private SpellStrategy envySpell;
         [SerializeField] private int currentSpellIndex;
+        [SerializeField] private bool crashing;
 
         [Header("Time")]
         [SerializeField] private float time;
         [SerializeField] private float delta;
 
+        private EventBinding<Event_CrashOut> onCrashOut;
+
         public Vector2 SpellDirection { get => spellAimer.AimDirection; }
 
         private void OnEnable()
         {
+            onCrashOut = new EventBinding<Event_CrashOut>(CrashOut);
+            EventBus<Event_CrashOut>.Register(onCrashOut);
+
             inputReader.SwapSpell += SwapSpell;
             inputReader.CastSpell += CastSpell;
         }
 
         private void OnDisable()
         {
+            EventBus<Event_CrashOut>.Deregister(onCrashOut);
+
             inputReader.SwapSpell -= SwapSpell;
             inputReader.CastSpell -= CastSpell;
         }
@@ -60,6 +73,20 @@ namespace ImpulseControl
             {
                 spellPools[i].CreateSpellPool(this);
                 availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i]);
+
+                // Assign spells
+                switch (availableSpells[i].Emotion)
+                {
+                    case EmotionType.Anger:
+                        angerSpell = availableSpells[i];
+                        break;
+                    case EmotionType.Fear:
+                        fearSpell = availableSpells[i];
+                        break;
+                    case EmotionType.Envy:
+                        envySpell = availableSpells[i];
+                        break;
+                }
             }
 
             // Set the first Spell
@@ -112,8 +139,8 @@ namespace ImpulseControl
         /// </summary>
         private void CastSpell(bool started)
         {
-            // Exit case - the button has been lifted
-            if (!started) return;
+            // Exit case - the button has been lifted or if in the middle of crashing
+            if (!started || crashing) return;
 
             // Cast the current Spell
             currentSpell.Cast();
@@ -141,6 +168,26 @@ namespace ImpulseControl
 
             // Remove the spell
             livingSpells.Remove(spell);
+        }
+
+        private void CrashOut(Event_CrashOut eventData)
+        {
+            // Set to crashing
+            crashing = true;
+
+            // Crash out the specific Emotion
+            switch (eventData.emotionType)
+            {
+                case EmotionType.Anger:
+                    angerSpell.CrashOut();
+                    break;
+                case EmotionType.Fear:
+                    fearSpell.CrashOut();
+                    break;
+                case EmotionType.Envy:
+                    envySpell.CrashOut();
+                    break;
+            }
         }
     }
 }
