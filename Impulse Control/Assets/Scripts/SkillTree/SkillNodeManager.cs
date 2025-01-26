@@ -9,12 +9,15 @@ using UnityEngine.InputSystem;
 namespace ImpulseControl {
 	public class SkillNodeManager : MonoBehaviour {
 		[Header("References")]
+		[SerializeField] private Camera mainCamera;
 		[SerializeField] private LiveModifiers liveModifiers;
 		[SerializeField] private GameInputReader inputReader;
 		[SerializeField] private GameObject skillTreeContainer;
+		[SerializeField] private SpriteRenderer backgroundSpriteRenderer;
 
 		private bool isPanning;
-		private Vector2 startingScreenPosition;
+		private Vector2 startingMousePosition;
+		private Vector2 startingPosition;
 
 		/// <summary>
 		/// A list of all the functions that correspond to the skill nodes. Each skill node has an "id" that corresponds to an index in this array. When the skill node is bought, it will run the function at its id index
@@ -30,7 +33,6 @@ namespace ImpulseControl {
 		}
 
 		private void Awake ( ) {
-			inputReader = FindObjectOfType<GameInputReader>( );
 			liveModifiers = FindObjectOfType<LiveModifiers>( );
 
 			// Initialize the list of functions with everything that each skill node will do
@@ -46,7 +48,19 @@ namespace ImpulseControl {
 
 		private void Update ( ) {
 			if (isPanning) {
-				transform.position += (Vector3) (Mouse.current.position.ReadValue( ) - startingScreenPosition);
+				// Calculate the position of the center of the skill tree based on the panning offset
+				Vector2 panPosition = startingPosition + (Vector2) mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue( )) - startingMousePosition;
+
+				// Calculate the camera width and height
+				float cameraHeight = 2f * mainCamera.orthographicSize;
+				float cameraWidth = cameraHeight * mainCamera.aspect;
+
+				// Clamp the panning position to make sure the skill tree always stays on the screen
+				panPosition.x = Mathf.Clamp(panPosition.x, (-backgroundSpriteRenderer.size.x + cameraWidth) / 2f, (backgroundSpriteRenderer.size.x - cameraWidth) / 2f);
+				panPosition.y = Mathf.Clamp(panPosition.y, (-backgroundSpriteRenderer.size.y + cameraHeight) / 2f, (backgroundSpriteRenderer.size.y - cameraHeight) / 2f);
+
+				// Set the position of the skill tree
+				transform.position = panPosition;
 			}
 		}
 
@@ -56,8 +70,9 @@ namespace ImpulseControl {
 		private void PanSkillTree (bool started) {
 			isPanning = started;
 
-			if (!started) {
-				startingScreenPosition = Mouse.current.position.ReadValue( );
+			if (started) {
+				startingPosition = transform.position;
+				startingMousePosition = (Vector2) mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue( ));
 			}
 		}
 	}
