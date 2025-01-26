@@ -9,17 +9,24 @@ namespace ImpulseControl {
 		[SerializeField] private List<SkillNode> childSkillNodes = new List<SkillNode>( );
 		[SerializeField] private SpriteRenderer spriteRenderer;
 		[SerializeField] private Transform nodeConnectorContainer;
+		[Space]
+		[SerializeField] private SkillNodeInfoBox skillNodeInfoBox;
+		[SerializeField] private PlayerExperience playerExperience;
+		[SerializeField] private SkillNodeManager skillNodeManager;
 		[Header("Properties")]
 		[SerializeField] private bool _isVisible;
 		[SerializeField] private bool _isUnlocked;
 		[SerializeField] private bool _isBought;
+		[Space]
 		[SerializeField] private string _title;
 		[SerializeField] private string _description;
 		[SerializeField] private int _skillPointCost;
-		[SerializeField] private AngerSpellModifiers _angerSpellModifiers;
-		[SerializeField] private FearSpellModifiers _fearSpellModifiers;
-		[SerializeField] private EnvySpellModifiers _envySpellModifiers;
-		[SerializeField] private PlayerModifiers _playerModifiers;
+		[SerializeField] private int id;
+		[Space]
+		[SerializeField] private AngerSpellModifiers angerSpellModifiers;
+		[SerializeField] private FearSpellModifiers fearSpellModifiers;
+		[SerializeField] private EnvySpellModifiers envySpellModifiers;
+		[SerializeField] private PlayerModifiers playerModifiers;
 
 		/// <summary>
 		/// Check to see if this skill node is visible on the skill tree
@@ -51,6 +58,14 @@ namespace ImpulseControl {
 			set {
 				_isBought = value;
 				UpdateAlpha( );
+
+				// If this skill node was just bought, update and unlock all child nodes
+				if (_isBought) {
+					UnlockChildNodes( );
+				}
+
+				// Call the function that correponds to this skill node's index
+				skillNodeManager.SkillNodeFunctionList[id]( );
 			}
 		}
 
@@ -97,6 +112,17 @@ namespace ImpulseControl {
 				nodeConnection.localPosition = direction / 2f;
 				nodeConnection.localRotation = Quaternion.LookRotation(Vector3.back, direction);
 			}
+
+			// Get references to objects from the scene
+			if (skillNodeInfoBox == null) {
+				skillNodeInfoBox = FindObjectOfType<SkillNodeInfoBox>( );
+			}
+			if (playerExperience == null) {
+				playerExperience = FindObjectOfType<PlayerExperience>( );
+			}
+			if (skillNodeManager == null) {
+				skillNodeManager = FindObjectOfType<SkillNodeManager>( );
+			}
 		}
 
 		private void Awake ( ) {
@@ -119,11 +145,11 @@ namespace ImpulseControl {
 				return;
 			}
 
-			FindObjectOfType<SkillNodeInfoBox>( )?.LinkToSkillTreeNode(this);
+			skillNodeInfoBox.LinkToSkillTreeNode(this);
 		}
 
 		private void OnMouseExit ( ) {
-			FindObjectOfType<SkillNodeInfoBox>( )?.UnlinkFromSkillNode( );
+			skillNodeInfoBox.UnlinkFromSkillNode( );
 		}
 
 		private void OnMouseDown ( ) {
@@ -140,8 +166,8 @@ namespace ImpulseControl {
 			// }
 
 			// playerExperience.SkillPoints -= SkillPointCost;
+
 			IsBought = true;
-			UnlockChildNodes( );
 		}
 
 		/// <summary>

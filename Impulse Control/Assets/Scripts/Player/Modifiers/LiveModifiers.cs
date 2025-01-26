@@ -8,15 +8,10 @@ namespace ImpulseControl.Modifiers
         [SerializeField] private ModifierPreset preset;
 
         [Header("Properties")]
-        [SerializeField] private AngerSpellModifiers angerSpellModifiers;
-        [SerializeField] private FearSpellModifiers fearSpellModifiers;
-        [SerializeField] private EnvySpellModifiers envySpellModifiers;
-        [SerializeField] private PlayerModifiers playerModifiers;
-
-        public AngerSpellModifiers Anger { get => angerSpellModifiers; }
-        public FearSpellModifiers Fear { get => fearSpellModifiers; }
-        public EnvySpellModifiers Envy { get => envySpellModifiers; }
-        public PlayerModifiers Player {  get => playerModifiers; }
+        [SerializeField] public AngerSpellModifiers Anger;
+        [SerializeField] public FearSpellModifiers Fear;
+        [SerializeField] public EnvySpellModifiers Envy;
+        [SerializeField] public PlayerModifiers Player;
 
         private void Awake()
         {
@@ -29,10 +24,10 @@ namespace ImpulseControl.Modifiers
         /// </summary>
         private void LoadValuesFromPreset(ModifierPreset preset)
         {
-            angerSpellModifiers = preset.AngerSpellModifiers;
-            fearSpellModifiers = preset.FearSpellModifiers;
-            envySpellModifiers = preset.EnvySpellModifiers;
-            playerModifiers = preset.PlayerModifiers;
+			Anger = preset.AngerSpellModifiers;
+			Fear = preset.FearSpellModifiers;
+			Envy = preset.EnvySpellModifiers;
+			Player = preset.PlayerModifiers;
         }
     }
 }
