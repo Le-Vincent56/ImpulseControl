@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8017223754914646823}
   - component: {fileID: 5943440291789875425}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Playa
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
