@@ -6,31 +6,27 @@ using UnityEngine;
 namespace ImpulseControl {
 	public class SkillNodeInfoBox : MonoBehaviour {
 		[Header("References")]
-		[SerializeField] private RectTransform rectTransform;
-		[SerializeField] private GameObject infoBoxBackground;
-		[SerializeField] private TextMeshProUGUI infoText;
+		[SerializeField] private RectTransform infoBoxBackground;
+		[SerializeField] private TextMeshPro infoText;
 
 		/// <summary>
 		/// Set this info box to be next to a skill node and display its data
 		/// </summary>
 		/// <param name="skillNode">The skill node to link to</param>
 		public void LinkToSkillTreeNode (SkillNode skillNode) {
-			// Calculate the screen position to set the info box to
-			// We want it to be to the right of the skill node
-			//Vector3 infoBoxOffsetPosition = Camera.main.WorldToScreenPoint(skillNode.transform.position);
-			//Debug.Log(skillNode.transform.position + " -> " + infoBoxOffsetPosition);
-			//infoBoxOffsetPosition.x += infoBoxBackground.GetComponent<RectTransform>( ).sizeDelta.x / 2f;
-			//rectTransform.anchoredPosition = infoBoxOffsetPosition;
+			// Set the position of the info box
+			// This will make the info box to the right of the skill node
+			transform.position = (Vector2) skillNode.transform.position + new Vector2(infoBoxBackground.sizeDelta.x / 2f + 0.75f, 0f);
 
 			infoText.text = skillNode.Title + "\n" + skillNode.Description;
-			infoBoxBackground.SetActive(true);
+			infoBoxBackground.gameObject.SetActive(true);
 		}
 
 		/// <summary>
 		/// Stop the info box from being visible
 		/// </summary>
 		public void UnlinkFromSkillNode ( ) {
-			infoBoxBackground.SetActive(false);
+			infoBoxBackground.gameObject.SetActive(false);
 		}
 	}
 }
