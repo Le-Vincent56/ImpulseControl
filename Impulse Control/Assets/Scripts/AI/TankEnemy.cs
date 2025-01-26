@@ -1,7 +1,6 @@
 using ImpulseControl.AI;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace ImpulseControl
@@ -10,13 +9,15 @@ namespace ImpulseControl
     {
         [SerializeField] float damage = 50f;
         [SerializeField] float shoveDamage = 20f;
-        [SerializeField] float pushForce = 3f;
+        [SerializeField] float shoveForce = 3f;
         [SerializeField] float speed = 5f;
         [SerializeField] float stoppingDistance = 2f;
+        float rng;
 
         // Start is called before the first frame update
         void Start()
         {
+            RollNewRNGVal();
             base.Damage = damage;
             base.Speed = speed;
             base.StoppingDistance = stoppingDistance;
@@ -26,8 +27,16 @@ namespace ImpulseControl
             var shoveState = new ShoveState(this, animator);
             
             // 50/50 chance of attack becoming a shove
-            At(attackState, shoveState, new FuncPredicate(() => Random.Range(0f, 1f) < 0.5f));
+            At(attackState, shoveState, new FuncPredicate(() => rng < 0.5f));
+            At(shoveState, attackState, new FuncPredicate(() => rng >= 0.5f));
             At(shoveState, moveState, new FuncPredicate(() => !withinAttackRange));
+
+            tolerance = 1f;
+        }
+        
+        float GetRandVal()
+        {
+            return Random.Range(0f, 1f);
         }
 
         // Update is called once per frame
@@ -45,8 +54,13 @@ namespace ImpulseControl
             if (raycast && raycast.transform.gameObject.tag == "Player")
             {
                 raycast.transform.gameObject.GetComponent<Health>().TakeDamage(shoveDamage);
-                raycast.transform.gameObject.GetComponent<Rigidbody2D>().AddForce(dirToPlayer.normalized * pushForce, ForceMode2D.Impulse);
+                raycast.transform.Translate(dirToPlayer.normalized * shoveForce);
             }
+
+        }
+        public void RollNewRNGVal()
+        {
+            rng = GetRandVal();
         }
         // public override void MoveToPlayer() { }
         // public override void Attack() { }

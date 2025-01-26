@@ -17,7 +17,7 @@ namespace ImpulseControl.AI
         protected StateMachine stateMachine;
 
         protected bool withinAttackRange;
-        private float tolerance = 2f;
+        protected float tolerance = 2f;
 
         public float Damage { get; set; } 
         protected float Speed { get; set; }
