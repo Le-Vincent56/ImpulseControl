@@ -7,6 +7,8 @@ namespace ImpulseControl.Spells.Strategies
     [CreateAssetMenu(fileName = "Anger Spell", menuName = "Spells/Anger Spell")]
     public class AngerSpellStrategy : SpellStrategy
     {
+        private CountdownTimer crashOutCooldownTimer;
+
         /// <summary>
         /// Set up the cooldown for the Anger Spell cooldown
         /// </summary>
@@ -14,8 +16,12 @@ namespace ImpulseControl.Spells.Strategies
         {
             cooldownTimer = new CountdownTimer(modifiers.Anger.spellCooldownTime);
 
-            // Constantly check the cast time
+            // Constantly check for cast time updates
             cooldownTimer.OnTimerStop += () => cooldownTimer.Reset(modifiers.Anger.spellCooldownTime);
+
+            crashOutCooldownTimer = new CountdownTimer(modifiers.Anger.crashOutAttackSpeed);
+
+            crashOutCooldownTimer.OnTimerStart += () => CrashOutCast();
         }
 
         /// <summary>
@@ -50,20 +56,42 @@ namespace ImpulseControl.Spells.Strategies
             cooldownTimer.Start();
         }
 
+        public void CrashOutCast()
+        {
+            // Get an Anger Spell
+            AngerSpell angerSpell = (AngerSpell)spellPool.Pool.Get();
+
+            // Set the attributes of the Anger Spell
+            float damage = modifiers.Anger.spellBaseDamage * modifiers.Anger.spellBaseDamage;
+            angerSpell.SetAttributes(emotionSystem.Anger,
+                playerMovement,
+                damage,
+                modifiers.Anger.spellDashDistance,
+                modifiers.Anger.crashOutProjectileSpeed,
+                modifiers.Anger.spellStartingOffset,
+                modifiers.Anger.crashOutOffset,
+                modifiers.Anger.crashOutLifetime
+            );
+
+            // Start the cooldown timer
+            crashOutCooldownTimer.Start();
+        }
+
         public override void CrashOut()
         {
-            // Set the new crash out attack speed
-            cooldownTimer.Reset(modifiers.Anger.crashOutAttackSpeed);
+            // Check for updates in the cooldown
+            crashOutCooldownTimer.Reset(modifiers.Anger.crashOutAttackSpeed);
 
-            // Set to cast automatically
-            cooldownTimer.OnTimerStop += () => Cast();
-
-            Cast();
+            // Start the Crash Out Timer
+            crashOutCooldownTimer.Start();
         }
 
         public override void Exhaust()
         {
-            cooldownTimer.OnTimerStop -= () => Cast();
+            Debug.Log("Exhaust");
+
+            // Stop the Crash Out Timer
+            crashOutCooldownTimer.Stop();
         }
     }
 }

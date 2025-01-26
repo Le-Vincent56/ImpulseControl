@@ -37,6 +37,7 @@ namespace ImpulseControl {
         private EventBinding<Event_CrashOutEnd> onCrashOutEnd;
 
         public Vector2 SpellDirection { get => spellAimer.AimDirection; }
+        public SpellStrategy CurrentSpell { get => currentSpell; }
 
         private void OnEnable()
         {
