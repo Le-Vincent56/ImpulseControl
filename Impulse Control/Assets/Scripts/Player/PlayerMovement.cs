@@ -66,6 +66,12 @@ namespace ImpulseControl
                 return;
             }
 
+            if (fear.EmotionState == EmotionStates.CrashingOut)
+            {
+                Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Player.moveSpeed + liveModifiers.Fear.crashOutMoveSpeedIncrease);
+                return;
+            }
+
             Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Player.moveSpeed);
         }
         
