@@ -51,12 +51,14 @@ namespace ImpulseControl.Spells.Strategies
 
         public override void CrashOut()
         {
-
+            // Set the player can't take damage
+            playerHealth.CanTakeDamage = false;
         }
 
         public override void Exhaust()
         {
-
+            // Set the player can take damage
+            playerHealth.CanTakeDamage = false;
         }
     }
 }

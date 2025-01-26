@@ -36,8 +36,6 @@ namespace ImpulseControl
                 transform.Translate(dashDirection * dashSpeed * Time.deltaTime);
             };
             dashTime.OnTimerStop += () => dashing = false;
-
-            
         }
 
         private void OnDestroy()
