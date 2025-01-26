@@ -8,12 +8,14 @@ namespace ImpulseControl.AI
     {
         [SerializeField] float damage = 25f;
         [SerializeField] float speed = 20f;
+        [SerializeField] float stoppingDistance = 2f;
 
         // Start is called before the first frame update
         void Start()
         {
             base.Damage = damage;
             base.Speed = speed;
+            base.StoppingDistance = stoppingDistance;
         }
 
         // Update is called once per frame

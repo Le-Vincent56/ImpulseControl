@@ -15,10 +15,12 @@ namespace ImpulseControl.AI
 
         protected StateMachine stateMachine;
 
-        protected bool withinRangeOfPlayer;
+        protected bool withinAttackRange;
 
-        public float Damage { get; set; }
-        public float Speed { get; set; }
+        public float Damage { get; set; } 
+        protected float Speed { get; set; }
+        protected float StoppingDistance { get; set; }
+        
 
         void Awake()
         {
@@ -35,10 +37,10 @@ namespace ImpulseControl.AI
             var deathState = new DeathState(this, animator);
 
             // Define transitions
+            At(idleState, attackState, new FuncPredicate(() => withinAttackRange));
+            At(moveState, attackState, new FuncPredicate(() => withinAttackRange));
+            At(attackState, moveState, new FuncPredicate(() => !withinAttackRange));
             At(idleState, moveState, new FuncPredicate(() => player != null));
-            At(idleState, attackState, new FuncPredicate(() => withinRangeOfPlayer));
-            At(moveState, attackState, new FuncPredicate(() => withinRangeOfPlayer));
-            At(attackState, moveState, new FuncPredicate(() => !withinRangeOfPlayer));
             Any(deathState, new FuncPredicate(() => isDead));
 
             // Set initial state
@@ -57,11 +59,17 @@ namespace ImpulseControl.AI
         {
             Vector3 dirToPlayer = player.transform.position - this.transform.position;
             this.transform.position += dirToPlayer.normalized * Speed * Time.deltaTime;
-            Debug.Log("dirToPlayer: " + dirToPlayer);
-            Debug.Log("Player Pos: " + player.transform.position + ",  this Pos: " + this.transform.position);
-            Debug.Log("Speed: " + Speed);
+            CheckIfInAttackRange(dirToPlayer);
         }
-        public virtual void Attack() { }
+        public virtual void Attack() 
+        {
+            Vector3 dirToPlayer = player.transform.position - this.transform.position;
+            CheckIfInAttackRange(dirToPlayer);
+        }
+        void CheckIfInAttackRange(Vector3 dirToPlayer)
+        {
+            withinAttackRange = (dirToPlayer.sqrMagnitude <= StoppingDistance * StoppingDistance) ? true : false;
+        }
         
         void ChangeDeathStatus()
         {

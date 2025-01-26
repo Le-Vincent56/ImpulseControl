@@ -25,9 +25,7 @@ namespace ImpulseControl.AI
 
         public virtual void OnEnter() { }
 
-        public virtual void OnExit() { 
-            Debug.Log("EXIT: Base State");
-        }
+        public virtual void OnExit() { }
 
         public virtual void Update() { }
     }

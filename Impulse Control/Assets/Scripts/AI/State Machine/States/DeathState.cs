@@ -8,6 +8,7 @@ namespace ImpulseControl.AI
 
         public override void OnEnter()
         {
+            Debug.Log("ENTER: Death State");
             enemyAnimator.CrossFade(MoveHash, transitionDuration);
         }
     }
