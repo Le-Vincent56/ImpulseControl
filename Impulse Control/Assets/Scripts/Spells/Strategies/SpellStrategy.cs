@@ -17,6 +17,8 @@ namespace ImpulseControl.Spells.Strategies
         [SerializeField] protected int spellLevel;
         [SerializeField] protected EmotionType correspondingEmotion;
 
+        public EmotionType EmotionType => correspondingEmotion;
+
         // Set a reference to the Spell Modifiers
         protected CountdownTimer cooldownTimer;
 
