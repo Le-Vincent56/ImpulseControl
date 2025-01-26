@@ -108,7 +108,8 @@ namespace ImpulseControl {
 				Vector2 direction = ChildSkillNodes[i].transform.position - transform.position;
 
 				// Set the size, position, and rotation of the node connection
-				nodeConnection.GetComponent<SpriteRenderer>( ).size = new Vector2(0.25f, direction.magnitude);
+				SpriteRenderer nodeConnectionSpriteRenderer = nodeConnection.GetComponent<SpriteRenderer>( );
+				nodeConnectionSpriteRenderer.size = new Vector2(nodeConnectionSpriteRenderer.size.x, direction.magnitude);
 				nodeConnection.localPosition = direction / 2f;
 				nodeConnection.localRotation = Quaternion.LookRotation(Vector3.back, direction);
 			}
