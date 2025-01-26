@@ -86,8 +86,9 @@ namespace ImpulseControl.Spells.Objects
             initialPosition = transform.position;
         }
 
-        public void SetAttributes(float damage)
+        public void SetAttributes(Emotion emotion, float damage)
         {
+            this.emotion = emotion;
             this.damage = damage;
         }
 

@@ -11,9 +11,9 @@ namespace ImpulseControl.Spells.Strategies
         private EnvySpell spell;
         private bool activated;
 
-        public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, LiveModifiers modifiers, SpellPool spellPool)
+        public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
         {
-            base.Link(spellSystem, playerMovement, modifiers, spellPool);
+            base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool);
 
             // Set not activated
             activated = false;

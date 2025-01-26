@@ -42,7 +42,7 @@ namespace ImpulseControl.Spells.Strategies
 
             // Set the attributes of the Anger Spell
             float damage = modifiers.Anger.spellBaseDamage * modifiers.Anger.spellBaseDamage;
-            angerSpell.SetAttributes(damage);
+            angerSpell.SetAttributes(emotionSystem.Anger, damage);
 
             // Start the cooldown timer
             cooldownTimer.Start();

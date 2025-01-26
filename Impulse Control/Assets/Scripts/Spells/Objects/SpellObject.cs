@@ -4,6 +4,7 @@ namespace ImpulseControl.Spells.Objects
 {
     public abstract class SpellObject : MonoBehaviour
     {
+        protected Emotion emotion;
         protected SpellPool spellPool;
         [SerializeField] protected float damage;
 

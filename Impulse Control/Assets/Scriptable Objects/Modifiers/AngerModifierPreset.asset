@@ -31,6 +31,7 @@ MonoBehaviour:
     crashOutDuration: 0
     crashOutAttackSpeed: 0
     crashOutRange: 0
+    crashOutDamageReduction: 0
     exhaustionDuration: 0
     exhaustionMoveSpeed: 0
     exhaustionWeaknessMultiplier: 0
@@ -68,6 +69,6 @@ MonoBehaviour:
     exhaustionDuration: 0
     exhaustionHealthPercentage: 0
   playerModifiers:
-    moveSpeed: 0
+    moveSpeed: 3
     maxHealth: 0
     baseDefense: 0
