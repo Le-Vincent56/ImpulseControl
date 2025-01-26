@@ -18,7 +18,7 @@ namespace ImpulseControl {
 			// This will make the info box to the right of the skill node
 			transform.position = (Vector2) skillNode.transform.position + new Vector2(infoBoxBackground.sizeDelta.x / 2f + 0.75f, 0f);
 
-			infoText.text = skillNode.Title + "\n" + skillNode.Description;
+			infoText.text = "<size=+1><b>" + skillNode.Title + "</b></size>\n<color=#c2c2c2>" + skillNode.Description + "</color>";
 			infoBoxBackground.gameObject.SetActive(true);
 		}
 
