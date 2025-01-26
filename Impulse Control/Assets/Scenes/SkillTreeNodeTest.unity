@@ -175,6 +175,14 @@ PrefabInstance:
       value: SkillNode (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isBought
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: _isUnlocked
       value: 0
       objectReference: {fileID: 0}
@@ -327,6 +335,14 @@ PrefabInstance:
     - target: {fileID: 2144191287626137999, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: m_Name
       value: SkillNode (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isBought
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isVisible
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: _isUnlocked
@@ -772,6 +788,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillNode (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isBought
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isUnlocked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -841,8 +869,16 @@ PrefabInstance:
       value: SkillNode (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isBought
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isVisible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: _isUnlocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: childSkillNodes.Array.size
@@ -1004,6 +1040,18 @@ PrefabInstance:
     - target: {fileID: 2144191287626137999, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: m_Name
       value: SkillNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isBought
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
+      propertyPath: _isUnlocked
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6706867093471298728, guid: de6c1bc615a9ea1488e5eb4b4de963e1, type: 3}
       propertyPath: childSkillNodes.Array.size
