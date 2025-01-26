@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AngerModifierPreset
   m_EditorClassIdentifier: 
   angerSpellModifiers:
-    angerFillPerSecond: 0
-    spellBaseDamage: 10
+    angerFillPerSecond: 0.05
+    spellBaseDamage: 70
     spellDamagePercentageIncrease: 1
     spellDashDistance: 5
     spellStartingOffset: 1
@@ -39,29 +39,29 @@ MonoBehaviour:
     exhaustionMoveSpeed: 1
     exhaustionWeaknessMultiplier: 0.4
   fearSpellModifiers:
-    fearFillPerSecond: 0.1
-    spellBaseDamage: 5
-    spellDamagePercentageIncrease: 0
+    fearFillPerSecond: 0.05
+    spellBaseDamage: 40
+    spellDamagePercentageIncrease: 1
     spellEnemyPierceCount: 5
     spellEnemyStunDuration: 0
     spellRadius: 5
-    spellFearCost: 0
+    spellFearCost: 0.1
     spellProjectileSpeed: 7
     spellCooldownTime: 0.35
     crashOutDuration: 5
     crashOutMoveSpeedIncrease: 10
-    crashOutBaseDamage: 0
+    crashOutBaseDamage: 50
     crashOutDamagePercentageIncrease: 0
     crashOutDamageRadius: 0
-    exhaustionDuration: 0
+    exhaustionDuration: 3
     exhaustionEmotionFillPercentage: 0
   envySpellModifiers:
-    envyFillPerSecond: 0
-    spellBaseDamage: 5
+    envyFillPerSecond: 0.05
+    spellBaseDamage: 30
     spellDamagePercentageIncrease: 1
     spellRadius: 1
     spellTickSpeed: 0
-    spellHealingPercentage: 0
+    spellHealingPercentage: 0.5
     spellEnvyCostPerSecond: 0.15
     spellCooldownTime: 0.2
     crashOutDuration: 5
@@ -69,7 +69,7 @@ MonoBehaviour:
     crashOutSpellRadius: 3
     summonedBaseDamage: 0
     summonedDamagePercentageIncrease: 0
-    exhaustionDuration: 0
+    exhaustionDuration: 3
     exhaustionHealthPercentage: 0
   playerModifiers:
     moveSpeed: 3
