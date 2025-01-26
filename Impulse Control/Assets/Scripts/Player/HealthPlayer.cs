@@ -37,6 +37,7 @@ namespace ImpulseControl
             base.Start();
             liveModifiers = GetComponent<LiveModifiers>();
             emotionSystem = GetComponent<EmotionSystem>();
+            canTakeDamage = true;
         }
         public override bool TakeDamage(float damage)
         {
