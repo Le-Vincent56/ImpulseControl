@@ -39,7 +39,7 @@ MonoBehaviour:
     exhaustionMoveSpeed: 1
     exhaustionWeaknessMultiplier: 0.4
   fearSpellModifiers:
-    fearFillPerSecond: 0
+    fearFillPerSecond: 0.1
     spellBaseDamage: 5
     spellDamagePercentageIncrease: 0
     spellEnemyPierceCount: 5
@@ -49,14 +49,14 @@ MonoBehaviour:
     spellProjectileSpeed: 7
     spellCooldownTime: 0.35
     crashOutDuration: 5
-    crashOutMoveSpeedIncrease: 0
+    crashOutMoveSpeedIncrease: 10
     crashOutBaseDamage: 0
     crashOutDamagePercentageIncrease: 0
     crashOutDamageRadius: 0
     exhaustionDuration: 0
     exhaustionEmotionFillPercentage: 0
   envySpellModifiers:
-    envyFillPerSecond: 0.1
+    envyFillPerSecond: 0
     spellBaseDamage: 5
     spellDamagePercentageIncrease: 1
     spellRadius: 1

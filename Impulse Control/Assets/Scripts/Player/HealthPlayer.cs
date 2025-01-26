@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using ImpulseControl.Events;
 using ImpulseControl.Modifiers;
 using UnityEngine;
@@ -11,6 +9,7 @@ namespace ImpulseControl
         private LiveModifiers liveModifiers;
         private EmotionSystem emotionSystem;
         private EventBinding<Event_ExaustedEnd> exhaustedFinishEventBinding;
+        private bool canTakeDamage;
 
         private void OnEnable()
         {
@@ -27,10 +26,11 @@ namespace ImpulseControl
             EventBus<Event_ExaustedEnd>.Deregister(exhaustedFinishEventBinding);
         }
 
-
         private Emotion anger;
         private Emotion envy;
         private Emotion fear;
+
+        public bool CanTakeDamage { get => canTakeDamage; set => canTakeDamage = value; }
 
         protected override void Start()
         {
@@ -40,6 +40,9 @@ namespace ImpulseControl
         }
         public override bool TakeDamage(float damage)
         {
+            // Exit case - the Player can't take damage
+            if (!canTakeDamage) return false;
+
             float damageModifier = damage;
             
             //if fear crashout no damage

@@ -12,6 +12,7 @@ namespace ImpulseControl.Spells.Strategies
         protected EmotionSystem emotionSystem;
         protected SpellSystem spellSystem;
         protected LiveModifiers modifiers;
+        protected HealthPlayer playerHealth;
         [SerializeField] protected string spellName;
         [SerializeField] protected string spellDescription;
         [SerializeField] protected int spellLevel;
@@ -39,6 +40,7 @@ namespace ImpulseControl.Spells.Strategies
             this.emotionSystem = emotionSystem;
             this.modifiers = modifiers;
             this.spellPool = spellPool;
+            this.playerHealth = playerHealth;
 
             // Set up the cooldown timer
             SetupCooldown();

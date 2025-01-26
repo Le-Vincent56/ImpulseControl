@@ -27,7 +27,6 @@ namespace ImpulseControl.Spells.Strategies
             base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool, playerHealth);
 
             // Set not activated
-            health = playerHealth;
             activated = false;
 
             costTimer = new CountdownTimer(1f);
