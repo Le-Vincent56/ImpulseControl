@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5181505607022278515}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing front 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7030837532076931025}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper jaw_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 3761033881790256818}
   - component: {fileID: 775374604307557281}
   - component: {fileID: 2189803757356648952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chomp_Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
-  speed: 12
-  stoppingDistance: 5
+  speed: 3
+  stoppingDistance: 1
 --- !u!61 &2189803757356648952
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.6, y: 0.45}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -198,7 +198,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 6.5, y: 6.5}
   m_EdgeRadius: 0
 --- !u!1 &1361956342019054482
 GameObject:
@@ -209,7 +209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 768354299758109795}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Back 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594236363333222763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 2214703655683712129}
   - component: {fileID: 622050719855786822}
   - component: {fileID: 156917965595147686}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5030061475116336103}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Back_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 2862978393364067911}
   - component: {fileID: 394634215314525257}
   - component: {fileID: 2446200346035772278}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 8342790985551779076}
   - component: {fileID: 444755358913582463}
   - component: {fileID: 3789612130672297604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Teeth Lower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   - component: {fileID: 7199874992647361224}
   - component: {fileID: 2497675902674776381}
   - component: {fileID: 3849102767092082277}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3696341913075577849}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8328748886590851616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper jaw_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4745155757292540052}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper jaw_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548869509186719752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 4633499492828932959}
   - component: {fileID: 394831871943357288}
   - component: {fileID: 5345927682126072173}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -956,7 +956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1561074541115424729}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6331627135952701898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1018,7 +1018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5352164244654307865}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Front_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1052,7 +1052,7 @@ GameObject:
   - component: {fileID: 8162092832383918949}
   - component: {fileID: 7694433395189130976}
   - component: {fileID: 2963281313701094570}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Teeth Upper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1158,7 +1158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 989628972604175185}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lower Jaw_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1195,7 +1195,7 @@ GameObject:
   - component: {fileID: 3088628316376756481}
   - component: {fileID: 8469808742813886165}
   - component: {fileID: 8389105139631140952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1300,7 +1300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113432920059002593}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Upper jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
