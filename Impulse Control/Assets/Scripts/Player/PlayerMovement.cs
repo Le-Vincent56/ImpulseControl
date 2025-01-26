@@ -1,3 +1,4 @@
+using ImpulseControl.AI;
 using ImpulseControl.Input;
 using ImpulseControl.Modifiers;
 using ImpulseControl.Timers;
@@ -69,9 +70,17 @@ namespace ImpulseControl
             }
 
             Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Player.moveSpeed);
-        }
-        
-        private void Move(float xNorm, float yNorm, float speed)
+		}
+
+		private void OnCollisionEnter2D (Collision2D collision) {
+            // If the player is currently crashing out on fear and they have collided with an enemy, then damage the enemy
+			if (fear.EmotionState == EmotionStates.CrashingOut && collision.gameObject.GetComponent<IEnemy>( ) != null) {
+                // The enemy takes damage based on the fear live modifiers
+                collision.gameObject.GetComponent<Health>( ).TakeDamage(liveModifiers.Fear.crashOutBaseDamage * liveModifiers.Fear.crashOutDamagePercentageIncrease);
+			}
+		}
+
+		private void Move(float xNorm, float yNorm, float speed)
         {
             rigidbody2d.velocity = new Vector2(xNorm * speed,
                 yNorm * speed); 
