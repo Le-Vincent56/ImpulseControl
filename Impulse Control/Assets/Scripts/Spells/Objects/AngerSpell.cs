@@ -1,3 +1,4 @@
+using ImpulseControl.AI;
 using ImpulseControl.Timers;
 using UnityEngine;
 
@@ -19,6 +20,10 @@ namespace ImpulseControl.Spells.Objects
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            // damage enemy if its the enemy
+            if (collision.gameObject.GetComponent<IEnemy>() != null) {
+                collision.gameObject.GetComponent<Health>().TakeDamage(damage);
+            }
         }
 
         /// <summary>
