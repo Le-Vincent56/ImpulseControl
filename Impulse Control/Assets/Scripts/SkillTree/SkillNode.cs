@@ -8,6 +8,7 @@ namespace ImpulseControl {
 		[Header("References")]
 		[SerializeField] private List<SkillNode> childSkillNodes = new List<SkillNode>( );
 		[SerializeField] private SpriteRenderer spriteRenderer;
+		[SerializeField] private Transform nodeConnectorContainer;
 		[Header("Properties")]
 		[SerializeField] private bool _isVisible;
 		[SerializeField] private bool _isUnlocked;
@@ -70,13 +71,13 @@ namespace ImpulseControl {
 
 			for (int i = 0; i < ChildSkillNodes.Count; i++) {
 				// If there are no more node connections, then return from the loop
-				if (transform.childCount == i) {
+				if (nodeConnectorContainer.childCount == i) {
 					Debug.LogWarning("There needs to be more node connections on skill node: " + name);
 					break;
 				}
 
 				// Get the current index node connection
-				Transform nodeConnection = transform.GetChild(i);
+				Transform nodeConnection = nodeConnectorContainer.GetChild(i);
 
 				// Get the direction from this skill node to the child skill node
 				Vector2 direction = ChildSkillNodes[i].transform.position - transform.position;
@@ -157,8 +158,8 @@ namespace ImpulseControl {
 				nodeConnectionAlpha = 0.1f;
 			}
 
-			for (int i = 0; i < transform.childCount; i++) {
-				transform.GetChild(i).GetComponent<SpriteRenderer>( ).color = new Color(1f, 1f, 1f, nodeConnectionAlpha);
+			for (int i = 0; i < nodeConnectorContainer.childCount; i++) {
+				nodeConnectorContainer.GetChild(i).GetComponent<SpriteRenderer>( ).color = new Color(1f, 1f, 1f, nodeConnectionAlpha);
 			}
 		}
 	}
