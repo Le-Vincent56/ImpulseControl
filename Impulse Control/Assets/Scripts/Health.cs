@@ -19,7 +19,8 @@ namespace ImpulseControl
         
         protected virtual void OnDestroy()
         {
-
+            // Dispose the timered up timer
+            damageCooldownTimer.Dispose();
         }
 
         // Start is called before the first frame update
