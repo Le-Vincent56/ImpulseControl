@@ -38,13 +38,15 @@ namespace ImpulseControl.Spells.Objects
             boxCollider.enabled = false;
 
             // Add the collision to the hit enemies list
-            hitEnemies.Add(enemy.gameObject);
+            hitEnemies.Add(collision.gameObject);
 
             // Damage the hit enemy
-            enemy.GetComponent<Health>().TakeDamage(damage);
+            collision.GetComponent<Health>().TakeDamage(damage);
 
             // Start chaining through enemies
             ChainThroughEnemies(1);
+
+            Debug.Log($"Hit Enemy: {collision.gameObject} for {damage}");
         }
 
         private void ChainThroughEnemies(int timesToChain)

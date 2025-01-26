@@ -35,11 +35,15 @@ namespace ImpulseControl
 
         public virtual bool TakeDamage(float damage)
         {
+            Debug.Log("Call to TakeDamage()");
+
             // Exit case - within the damage buffer
             if (damageCooldownTimer.IsRunning) return false;
 
             // Take damage
             currentHealth -= damage;
+
+            Debug.Log("Took Damage");
 
             // Check for death case
             if (currentHealth <= 0)
