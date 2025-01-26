@@ -12,6 +12,7 @@ namespace ImpulseControl.AI
         protected static readonly int IdleHash = Animator.StringToHash("Idle");
         protected static readonly int MoveHash = Animator.StringToHash("Move");
         protected static readonly int AttackHash = Animator.StringToHash("Attack");
+        protected static readonly int DeathHash = Animator.StringToHash("Death");
 
         protected const float transitionDuration = 0.1f;
 
@@ -24,7 +25,9 @@ namespace ImpulseControl.AI
 
         public virtual void OnEnter() { }
 
-        public virtual void OnExit() { }
+        public virtual void OnExit() { 
+            Debug.Log("EXIT: Base State");
+        }
 
         public virtual void Update() { }
     }

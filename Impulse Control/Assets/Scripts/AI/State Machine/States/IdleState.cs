@@ -8,6 +8,7 @@ namespace ImpulseControl.AI
 
         public override void OnEnter()
         {
+            Debug.Log("ENTER: Idle State");
             enemyAnimator.CrossFade(IdleHash, transitionDuration);
         }
     }

@@ -8,12 +8,13 @@ namespace ImpulseControl.AI
 
         public override void OnEnter()
         {
+            Debug.Log("ENTER: Move State");
             enemyAnimator.CrossFade(MoveHash, transitionDuration);
         }
 
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
+            enemy.MoveToPlayer();
         }
     }
 }
