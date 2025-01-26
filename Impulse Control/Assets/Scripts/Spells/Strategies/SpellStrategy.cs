@@ -24,10 +24,15 @@ namespace ImpulseControl.Spells.Strategies
 
         public EmotionType Emotion { get => correspondingEmotion; }
 
+        protected virtual void OnDestroy()
+        {
+            cooldownTimer.Dispose();
+        }
+
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
-        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
+        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool, HealthPlayer playerHealth)
         {
             this.spellSystem = spellSystem;
             this.playerMovement = playerMovement;

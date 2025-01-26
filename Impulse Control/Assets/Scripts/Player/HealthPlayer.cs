@@ -38,13 +38,13 @@ namespace ImpulseControl
             liveModifiers = GetComponent<LiveModifiers>();
             emotionSystem = GetComponent<EmotionSystem>();
         }
-        public override void TakeDamage(float damage)
+        public override bool TakeDamage(float damage)
         {
             float damageModifier = damage;
             
             //if fear crashout no damage
             if (emotionSystem.Fear.EmotionState == EmotionStates.CrashingOut) 
-                return;
+                return false;
 
             //different damage per emotion modify the damage
             switch (emotionSystem.Anger.EmotionState)
@@ -58,8 +58,14 @@ namespace ImpulseControl
             }
 
             //modify health
-            base.TakeDamage(damageModifier);
+            return base.TakeDamage(damageModifier);
         }
+
+        /// <summary>
+        /// Heal the Player
+        /// </summary>
+        /// <param name="amount"></param>
+        public void Heal(float amount) => currentHealth += Mathf.Clamp(0, startingHealth, currentHealth + amount);
 
         //envy exhaust done set health to zero
         private void OnExhaustionEnvyFinished()
