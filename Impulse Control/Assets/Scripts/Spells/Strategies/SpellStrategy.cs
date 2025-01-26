@@ -50,5 +50,7 @@ namespace ImpulseControl.Spells.Strategies
         /// Crashout the Strategy
         /// </summary>
         public abstract void CrashOut();
+
+        public abstract void Exhaust();
     }
 }

@@ -45,5 +45,15 @@ namespace ImpulseControl.Spells.Strategies
             // Start the cooldown timer
             cooldownTimer.Start();
         }
+
+        public override void CrashOut()
+        {
+
+        }
+
+        public override void Exhaust()
+        {
+
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace ImpulseControl
         [SerializeField] private float delta;
 
         private EventBinding<Event_CrashOut> onCrashOut;
+        private EventBinding<Event_CrashOutEnd> onCrashOutEnd;
 
         public Vector2 SpellDirection { get => spellAimer.AimDirection; }
 
@@ -44,6 +45,9 @@ namespace ImpulseControl
             onCrashOut = new EventBinding<Event_CrashOut>(CrashOut);
             EventBus<Event_CrashOut>.Register(onCrashOut);
 
+            onCrashOutEnd = new EventBinding<Event_CrashOutEnd>(EndCrashOut);
+            EventBus<Event_CrashOutEnd>.Register(onCrashOutEnd);
+
             inputReader.SwapSpell += SwapSpell;
             inputReader.CastSpell += CastSpell;
         }
@@ -51,6 +55,7 @@ namespace ImpulseControl
         private void OnDisable()
         {
             EventBus<Event_CrashOut>.Deregister(onCrashOut);
+            EventBus<Event_CrashOutEnd>.Deregister(onCrashOutEnd);
 
             inputReader.SwapSpell -= SwapSpell;
             inputReader.CastSpell -= CastSpell;
@@ -186,6 +191,26 @@ namespace ImpulseControl
                     break;
                 case EmotionType.Envy:
                     envySpell.CrashOut();
+                    break;
+            }
+        }
+
+        private void EndCrashOut(Event_CrashOutEnd eventData)
+        {
+            // Set to not crashing
+            crashing = false;
+
+            // Crash out the specific Emotion
+            switch (eventData.emotionType)
+            {
+                case EmotionType.Anger:
+                    angerSpell.Exhaust();
+                    break;
+                case EmotionType.Fear:
+                    fearSpell.Exhaust();
+                    break;
+                case EmotionType.Envy:
+                    envySpell.Exhaust();
                     break;
             }
         }

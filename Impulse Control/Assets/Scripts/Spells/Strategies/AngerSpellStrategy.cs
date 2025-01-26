@@ -49,5 +49,21 @@ namespace ImpulseControl.Spells.Strategies
             // Start the cooldown timer
             cooldownTimer.Start();
         }
+
+        public override void CrashOut()
+        {
+            // Set the new crash out attack speed
+            cooldownTimer.Reset(modifiers.Anger.crashOutAttackSpeed);
+
+            // Set to cast automatically
+            cooldownTimer.OnTimerStop += () => Cast();
+
+            Cast();
+        }
+
+        public override void Exhaust()
+        {
+            cooldownTimer.OnTimerStop -= () => Cast();
+        }
     }
 }
