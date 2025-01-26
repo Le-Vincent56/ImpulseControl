@@ -37,12 +37,84 @@ namespace ImpulseControl {
 
 			// Initialize the list of functions with everything that each skill node will do
 			SkillNodeFunctionList = new List<Action>( ) {
-				() => {
-					// liveModifiers.Anger.spellDashDistance = 0;
+				() =>
+				{
+					liveModifiers.Anger.spellBaseDamage += 10;
 				},
-				() => {
-					// liveModifiers.Envy.spellBaseDamage += 1;
-				}
+				() =>
+				{
+					liveModifiers.Anger.spellDamagePercentageIncrease *= 1.25f;
+				},
+				() =>
+				{
+					liveModifiers.Anger.angerFillPerSecond *= 1.01f;
+				},
+				() =>
+				{
+					liveModifiers.Anger.spellCooldownTime *= .95f;
+				},
+				() =>
+				{
+					liveModifiers.Anger.spellAngerCost *= .95f;
+				},///////////////////////////////////////////////////
+				() =>
+				{
+					liveModifiers.Fear.spellBaseDamage += 10;
+				},
+				() =>
+				{
+					liveModifiers.Fear.spellDamagePercentageIncrease *= 1.25f;
+				},
+				() =>
+				{
+					liveModifiers.Fear.fearFillPerSecond *= 1.01f;
+				},
+				() =>
+				{
+					liveModifiers.Fear.spellCooldownTime *= .95f;
+				},
+				() =>
+				{
+					liveModifiers.Fear.spellProjectileSpeed *= 1.25f;
+				},
+				() =>
+				{
+					liveModifiers.Fear.spellEnemyPierceCount += 1;
+				},
+				() =>
+				{
+					liveModifiers.Fear.spellFearCost *= .95f;
+				},///////////////////////////////////////////////////
+				() =>
+				{
+					liveModifiers.Envy.spellBaseDamage += 10;
+				},
+				() =>
+				{
+					liveModifiers.Envy.spellDamagePercentageIncrease *= 1.25f;
+				},
+				() =>
+				{
+					liveModifiers.Envy.envyFillPerSecond *= 1.01f;
+				},
+				() =>
+				{
+					liveModifiers.Envy.spellCooldownTime *= .95f;
+				},
+				() =>
+				{
+					liveModifiers.Envy.spellRadius *= 1.05f;
+				},
+				() =>
+				{
+					liveModifiers.Envy.spellHealingPercentage *= 1.05f;
+				},
+				() =>
+				{
+					liveModifiers.Envy.spellEnvyCostPerSecond *= .95f;
+				},
+				
+				
 			};
 		}
 

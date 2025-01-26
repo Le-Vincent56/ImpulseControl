@@ -15,7 +15,7 @@ namespace ImpulseControl {
 		/// </summary>
 		public int ExperiencePoints {
 			get => _experiencePoints;
-			private set {
+			set {
 				_experiencePoints = value;
 
 				// If the current experience points are greater than or equal to the experience needed for the next level, then level the player up

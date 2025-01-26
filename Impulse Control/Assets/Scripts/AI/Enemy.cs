@@ -106,6 +106,11 @@ namespace ImpulseControl.AI
         {
             isDead = true;
         }
+        public void SendToObjectPool()
+        {
+            player.GetComponent<PlayerExperience>().ExperiencePoints += Random.Range(1, 4);
+            this.gameObject.SetActive(false);
+        }
         protected void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
         protected void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
     }
