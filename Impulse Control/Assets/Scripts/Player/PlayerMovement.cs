@@ -1,4 +1,5 @@
 using ImpulseControl.Input;
+using ImpulseControl.Modifiers;
 using ImpulseControl.Timers;
 using UnityEngine;
 
@@ -6,13 +7,14 @@ namespace ImpulseControl
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("References")] [SerializeField]
-        private GameInputReader gameInputReader;
-        [SerializeField] private Rigidbody2D rigidbody2d;
-
-        [Header("Attributes")] 
-        [SerializeField] private float speed = 1.0f;
-
+        [Header("References")] 
+        [SerializeField] private GameInputReader gameInputReader;
+        private Rigidbody2D rigidbody2d;
+        private LiveModifiers liveModifiers;
+        private EmotionSystem emotionSystem;
+        private Emotion anger;
+        private Emotion fear;
+        
         [Header("Dashing")]
         [SerializeField] private bool dashing;
         [SerializeField] private CountdownTimer dashTime;
@@ -23,6 +25,11 @@ namespace ImpulseControl
         {
             // Get components
             rigidbody2d = GetComponent<Rigidbody2D>();
+            liveModifiers = GetComponent<LiveModifiers>();
+            emotionSystem = GetComponent<EmotionSystem>();
+            anger = emotionSystem.Anger;
+            fear = emotionSystem.Fear;
+            
 
             dashTime = new CountdownTimer(0.25f);
 
@@ -46,13 +53,26 @@ namespace ImpulseControl
         {
             // Exit case - if dashing
             if (dashing) return;
+            
+            if (fear.EmotionState == EmotionStates.ExhaustedFear)
+            {
+                Move(0, 0,0);
+                return;
+            }
 
-            Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY);
+            if (anger.EmotionState == EmotionStates.Exhausted)
+            {
+                Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Anger.exhaustionMoveSpeed);
+                return;
+            }
+
+            Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Player.moveSpeed);
         }
         
-        private void Move(float xNorm, float yNorm)
+        private void Move(float xNorm, float yNorm, float speed)
         {
-            rigidbody2d.velocity = new Vector2(xNorm * speed, yNorm * speed);
+            rigidbody2d.velocity = new Vector2(xNorm * speed,
+                yNorm * speed); 
         }
 
         /// <summary>
