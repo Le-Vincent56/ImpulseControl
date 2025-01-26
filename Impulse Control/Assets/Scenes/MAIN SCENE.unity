@@ -820,8 +820,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3409235101280716525, guid: 29bc386fab647f543b2c67c182686de9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 233644484, guid: 72374b7e415f62640ac867f624b3ca0d, type: 3}
+    - target: {fileID: 3409235101280716525, guid: 29bc386fab647f543b2c67c182686de9, type: 3}
       propertyPath: m_SortingLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697907498509787423, guid: 29bc386fab647f543b2c67c182686de9, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697907498509787423, guid: 29bc386fab647f543b2c67c182686de9, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.01
       objectReference: {fileID: 0}
     - target: {fileID: 8757291356588869334, guid: 29bc386fab647f543b2c67c182686de9, type: 3}
       propertyPath: inputReader
