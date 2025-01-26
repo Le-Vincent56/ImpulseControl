@@ -9,12 +9,13 @@ namespace ImpulseControl.Input
     public class GameInputReader : ScriptableObject, IGameplayActions
     {
         public event UnityAction<Vector2, bool> Move = delegate { };
-        public event UnityAction<bool> SpellOne = delegate { };
-        public event UnityAction<bool> SpellTwo = delegate { };
-        public event UnityAction<bool> SpellThree = delegate { };
+        public event UnityAction<int, bool> SwapSpell = delegate { };
+        public event UnityAction<bool> CastSpell = delegate { };
 
         public int NormMoveX { get; private set; }
         public int NormMoveY { get; private set; }
+
+        public int NormSwapX { get; private set; }
 
         private GameInputActions inputActions;
 
@@ -60,61 +61,49 @@ namespace ImpulseControl.Input
         }
 
         /// <summary>
-        /// Callback function for handling Spell One casting
+        /// Callback function for Spell Swapping
         /// </summary>
-        public void OnSpellOne(InputAction.CallbackContext context)
+        public void OnSwapSpell(InputAction.CallbackContext context)
         {
+            // Get the raw swap input from the control
+            Vector2 rawSwapInput = context.ReadValue<Vector2>();
+
+            // Extract the swap direction
+            int swapDirection = (int)(rawSwapInput * Vector2.right).normalized.x;
+
             // Check the context phase
             switch (context.phase)
             {
                 // If starting, invoke with true
                 case InputActionPhase.Started:
-                    SpellOne.Invoke(true);
+                    // Invoke the swap event
+                    SwapSpell.Invoke(swapDirection, true);
                     break;
 
                 // If canceled, invoke with false
                 case InputActionPhase.Canceled:
-                    SpellOne.Invoke(false);
+                    // Invoke the swap event
+                    SwapSpell.Invoke(swapDirection, false);
                     break;
             }
         }
 
         /// <summary>
-        /// Callback function for handling Spell One casting
+        /// Callback function for Spell Casting
         /// </summary>
-        public void OnSpellTwo(InputAction.CallbackContext context)
+        public void OnCastSpell(InputAction.CallbackContext context)
         {
             // Check the context phase
             switch (context.phase)
             {
                 // If starting, invoke with true
                 case InputActionPhase.Started:
-                    SpellTwo.Invoke(true);
+                    CastSpell.Invoke(true);
                     break;
 
                 // If canceled, invoke with false
                 case InputActionPhase.Canceled:
-                    SpellTwo.Invoke(false);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Callback function for handling Spell One casting
-        /// </summary>
-        public void OnSpellThree(InputAction.CallbackContext context)
-        {
-            // Check the context phase
-            switch (context.phase)
-            {
-                // If starting, invoke with true
-                case InputActionPhase.Started:
-                    SpellThree.Invoke(true);
-                    break;
-
-                // If canceled, invoke with false
-                case InputActionPhase.Canceled:
-                    SpellThree.Invoke(false);
+                    CastSpell.Invoke(false);
                     break;
             }
         }
