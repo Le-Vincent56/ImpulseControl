@@ -14,10 +14,14 @@ namespace ImpulseControl.Modifiers
         public float spellDamagePercentageIncrease;
         [Tooltip("The range of the spear dash")]
         public float spellDashDistance;
+        [Tooltip("The offset of the spear at the beginning of the attack")]
+        public float spellStartingOffset;
         [Tooltip("The radius around each attack that also attacks enemies")]
         public float spellRadius;
         [Tooltip("The amount of anger that the spell costs to cast")]
         public float spellAngerCost;
+        [Tooltip("The cooldown time of the spell")]
+        public float spellCooldownTime;
         [Space]
         [Tooltip("The base damage that fire does each tick")]
         public float fireBaseDamage;
@@ -41,6 +45,8 @@ namespace ImpulseControl.Modifiers
         public float crashOutAttackSpeed;
         [Tooltip("The maximum range at which you can throw a spear")]
         public float crashOutRange;
+        [Tooltip("Percentage that is multiplied by the incoming damage from an enemy. Should reduce damage")]
+        public float crashOutDamageReduction;
         [Space]
         [Tooltip("The number of seconds that the exhaustion happens for")]
         public float exhaustionDuration;

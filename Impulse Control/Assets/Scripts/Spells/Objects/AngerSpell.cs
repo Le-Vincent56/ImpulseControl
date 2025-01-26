@@ -1,3 +1,4 @@
+using ImpulseControl.AI;
 using ImpulseControl.Timers;
 using UnityEngine;
 
@@ -19,7 +20,10 @@ namespace ImpulseControl.Spells.Objects
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // Damage
+            // damage enemy if its the enemy
+            if (collision.gameObject.GetComponent<IEnemy>() != null) {
+                collision.gameObject.GetComponent<Health>().TakeDamage(damage);
+            }
         }
 
         /// <summary>
@@ -85,6 +89,12 @@ namespace ImpulseControl.Spells.Objects
 
             // Set the initial position
             initialPosition = transform.position;
+        }
+
+        public void SetAttributes(Emotion emotion, float damage)
+        {
+            this.emotion = emotion;
+            this.damage = damage;
         }
 
         /// <summary>

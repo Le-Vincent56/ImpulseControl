@@ -2,7 +2,6 @@ using ImpulseControl.Modifiers;
 using ImpulseControl.Spells.Objects;
 using ImpulseControl.Timers;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace ImpulseControl.Spells.Strategies
 {
@@ -10,6 +9,7 @@ namespace ImpulseControl.Spells.Strategies
     {
         protected SpellPool spellPool;
         protected PlayerMovement playerMovement;
+        protected EmotionSystem emotionSystem;
         protected SpellSystem spellSystem;
         protected LiveModifiers modifiers;
         [SerializeField] protected string spellName;
@@ -23,13 +23,21 @@ namespace ImpulseControl.Spells.Strategies
         /// <summary>
         /// Link the Spell to a Spell Modifier and Emotion
         /// </summary>
-        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, LiveModifiers modifiers, SpellPool spellPool)
+        public virtual void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
         {
             this.spellSystem = spellSystem;
             this.playerMovement = playerMovement;
+            this.emotionSystem = emotionSystem;
             this.modifiers = modifiers;
             this.spellPool = spellPool;
+
+            // Set up the cooldown timer
+            SetupCooldown();
         }
+
+        protected abstract void SetupCooldown();
+
+        protected abstract bool OnCooldown();
 
         /// <summary>
         /// Cast the Spell

@@ -11,8 +11,9 @@ namespace ImpulseControl.Input
         public event UnityAction<Vector2, bool> Move = delegate { };
         public event UnityAction<int, bool> SwapSpell = delegate { };
         public event UnityAction<bool> CastSpell = delegate { };
+        public event UnityAction<bool> PanSkillTree = delegate { };
 
-        public int NormMoveX { get; private set; }
+		public int NormMoveX { get; private set; }
         public int NormMoveY { get; private set; }
 
         public int NormSwapX { get; private set; }
@@ -106,6 +107,25 @@ namespace ImpulseControl.Input
                     CastSpell.Invoke(false);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Callback function for panning the skill tree
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnPanSkillTree (InputAction.CallbackContext context) {
+			// Check the context phase
+			switch (context.phase) {
+				// If starting, invoke with true
+				case InputActionPhase.Started:
+					PanSkillTree.Invoke(true);
+					break;
+
+				// If canceled, invoke with false
+				case InputActionPhase.Canceled:
+					PanSkillTree.Invoke(false);
+					break;
+			}
         }
     }
 }

@@ -6,6 +6,11 @@ namespace ImpulseControl.Spells.Objects
     {
         private Transform followTarget;
 
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            Debug.Log($"Colliding with: {collision.gameObject.name}");
+        }
+
         /// <summary>
         /// Initialize the Envy Spell
         /// </summary>
@@ -37,7 +42,8 @@ namespace ImpulseControl.Spells.Objects
         /// </summary>
         public override void TickUpdate(float time, float delta)
         {
-
+            // Match the follow target's position
+            transform.position = followTarget.position;
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace ImpulseControl
         [Header("References")]
         [SerializeField] private GameInputReader inputReader;
         [SerializeField] private PlayerMovement playerMovement;
+        [SerializeField] private EmotionSystem emotionSystem;
         [SerializeField] private LiveModifiers modifiers;
         [SerializeField] private SpellAimer spellAimer;
 
@@ -47,6 +48,7 @@ namespace ImpulseControl
             // Get components
             playerMovement = GetComponent<PlayerMovement>();
             modifiers = GetComponent<LiveModifiers>();
+            emotionSystem = GetComponent<EmotionSystem>();
             spellPools = GetComponentsInChildren<SpellPool>();
             spellAimer = GetComponent<SpellAimer>();
 
@@ -57,7 +59,7 @@ namespace ImpulseControl
             for(int i = 0; i < availableSpells.Length; i++)
             {
                 spellPools[i].CreateSpellPool(this);
-                availableSpells[i].Link(this, playerMovement, modifiers, spellPools[i]);
+                availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i]);
             }
 
             // Set the first Spell
