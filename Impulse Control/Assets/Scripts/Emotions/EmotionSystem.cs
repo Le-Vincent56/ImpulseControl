@@ -105,12 +105,23 @@ namespace ImpulseControl
                 {
                     case EmotionType.Anger:
                         anger.ResetToNormal();
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Anger
+                        });
                         break;
                     case EmotionType.Envy:
                         envy.ResetToNormal();
-                        EventBus<Event_EnvyExhaustedFinished>.Raise(new Event_EnvyExhaustedFinished());
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Envy
+                        });
                         break;
                     case EmotionType.Fear:
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Fear
+                        });
                         fear.ResetToNormal();
                         envy.ResetToNormal();
                         anger.ResetToNormal();
