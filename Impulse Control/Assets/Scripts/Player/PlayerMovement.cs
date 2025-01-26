@@ -74,7 +74,7 @@ namespace ImpulseControl
 
 		private void OnCollisionEnter2D (Collision2D collision) {
             // If the player is currently crashing out on fear and they have collided with an enemy, then damage the enemy
-			if (fear.EmotionState == EmotionStates.CrashingOut && collision.gameObject.GetComponent<IEnemy>( ) != null) {
+			if (emotionSystem.Fear.EmotionState == EmotionStates.CrashingOut && collision.gameObject.GetComponent<IEnemy>( ) != null) {
                 // The enemy takes damage based on the fear live modifiers
                 collision.gameObject.GetComponent<Health>( ).TakeDamage(liveModifiers.Fear.crashOutBaseDamage * liveModifiers.Fear.crashOutDamagePercentageIncrease);
 			}

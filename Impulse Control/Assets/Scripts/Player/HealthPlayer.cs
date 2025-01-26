@@ -54,22 +54,12 @@ namespace ImpulseControl
             }
 
             //modify health
-            currentHealth -= damageModifier;
-            
-            if (currentHealth <= 0)
-            {
-                Death?.Invoke();
-                if (CompareTag("Player")) 
-                {
-                    Debug.Log("Player died a sussy death");
-                }
-            }
+            base.TakeDamage(damageModifier);
         }
 
         //envy exhaust done set health to zero
         private void OnExhaustionEnvyFinished()
         {
-            Debug.Log("Exaust Done");
             currentHealth = liveModifiers.Envy.exhaustionHealthPercentage * currentHealth;
         }
     }
