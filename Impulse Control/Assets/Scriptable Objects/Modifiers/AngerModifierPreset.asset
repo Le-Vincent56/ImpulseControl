@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AngerModifierPreset
   m_EditorClassIdentifier: 
   angerSpellModifiers:
-    angerFillPerSecond: 0
-    spellBaseDamage: 0
-    spellDamagePercentageIncrease: 0
+    angerFillPerSecond: 0.2
+    spellBaseDamage: 10
+    spellDamagePercentageIncrease: 1
     spellDashDistance: 5
     spellStartingOffset: 1
     spellRadius: 0
@@ -28,11 +28,14 @@ MonoBehaviour:
     explosionBaseDamage: 0
     explosionDamagePercentageIncrease: 0
     explosionRadius: 0
-    crashOutDuration: 0
-    crashOutAttackSpeed: 0
+    crashOutDuration: 5
+    crashOutAttackSpeed: 0.1
     crashOutRange: 0
     crashOutDamageReduction: 0
-    exhaustionDuration: 0
+    crashOutOffset: 3
+    crashOutLifetime: 3
+    crashOutProjectileSpeed: 10
+    exhaustionDuration: 3
     exhaustionMoveSpeed: 0
     exhaustionWeaknessMultiplier: 0
   fearSpellModifiers:
@@ -45,7 +48,7 @@ MonoBehaviour:
     spellFearCost: 0
     spellProjectileSpeed: 7
     spellCooldownTime: 0.35
-    crashOutDuration: 0
+    crashOutDuration: 5
     crashOutMoveSpeedIncrease: 0
     crashOutBaseDamage: 0
     crashOutDamagePercentageIncrease: 0
@@ -61,7 +64,7 @@ MonoBehaviour:
     spellHealingPercentage: 0
     spellEnvyCostPerSecond: 0
     spellCooldownTime: 0.2
-    crashOutDuration: 0
+    crashOutDuration: 5
     crashOutSpellBaseDamageIncrease: 0
     crashOutSpellRadiusIncrease: 0
     summonedBaseDamage: 0

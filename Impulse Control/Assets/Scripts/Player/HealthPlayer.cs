@@ -10,17 +10,21 @@ namespace ImpulseControl
     {
         private LiveModifiers liveModifiers;
         private EmotionSystem emotionSystem;
-        private EventBinding<Event_EnvyExhaustedFinished> exhaustedFinishEventBinding;
+        private EventBinding<Event_ExaustedEnd> exhaustedFinishEventBinding;
 
         private void OnEnable()
         {
-            exhaustedFinishEventBinding = new EventBinding<Event_EnvyExhaustedFinished>(OnExhaustionEnvyFinished);
-            EventBus<Event_EnvyExhaustedFinished>.Register(exhaustedFinishEventBinding);
+            exhaustedFinishEventBinding = new EventBinding<Event_ExaustedEnd>((e)=>
+            {
+                if(e.emotionType == EmotionType.Fear)
+                    OnExhaustionEnvyFinished();
+            });
+            EventBus<Event_ExaustedEnd>.Register(exhaustedFinishEventBinding);
         }
 
         private void OnDisable()
         {
-            EventBus<Event_EnvyExhaustedFinished>.Deregister(exhaustedFinishEventBinding);
+            EventBus<Event_ExaustedEnd>.Deregister(exhaustedFinishEventBinding);
         }
 
 

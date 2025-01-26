@@ -59,40 +59,40 @@ namespace ImpulseControl
                 switch (currentCrashOut)
                 {
                     case EmotionType.Anger:
-                        EventBus<Event_CrashOutEnd>.Raise(new Event_CrashOutEnd()
-                        {
-                            emotionType = EmotionType.Anger
-                        });
                         currentExhausted = EmotionType.Anger;
                         anger.Exhausted();
                         envy.ResetToNormal();
                         fear.ResetToNormal();
                         timerExhausted.Reset(liveModifiers.Anger.exhaustionDuration);
                         timerExhausted.Start();
-                        break;
-                    case EmotionType.Envy:
                         EventBus<Event_CrashOutEnd>.Raise(new Event_CrashOutEnd()
                         {
-                            emotionType = EmotionType.Envy
+                            emotionType = EmotionType.Anger
                         });
+                        break;
+                    case EmotionType.Envy:
                         currentExhausted = EmotionType.Envy;
                         envy.Exhausted();
                         anger.ResetToNormal();
                         fear.ResetToNormal();
                         timerExhausted.Reset(liveModifiers.Envy.exhaustionDuration);
                         timerExhausted.Start();
-                        break;
-                    case EmotionType.Fear:
                         EventBus<Event_CrashOutEnd>.Raise(new Event_CrashOutEnd()
                         {
-                            emotionType = EmotionType.Fear
+                            emotionType = EmotionType.Envy
                         });
+                        break;
+                    case EmotionType.Fear:
                         currentExhausted = EmotionType.Fear;
                         fear.ExhaustedFear();
                         envy.ExhaustedFear();
                         anger.ExhaustedFear();
                         timerExhausted.Reset(liveModifiers.Fear.exhaustionDuration);
                         timerExhausted.Start();
+                        EventBus<Event_CrashOutEnd>.Raise(new Event_CrashOutEnd()
+                        {
+                            emotionType = EmotionType.Fear
+                        });
                         break;
                 }
 
@@ -105,15 +105,26 @@ namespace ImpulseControl
                 {
                     case EmotionType.Anger:
                         anger.ResetToNormal();
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Anger
+                        });
                         break;
                     case EmotionType.Envy:
                         envy.ResetToNormal();
-                        EventBus<Event_EnvyExhaustedFinished>.Raise(new Event_EnvyExhaustedFinished());
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Envy
+                        });
                         break;
                     case EmotionType.Fear:
                         fear.ResetToNormal();
                         envy.ResetToNormal();
                         anger.ResetToNormal();
+                        EventBus<Event_ExaustedEnd>.Raise(new Event_ExaustedEnd()
+                        {
+                            emotionType = EmotionType.Fear
+                        });
                         break;
                 }
             };
@@ -124,27 +135,27 @@ namespace ImpulseControl
             {
                 (anger, () =>
                 {
+                    anger.CrashOut(liveModifiers.Anger.crashOutDuration);
+                    envy.Pause();
+                    fear.Pause();
                     EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
                     {
                         emotionType = anger.EmotionType
                     });
-                    anger.CrashOut(liveModifiers.Anger.crashOutDuration);
-                    envy.Pause();
-                    fear.Pause();
                     timerExhausted.Pause(true);
                     currentCrashOut = EmotionType.Anger;
-                    timer.Reset(liveModifiers.Fear.crashOutDuration);
+                    timer.Reset(liveModifiers.Anger.crashOutDuration);
                     timer.Start();
                 }),
                 (fear, () =>
                 {
+                    fear.CrashOut(liveModifiers.Fear.crashOutDuration);
+                    envy.Pause();
+                    anger.Pause();
                     EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
                     {
                         emotionType = fear.EmotionType
                     });
-                    fear.CrashOut(liveModifiers.Fear.crashOutDuration);
-                    envy.Pause();
-                    anger.Pause();
                     timerExhausted.Pause(true);
                     currentCrashOut = EmotionType.Fear;
                     timer.Reset(liveModifiers.Fear.crashOutDuration);
@@ -152,13 +163,13 @@ namespace ImpulseControl
                 }),
                 (envy, () =>
                 {
+                    Envy.CrashOut(liveModifiers.Envy.crashOutDuration);
+                    fear.Pause();
+                    anger.Pause();
                     EventBus<Event_CrashOut>.Raise(new Event_CrashOut()
                     {
                         emotionType = envy.EmotionType
                     });
-                    Envy.CrashOut(liveModifiers.Envy.crashOutDuration);
-                    fear.Pause();
-                    anger.Pause();
                     timerExhausted.Pause(true);
                     currentCrashOut = EmotionType.Envy;
                     timer.Reset(liveModifiers.Envy.crashOutDuration);

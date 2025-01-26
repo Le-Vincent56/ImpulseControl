@@ -1,3 +1,4 @@
+using ImpulseControl.Events;
 using ImpulseControl.Input;
 using ImpulseControl.Modifiers;
 using ImpulseControl.Spells;
@@ -5,6 +6,7 @@ using ImpulseControl.Spells.Objects;
 using ImpulseControl.Spells.Strategies;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ImpulseControl {
@@ -16,29 +18,47 @@ namespace ImpulseControl {
 		[SerializeField] private LiveModifiers modifiers;
 		[SerializeField] private SpellAimer spellAimer;
 
-		[Header("Spells")]
-		[SerializeField] private SpellPool[ ] spellPools;
-		[SerializeField] private SpellStrategy[ ] availableSpells;
-		[SerializeField] private List<SpellObject> livingSpells;
-		[SerializeField] private SpellStrategy currentSpell;
-		[SerializeField] private int currentSpellIndex;
+        [Header("Spells")]
+        [SerializeField] private SpellPool[] spellPools;
+        [SerializeField] private SpellStrategy[] availableSpells;
+        [SerializeField] private List<SpellObject> livingSpells;
+        [SerializeField] private SpellStrategy currentSpell;
+        [SerializeField] private SpellStrategy angerSpell;
+        [SerializeField] private SpellStrategy fearSpell;
+        [SerializeField] private SpellStrategy envySpell;
+        [SerializeField] private int currentSpellIndex;
+        [SerializeField] private bool crashing;
 
 		[Header("Time")]
 		[SerializeField] private float time;
 		[SerializeField] private float delta;
 
-		public Vector2 SpellDirection { get => spellAimer.AimDirection; }
-		public SpellStrategy CurrentSpell => currentSpell;
+        private EventBinding<Event_CrashOut> onCrashOut;
+        private EventBinding<Event_CrashOutEnd> onCrashOutEnd;
 
-		private void OnEnable ( ) {
-			inputReader.SwapSpell += SwapSpell;
-			inputReader.CastSpell += CastSpell;
-		}
+        public Vector2 SpellDirection { get => spellAimer.AimDirection; }
+        public SpellStrategy CurrentSpell { get => currentSpell; }
 
-		private void OnDisable ( ) {
-			inputReader.SwapSpell -= SwapSpell;
-			inputReader.CastSpell -= CastSpell;
-		}
+        private void OnEnable()
+        {
+            onCrashOut = new EventBinding<Event_CrashOut>(CrashOut);
+            EventBus<Event_CrashOut>.Register(onCrashOut);
+
+            onCrashOutEnd = new EventBinding<Event_CrashOutEnd>(EndCrashOut);
+            EventBus<Event_CrashOutEnd>.Register(onCrashOutEnd);
+
+            inputReader.SwapSpell += SwapSpell;
+            inputReader.CastSpell += CastSpell;
+        }
+
+        private void OnDisable()
+        {
+            EventBus<Event_CrashOut>.Deregister(onCrashOut);
+            EventBus<Event_CrashOutEnd>.Deregister(onCrashOutEnd);
+
+            inputReader.SwapSpell -= SwapSpell;
+            inputReader.CastSpell -= CastSpell;
+        }
 
 		private void Start ( ) {
 			// Get components
@@ -51,11 +71,26 @@ namespace ImpulseControl {
 			// Limit the amount of Spell Pools by the number of available Spells
 			spellPools = spellPools.Take(availableSpells.Length).ToArray( );
 
-			// Iterate through each available Spell
-			for (int i = 0; i < availableSpells.Length; i++) {
-				spellPools[i].CreateSpellPool(this);
-				availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i]);
-			}
+            // Iterate through each available Spell
+            for(int i = 0; i < availableSpells.Length; i++)
+            {
+                spellPools[i].CreateSpellPool(this);
+                availableSpells[i].Link(this, playerMovement, emotionSystem, modifiers, spellPools[i]);
+
+                // Assign spells
+                switch (availableSpells[i].Emotion)
+                {
+                    case EmotionType.Anger:
+                        angerSpell = availableSpells[i];
+                        break;
+                    case EmotionType.Fear:
+                        fearSpell = availableSpells[i];
+                        break;
+                    case EmotionType.Envy:
+                        envySpell = availableSpells[i];
+                        break;
+                }
+            }
 
 			// Set the first Spell
 			SetSpell(0);
@@ -100,13 +135,13 @@ namespace ImpulseControl {
 			SetSpell(swapIndex);
 		}
 
-		/// <summary>
-		/// Cast a Spell
-		/// </summary>
-		private void CastSpell (bool started) {
-			// Exit case - the button has been lifted
-			if (!started)
-				return;
+        /// <summary>
+        /// Cast a Spell
+        /// </summary>
+        private void CastSpell(bool started)
+        {
+            // Exit case - the button has been lifted or if in the middle of crashing
+            if (!started || crashing) return;
 
 			// Cast the current Spell
 			currentSpell.Cast( );
@@ -132,8 +167,48 @@ namespace ImpulseControl {
 			if (!livingSpells.Contains(spell))
 				return;
 
-			// Remove the spell
-			livingSpells.Remove(spell);
-		}
-	}
+            // Remove the spell
+            livingSpells.Remove(spell);
+        }
+
+        private void CrashOut(Event_CrashOut eventData)
+        {
+            // Set to crashing
+            crashing = true;
+
+            // Crash out the specific Emotion
+            switch (eventData.emotionType)
+            {
+                case EmotionType.Anger:
+                    angerSpell.CrashOut();
+                    break;
+                case EmotionType.Fear:
+                    fearSpell.CrashOut();
+                    break;
+                case EmotionType.Envy:
+                    envySpell.CrashOut();
+                    break;
+            }
+        }
+
+        private void EndCrashOut(Event_CrashOutEnd eventData)
+        {
+            // Set to not crashing
+            crashing = false;
+
+            // Crash out the specific Emotion
+            switch (eventData.emotionType)
+            {
+                case EmotionType.Anger:
+                    angerSpell.Exhaust();
+                    break;
+                case EmotionType.Fear:
+                    fearSpell.Exhaust();
+                    break;
+                case EmotionType.Envy:
+                    envySpell.Exhaust();
+                    break;
+            }
+        }
+    }
 }
