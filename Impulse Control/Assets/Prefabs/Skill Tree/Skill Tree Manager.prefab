@@ -2264,7 +2264,7 @@ MonoBehaviour:
   _isBought: 0
   _title: Increased Envy Power
   _description: <color=#ff0000>+25</color> percent damage.
-  id: 5
+  id: 13
   angerSpellModifiers:
     angerFillPerSecond: 0
     spellBaseDamage: 0
@@ -3213,7 +3213,7 @@ MonoBehaviour:
   _isBought: 0
   _title: Envy Damage Increase
   _description: <color=#ff0000>+10</color> to base damage.
-  id: 6
+  id: 12
   angerSpellModifiers:
     angerFillPerSecond: 0
     spellBaseDamage: 0
@@ -4127,7 +4127,7 @@ MonoBehaviour:
   _isBought: 0
   _title: Increased Envy Power
   _description: <color=#ff0000>+25</color> percent damage.
-  id: 5
+  id: 13
   angerSpellModifiers:
     angerFillPerSecond: 0
     spellBaseDamage: 0
@@ -5353,7 +5353,7 @@ MonoBehaviour:
   _isBought: 0
   _title: Envy Damage Increase
   _description: <color=#ff0000>+10</color> to base damage.
-  id: 6
+  id: 12
   angerSpellModifiers:
     angerFillPerSecond: 0
     spellBaseDamage: 0
