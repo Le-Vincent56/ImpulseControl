@@ -106,7 +106,7 @@ namespace ImpulseControl.Spells.Objects
             boxCollider = GetComponent<BoxCollider2D>();
 
             // Initialize the list
-            hitEnemies = new List<Enemy>();
+            hitEnemies = new List<GameObject>();
 
             // Initialize the Timer
             livingTimer = new CountdownTimer(livingTime);
