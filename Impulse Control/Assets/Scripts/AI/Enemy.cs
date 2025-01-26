@@ -58,11 +58,19 @@ namespace ImpulseControl.AI
         }
         public virtual void MoveToPlayer() 
         {
-            //TODO: Pursue behavior
             dirToPlayer = player.transform.position - this.transform.position;
-            this.transform.position += dirToPlayer.normalized * Speed * Time.deltaTime;
+            Seek(dirToPlayer.normalized);
 
             // Flip Sprite when necessary
+            FlipSprite();
+        }
+        void Seek(Vector3 dir)
+        {
+            this.transform.position += dir * Speed * Time.deltaTime;
+        }
+
+        void FlipSprite()
+        {
             if (dirToPlayer.x > 0)
             {
                 this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -71,11 +79,6 @@ namespace ImpulseControl.AI
             {
                 this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
-        }
-
-        void FlipSprite()
-        {
-            this.transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y + 180f, 0f);
         }
         public virtual void Attack() 
         {
@@ -99,7 +102,6 @@ namespace ImpulseControl.AI
 
                 raycast.transform.gameObject.GetComponent<Health>().TakeDamage(Damage);
             }
-            Debug.Log("Attack Raycast hit?: " + raycast);
         }
         
         void ChangeDeathStatus()
