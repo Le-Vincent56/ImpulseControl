@@ -1,3 +1,4 @@
+using ImpulseControl.Input;
 using ImpulseControl.Modifiers;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,6 +66,8 @@ namespace ImpulseControl {
 
 				// Call the function that correponds to this skill node's index
 				skillNodeManager.SkillNodeFunctionList[id]( );
+
+				skillNodeManager.LiterallyDisable( );
 			}
 		}
 

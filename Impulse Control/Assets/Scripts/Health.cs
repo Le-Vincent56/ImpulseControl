@@ -1,6 +1,7 @@
 using ImpulseControl.Timers;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ImpulseControl
 {
@@ -44,7 +45,7 @@ namespace ImpulseControl
             if (currentHealth <= 0)
             {
                 Death?.Invoke();
-                if (this.transform.gameObject.tag == "Player") { Debug.Log("Player died a sussy death"); }
+                if (this.transform.gameObject.tag == "Player") { Debug.Log("Player died a sussy death"); SceneManager.LoadScene(2); }
 
                 return true;
             }

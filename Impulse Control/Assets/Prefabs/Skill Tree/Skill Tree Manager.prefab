@@ -605,6 +605,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   liveModifiers: {fileID: 0}
   inputReader: {fileID: 11400000, guid: 4e4088a88ade5ea45879435b79f30db5, type: 2}
+  inputReaderUI: {fileID: 0}
   skillTreeContainer: {fileID: 8572945547101113568}
   backgroundSpriteRenderer: {fileID: 2243750515023159399}
 --- !u!1 &572464360546901694

@@ -771,6 +771,7 @@ GameObject:
   - component: {fileID: 316266783}
   - component: {fileID: 316266785}
   - component: {fileID: 316266786}
+  - component: {fileID: 316266787}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -852,6 +853,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyPressed: 0
+--- !u!114 &316266787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316266781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00d1a6ff947772409caa8e069c10407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448148569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,7 +2664,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226418327}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 1741557479}
@@ -3435,7 +3448,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664930096}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -3624,7 +3637,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1702876062}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 316266787}
+        m_TargetAssemblyTypeName: ImpulseControl.SceneChanging, Assembly-CSharp
+        m_MethodName: ChangeScenes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1702876062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4456,8 +4481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7963e049bd88142b02b849362b709e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 70e6b1b799667e64b9c87a419366ace6, type: 2}
-  masterSlider: {fileID: 0}
 --- !u!114 &1954444357
 MonoBehaviour:
   m_ObjectHideFlags: 0
