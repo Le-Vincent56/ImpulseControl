@@ -57,7 +57,7 @@ MonoBehaviour:
     exhaustionEmotionFillPercentage: 0
   envySpellModifiers:
     envyFillPerSecond: 0.05
-    spellBaseDamage: 30
+    spellBaseDamage: 5
     spellDamagePercentageIncrease: 1
     spellRadius: 1
     spellTickSpeed: 0

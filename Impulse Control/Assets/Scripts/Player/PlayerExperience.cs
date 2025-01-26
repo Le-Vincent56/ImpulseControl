@@ -29,10 +29,12 @@ namespace ImpulseControl {
 					Level++;
 					SkillPoints++;
 
-					skillNodeManager.transform.GetChild(0).gameObject.SetActive(true);
-					inputReader.Disable( );
-					inputReaderUI.Enable( );
-					Time.timeScale = 0;
+					if (Level <= 10) {
+						skillNodeManager.transform.GetChild(0).gameObject.SetActive(true);
+						inputReader.Disable( );
+						inputReaderUI.Enable( );
+						Time.timeScale = 0;
+					}
 				}
 			}
 		}
