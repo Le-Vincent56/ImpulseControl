@@ -9,7 +9,10 @@ namespace ImpulseControl
         protected float currentHealth;
         public Action Death;
 
-        public float CurrentHealth { get => currentHealth; }
+        /// <summary>
+        /// The current health of this object
+        /// </summary>
+        public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
         
         // Start is called before the first frame update
         protected virtual void Start()

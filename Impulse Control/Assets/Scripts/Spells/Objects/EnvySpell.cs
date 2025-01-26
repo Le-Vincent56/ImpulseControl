@@ -1,3 +1,6 @@
+using System;
+using ImpulseControl.Events;
+using ImpulseControl.Modifiers;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Objects
@@ -5,10 +8,40 @@ namespace ImpulseControl.Spells.Objects
     public class EnvySpell : SpellObject
     {
         private Transform followTarget;
+        private Vector3 scale;
+        [SerializeField] private LayerMask enemyLayer;
 
+        private float damageIncreasePercentage;
+        private float radiusIncrease;
+        private bool crashedOut;
+        
         private void OnTriggerStay2D(Collider2D collision)
         {
             Debug.Log($"Colliding with: {collision.gameObject.name}");
+            if (collision.gameObject.layer == enemyLayer)
+            {
+                if(crashedOut)
+                    collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime);
+                else
+                    collision.gameObject.GetComponent<Health>().TakeDamage(damage * Time.deltaTime * damageIncreasePercentage);
+            }
+        }
+
+        private void Start()
+        {
+            scale = transform.localScale;
+        }
+
+        public void SetAttributes(Emotion emotion, float percentage, float radius)
+        {
+            //reset scale 
+            transform.localScale = scale;
+            this.emotion = emotion;
+            crashedOut = emotion.EmotionState == EmotionStates.CrashingOut;
+            if (crashedOut)
+            {
+                transform.localScale = new Vector3(transform.localScale.x + radiusIncrease, transform.localScale.y + radiusIncrease, 1.0f);
+            }
         }
 
         /// <summary>

@@ -7,21 +7,25 @@ namespace ImpulseControl.Spells.Objects
     public class AngerSpell : SpellObject
     {
         protected CountdownTimer livingTimer;
+        [SerializeField] private bool crashing;
         [SerializeField] private float livingTime;
         [SerializeField] private Vector2 direction;
+        [SerializeField] private Vector2 translateVector;
+        [SerializeField] private float projectileSpeed;
         private Vector3 initialScale;
         private Vector3 initialPosition;
+        [SerializeField] private LayerMask enemyLayer;
 
         protected override void OnDestroy()
         {
             // Dispose of the Timer
             livingTimer.Dispose();
         }
-
+        
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // damage enemy if its the enemy
-            if (collision.gameObject.GetComponent<IEnemy>() != null) {
+            if(collision.gameObject.layer == enemyLayer)
+            {
                 collision.gameObject.GetComponent<Health>().TakeDamage(damage);
             }
         }
@@ -40,7 +44,6 @@ namespace ImpulseControl.Spells.Objects
             // Initialize the Timer
             livingTimer = new CountdownTimer(livingTime);
 
-            livingTimer.OnTimerTick += ExtendHitbox;
             livingTimer.OnTimerStop += Deactivate;
         }
 
@@ -74,40 +77,81 @@ namespace ImpulseControl.Spells.Objects
         /// <summary>
         /// Update the Anger Spell
         /// </summary>
-        public override void TickUpdate(float time, float delta) { /* Noop */ }
-
-        /// <summary>
-        /// Set the position of the spell
-        /// </summary>
-        public void SetTransform(Vector2 upVector, float offset)
+        public override void TickUpdate(float time, float delta)
         {
-            // Offset towards the direction
-            transform.Translate(direction * offset);
+            if(crashing)
+            {
+                transform.Translate(projectileSpeed * delta * translateVector);
 
-            // Rotate towards the direction
-            transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+                return;
+            }
 
-            // Set the initial position
-            initialPosition = transform.position;
-        }
-
-        public void SetAttributes(Emotion emotion, float damage)
-        {
-            this.emotion = emotion;
-            this.damage = damage;
-        }
-
-        /// <summary>
-        /// Extend the length of the hitbox
-        /// </summary>
-        private void ExtendHitbox()
-        {
             // Calculate the length
             float currentLength = Mathf.Lerp(0f, 3f, 1 - livingTimer.Progress);
 
             // Adjust the height and the position
             AdjustHeight(currentLength);
             AdjustPosition(currentLength);
+        }
+
+        /// <summary>
+        /// Set the position of the spell
+        /// </summary>
+        public void SetTransform(float offset)
+        {
+            // Offset towards the direction
+            transform.Translate(direction * offset);
+
+            Quaternion rotation = Quaternion.LookRotation(Vector3.back, direction);
+
+            // Rotate towards the direction
+            transform.rotation = rotation;
+            translateVector = rotation * direction;
+
+            // Set the initial position
+            initialPosition = transform.position;
+        }
+
+        /// <summary>
+        /// Set the Attributes for the Anger Spell
+        /// </summary>
+        public void SetAttributes(Emotion emotion, PlayerMovement playerMovement, float damage, float dashDistance, float projectileSpeed,
+            float offset, float crashOffset, float crashOutLifetime)
+        {
+            this.emotion = emotion;
+            this.damage = damage;
+
+            // Check if crashing
+            crashing = emotion.EmotionState == EmotionStates.CrashingOut;
+            Debug.Log($"Crashing: {crashing}");
+            //crashing = true;
+
+            // Exit case - if crashing
+            if (crashing)
+            {
+                // Set the projectile speed
+                this.projectileSpeed = projectileSpeed;
+
+                // Set the transform
+                SetTransform(crashOffset);
+
+                // Set the new lifetime
+                livingTimer.Reset(crashOutLifetime);
+
+                return;
+            }
+
+            // Set the projectile speed
+            this.projectileSpeed = 0f;
+
+            // Set the transform
+            SetTransform(offset);
+
+            // Set the lifetime
+            livingTimer.Reset(livingTime);
+
+            // Translate the player
+            playerMovement.SetDash(direction, dashDistance);
         }
 
         /// <summary>

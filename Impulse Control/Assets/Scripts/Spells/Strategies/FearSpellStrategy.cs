@@ -44,6 +44,19 @@ namespace ImpulseControl.Spells.Strategies
 
             // Start the cooldown timer
             cooldownTimer.Start();
+
+            // Remove bubbles
+            emotionSystem.Fear.RemoveBubbles(modifiers.Fear.spellFearCost);
+        }
+
+        public override void CrashOut()
+        {
+
+        }
+
+        public override void Exhaust()
+        {
+
         }
     }
 }
