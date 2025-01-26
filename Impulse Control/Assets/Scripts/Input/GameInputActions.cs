@@ -55,15 +55,6 @@ namespace ImpulseControl.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pan Skill Tree"",
-                    ""type"": ""Button"",
-                    ""id"": ""4095cdd5-0df9-4b06-a919-fca07d45f26b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,17 +154,6 @@ namespace ImpulseControl.Input
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cast Spell"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""560dd5b5-fcae-477f-b161-585cd82ff973"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pan Skill Tree"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -277,6 +257,15 @@ namespace ImpulseControl.Input
                     ""name"": ""Any Key Pressed"",
                     ""type"": ""Button"",
                     ""id"": ""b401d529-93b4-45fc-83f2-436a1ff648a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pan Skill Tree"",
+                    ""type"": ""Button"",
+                    ""id"": ""20b7a8a8-2c90-4b87-a4b0-130a0c400ef0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -712,6 +701,17 @@ namespace ImpulseControl.Input
                     ""action"": ""Any Key Pressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65d39cbc-71f8-4123-bb34-558c2374945d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pan Skill Tree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -723,7 +723,6 @@ namespace ImpulseControl.Input
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
             m_Gameplay_SwapSpell = m_Gameplay.FindAction("Swap Spell", throwIfNotFound: true);
             m_Gameplay_CastSpell = m_Gameplay.FindAction("Cast Spell", throwIfNotFound: true);
-            m_Gameplay_PanSkillTree = m_Gameplay.FindAction("Pan Skill Tree", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
@@ -737,6 +736,7 @@ namespace ImpulseControl.Input
             m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
             m_UI_AnyKeyPressed = m_UI.FindAction("Any Key Pressed", throwIfNotFound: true);
+            m_UI_PanSkillTree = m_UI.FindAction("Pan Skill Tree", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -801,7 +801,6 @@ namespace ImpulseControl.Input
         private readonly InputAction m_Gameplay_Move;
         private readonly InputAction m_Gameplay_SwapSpell;
         private readonly InputAction m_Gameplay_CastSpell;
-        private readonly InputAction m_Gameplay_PanSkillTree;
         public struct GameplayActions
         {
             private @GameInputActions m_Wrapper;
@@ -809,7 +808,6 @@ namespace ImpulseControl.Input
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
             public InputAction @SwapSpell => m_Wrapper.m_Gameplay_SwapSpell;
             public InputAction @CastSpell => m_Wrapper.m_Gameplay_CastSpell;
-            public InputAction @PanSkillTree => m_Wrapper.m_Gameplay_PanSkillTree;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -828,9 +826,6 @@ namespace ImpulseControl.Input
                 @CastSpell.started += instance.OnCastSpell;
                 @CastSpell.performed += instance.OnCastSpell;
                 @CastSpell.canceled += instance.OnCastSpell;
-                @PanSkillTree.started += instance.OnPanSkillTree;
-                @PanSkillTree.performed += instance.OnPanSkillTree;
-                @PanSkillTree.canceled += instance.OnPanSkillTree;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -844,9 +839,6 @@ namespace ImpulseControl.Input
                 @CastSpell.started -= instance.OnCastSpell;
                 @CastSpell.performed -= instance.OnCastSpell;
                 @CastSpell.canceled -= instance.OnCastSpell;
-                @PanSkillTree.started -= instance.OnPanSkillTree;
-                @PanSkillTree.performed -= instance.OnPanSkillTree;
-                @PanSkillTree.canceled -= instance.OnPanSkillTree;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -879,6 +871,7 @@ namespace ImpulseControl.Input
         private readonly InputAction m_UI_Submit;
         private readonly InputAction m_UI_Navigate;
         private readonly InputAction m_UI_AnyKeyPressed;
+        private readonly InputAction m_UI_PanSkillTree;
         public struct UIActions
         {
             private @GameInputActions m_Wrapper;
@@ -894,6 +887,7 @@ namespace ImpulseControl.Input
             public InputAction @Submit => m_Wrapper.m_UI_Submit;
             public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
             public InputAction @AnyKeyPressed => m_Wrapper.m_UI_AnyKeyPressed;
+            public InputAction @PanSkillTree => m_Wrapper.m_UI_PanSkillTree;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -936,6 +930,9 @@ namespace ImpulseControl.Input
                 @AnyKeyPressed.started += instance.OnAnyKeyPressed;
                 @AnyKeyPressed.performed += instance.OnAnyKeyPressed;
                 @AnyKeyPressed.canceled += instance.OnAnyKeyPressed;
+                @PanSkillTree.started += instance.OnPanSkillTree;
+                @PanSkillTree.performed += instance.OnPanSkillTree;
+                @PanSkillTree.canceled += instance.OnPanSkillTree;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
@@ -973,6 +970,9 @@ namespace ImpulseControl.Input
                 @AnyKeyPressed.started -= instance.OnAnyKeyPressed;
                 @AnyKeyPressed.performed -= instance.OnAnyKeyPressed;
                 @AnyKeyPressed.canceled -= instance.OnAnyKeyPressed;
+                @PanSkillTree.started -= instance.OnPanSkillTree;
+                @PanSkillTree.performed -= instance.OnPanSkillTree;
+                @PanSkillTree.canceled -= instance.OnPanSkillTree;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -995,7 +995,6 @@ namespace ImpulseControl.Input
             void OnMove(InputAction.CallbackContext context);
             void OnSwapSpell(InputAction.CallbackContext context);
             void OnCastSpell(InputAction.CallbackContext context);
-            void OnPanSkillTree(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
@@ -1010,6 +1009,7 @@ namespace ImpulseControl.Input
             void OnSubmit(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnAnyKeyPressed(InputAction.CallbackContext context);
+            void OnPanSkillTree(InputAction.CallbackContext context);
         }
     }
 }

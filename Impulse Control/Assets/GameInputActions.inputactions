@@ -31,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pan Skill Tree",
-                    "type": "Button",
-                    "id": "4095cdd5-0df9-4b06-a919-fca07d45f26b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -139,17 +130,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cast Spell",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "560dd5b5-fcae-477f-b161-585cd82ff973",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pan Skill Tree",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -253,6 +233,15 @@
                     "name": "Any Key Pressed",
                     "type": "Button",
                     "id": "b401d529-93b4-45fc-83f2-436a1ff648a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pan Skill Tree",
+                    "type": "Button",
+                    "id": "20b7a8a8-2c90-4b87-a4b0-130a0c400ef0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -686,6 +675,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Any Key Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65d39cbc-71f8-4123-bb34-558c2374945d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Skill Tree",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
