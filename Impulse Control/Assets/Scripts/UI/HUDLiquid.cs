@@ -28,6 +28,8 @@ namespace ImpulseControl {
 		private void OnValidate ( ) {
 			rectTransform = GetComponent<RectTransform>( );
 			rectTransform.anchoredPosition = basePosition + new Vector2(0f, liquidHeight);
+
+			liveModifiers = FindObjectOfType<LiveModifiers>( );
 		}
 
 		private void Awake ( ) {

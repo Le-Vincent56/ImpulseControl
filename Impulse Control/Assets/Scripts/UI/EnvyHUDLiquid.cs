@@ -11,6 +11,11 @@ namespace ImpulseControl {
 		[SerializeField] private Transform envyIconTransform;
 		[SerializeField] private Transform iconBackgroundTransform;
 
+		private void Awake ( ) {
+			emotionSystem = FindObjectOfType<EmotionSystem>( );
+			spellSystem = FindObjectOfType<SpellSystem>( );
+		}
+
 		private void Update ( ) {
 			Progress = emotionSystem.Envy.CurrentLevel;
 
