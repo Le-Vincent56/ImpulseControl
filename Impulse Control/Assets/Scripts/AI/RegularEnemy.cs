@@ -27,7 +27,7 @@ namespace ImpulseControl.AI
         {
             stateMachine.FixedUpdate();
         }
-        //public override void MoveToPlayer() { }
-        //public override void Attack() { }
+        // public override void MoveToPlayer() { }
+        // public override void Attack() { }
     }
 }

@@ -20,6 +20,10 @@ namespace ImpulseControl.Modifiers
         public float spellRadius;
         [Tooltip("The amount of fear that the spell costs to cast")]
         public float spellFearCost;
+        [Tooltip("The speed at which the spell travels at")]
+        public float spellProjectileSpeed;
+        [Tooltip("The cooldown time of the spell")]
+        public float spellCooldownTime;
         [Space]
         [Tooltip("The number of seconds that the crash out happens")]
         public float crashOutDuration;

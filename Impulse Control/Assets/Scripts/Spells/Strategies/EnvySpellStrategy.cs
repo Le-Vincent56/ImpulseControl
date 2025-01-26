@@ -1,4 +1,6 @@
+using ImpulseControl.Modifiers;
 using ImpulseControl.Spells.Objects;
+using ImpulseControl.Timers;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Strategies
@@ -9,11 +11,38 @@ namespace ImpulseControl.Spells.Strategies
         private EnvySpell spell;
         private bool activated;
 
+        public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
+        {
+            base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool);
+
+            // Set not activated
+            activated = false;
+        }
+
+        /// <summary>
+        /// Set up the Cooldown for the Envy Spell
+        /// </summary>
+        protected override void SetupCooldown()
+        {
+            cooldownTimer = new CountdownTimer(modifiers.Envy.spellCooldownTime);
+
+            // Constantly check the cast time
+            cooldownTimer.OnTimerStop += () => cooldownTimer.Reset(modifiers.Envy.spellCooldownTime);
+        }
+
+        /// <summary>
+        /// Check if the Envy Spell is on cooldown
+        /// </summary>
+        protected override bool OnCooldown() => cooldownTimer.IsRunning;
+
         /// <summary>
         /// Cast the Envy Spell
         /// </summary>
         public override void Cast()
         {
+            // Exit case - the Envy Spell is on cooldown
+            if (OnCooldown()) return;
+
             // Check if the spell is already active
             if(activated)
             {
@@ -38,6 +67,9 @@ namespace ImpulseControl.Spells.Strategies
                 // Set activated
                 activated = true;
             }
+
+            // Start the cooldown timer
+            cooldownTimer.Start();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ImpulseControl.AI
         protected StateMachine stateMachine;
 
         protected bool withinAttackRange;
-        private float spherecastAttackRadius = 2f;
+        private float tolerance = 2f;
 
         public float Damage { get; set; } 
         protected float Speed { get; set; }
@@ -56,14 +56,21 @@ namespace ImpulseControl.AI
         {
             enemyHealth.Death -= ChangeDeathStatus;
         }
-
         public virtual void MoveToPlayer() 
         {
-            //TODO: Pursue behavior
             dirToPlayer = player.transform.position - this.transform.position;
-            this.transform.position += dirToPlayer.normalized * Speed * Time.deltaTime;
+            Seek(dirToPlayer.normalized);
 
             // Flip Sprite when necessary
+            FlipSprite();
+        }
+        void Seek(Vector3 dir)
+        {
+            this.transform.position += dir * Speed * Time.deltaTime;
+        }
+
+        void FlipSprite()
+        {
             if (dirToPlayer.x > 0)
             {
                 this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -73,18 +80,12 @@ namespace ImpulseControl.AI
                 this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
-
-        void FlipSprite()
-        {
-            this.transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y + 180f, 0f);
-        }
         public virtual void Attack() 
         {
             dirToPlayer = player.transform.position - this.transform.position;
         }
         public void CheckIfInAttackRange()
         {
-            float tolerance = 20f;
             float playerYUpperBound = player.transform.position.y + tolerance;
             float playerYLowerBound = player.transform.position.y - tolerance;
             float squrDistance = dirToPlayer.sqrMagnitude;
@@ -94,13 +95,13 @@ namespace ImpulseControl.AI
         // Hook this up as an animation event
         public void AttackAnimEvent()
         {
-            RaycastHit hit;
-            bool spherecast = Physics.SphereCast(this.transform.position, spherecastAttackRadius, dirToPlayer, out hit, StoppingDistance + 2f);
-            if(spherecast && hit.transform.gameObject.tag == "Player")
+            RaycastHit2D raycast = Physics2D.Raycast(this.transform.position, dirToPlayer, StoppingDistance + 2f);
+            if (raycast && raycast.transform.gameObject.tag == "Player")
             {
-                hit.transform.gameObject.GetComponent<Health>().TakeDamage(Damage);
+                Debug.DrawRay(this.transform.position, dirToPlayer, Color.green);
+
+                raycast.transform.gameObject.GetComponent<Health>().TakeDamage(Damage);
             }
-            Debug.Log("Attack Spherecast hit?: " + spherecast);
         }
         
         void ChangeDeathStatus()
@@ -109,11 +110,5 @@ namespace ImpulseControl.AI
         }
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
         void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(this.transform.position, dirToPlayer);
-            Gizmos.DrawSphere(this.transform.position + dirToPlayer, spherecastAttackRadius);
-        }
     }
 }
