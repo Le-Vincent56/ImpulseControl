@@ -18,7 +18,7 @@ namespace ImpulseControl {
 		private void Update ( ) {
 			Progress = emotionSystem.Fear.CurrentLevel;
 
-			if (spellSystem.CurrentSpell.EmotionType == EmotionType.Anger) {
+			if (spellSystem.CurrentSpell.EmotionType == EmotionType.Fear) {
 				iconBackgroundTransform.position = fearIconTransform.position;
 			}
 		}

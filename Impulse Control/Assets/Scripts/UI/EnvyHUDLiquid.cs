@@ -19,7 +19,7 @@ namespace ImpulseControl {
 		private void Update ( ) {
 			Progress = emotionSystem.Envy.CurrentLevel;
 
-			if (spellSystem.CurrentSpell.EmotionType == EmotionType.Anger) {
+			if (spellSystem.CurrentSpell.EmotionType == EmotionType.Envy) {
 				iconBackgroundTransform.position = envyIconTransform.position;
 			}
 		}
