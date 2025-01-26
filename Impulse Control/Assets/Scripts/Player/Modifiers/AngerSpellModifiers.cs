@@ -14,10 +14,14 @@ namespace ImpulseControl.Modifiers
         public float spellDamagePercentageIncrease;
         [Tooltip("The range of the spear dash")]
         public float spellDashDistance;
+        [Tooltip("The offset of the spear at the beginning of the attack")]
+        public float spellStartingOffset;
         [Tooltip("The radius around each attack that also attacks enemies")]
         public float spellRadius;
         [Tooltip("The amount of anger that the spell costs to cast")]
         public float spellAngerCost;
+        [Tooltip("The cooldown time of the spell")]
+        public float spellCooldownTime;
         [Space]
         [Tooltip("The base damage that fire does each tick")]
         public float fireBaseDamage;

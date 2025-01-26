@@ -28,7 +28,14 @@ namespace ImpulseControl.Spells.Strategies
             this.playerMovement = playerMovement;
             this.modifiers = modifiers;
             this.spellPool = spellPool;
+
+            // Set up the cooldown timer
+            SetupCooldown();
         }
+
+        protected abstract void SetupCooldown();
+
+        protected abstract bool OnCooldown();
 
         /// <summary>
         /// Cast the Spell

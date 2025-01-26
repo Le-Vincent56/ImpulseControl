@@ -6,6 +6,11 @@ namespace ImpulseControl.Spells.Objects
     {
         private Transform followTarget;
 
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            Debug.Log($"Colliding with: {collision.gameObject.name}");
+        }
+
         /// <summary>
         /// Initialize the Envy Spell
         /// </summary>

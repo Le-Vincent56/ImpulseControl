@@ -19,7 +19,6 @@ namespace ImpulseControl.Spells.Objects
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // Damage
         }
 
         /// <summary>
@@ -85,6 +84,11 @@ namespace ImpulseControl.Spells.Objects
 
             // Set the initial position
             initialPosition = transform.position;
+        }
+
+        public void SetAttributes(float damage)
+        {
+            this.damage = damage;
         }
 
         /// <summary>

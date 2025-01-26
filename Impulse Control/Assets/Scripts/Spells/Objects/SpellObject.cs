@@ -5,8 +5,7 @@ namespace ImpulseControl.Spells.Objects
     public abstract class SpellObject : MonoBehaviour
     {
         protected SpellPool spellPool;
-        [SerializeField] private float damage;
-        [SerializeField] private float projectileSpeed;
+        [SerializeField] protected float damage;
 
         protected virtual void OnDestroy() { }
 
