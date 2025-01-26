@@ -172,6 +172,9 @@ namespace ImpulseControl.Spells.Strategies
 
         public override void Exhaust()
         {
+            // Exit case - the spell doesn't exist
+            if (spell == null) return;
+
             // Nullify the spell's target
             spell.SetTarget(null);
 
@@ -181,9 +184,6 @@ namespace ImpulseControl.Spells.Strategies
 
             // Set deactivated
             activated = false;
-
-            // Stop the cost timer
-            costTimer.Pause(true);
         }
     }
 }
