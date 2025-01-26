@@ -1,6 +1,8 @@
+using ImpulseControl.Events;
 using ImpulseControl.Modifiers;
 using ImpulseControl.Spells.Objects;
 using ImpulseControl.Timers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ImpulseControl.Spells.Strategies
@@ -10,7 +12,7 @@ namespace ImpulseControl.Spells.Strategies
     {
         private EnvySpell spell;
         private bool activated;
-
+        
         public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
         {
             base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool);
@@ -63,6 +65,8 @@ namespace ImpulseControl.Spells.Strategies
 
                 // Set the follow transform of the Envy Spell
                 spell.SetTarget(spellSystem.transform);
+                
+                spell.SetAttributes(emotionSystem.Envy, modifiers.Envy.crashOutSpellBaseDamageIncrease, modifiers.Envy.crashOutSpellRadiusIncrease);
 
                 // Set activated
                 activated = true;
