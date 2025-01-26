@@ -12,8 +12,6 @@ namespace ImpulseControl
         private Rigidbody2D rigidbody2d;
         private LiveModifiers liveModifiers;
         private EmotionSystem emotionSystem;
-        private Emotion anger;
-        private Emotion fear;
         
         [Header("Dashing")]
         [SerializeField] private bool dashing;
@@ -27,9 +25,7 @@ namespace ImpulseControl
             rigidbody2d = GetComponent<Rigidbody2D>();
             liveModifiers = GetComponent<LiveModifiers>();
             emotionSystem = GetComponent<EmotionSystem>();
-            anger = emotionSystem.Anger;
-            fear = emotionSystem.Fear;
-            
+
 
             dashTime = new CountdownTimer(0.25f);
 
@@ -54,19 +50,19 @@ namespace ImpulseControl
             // Exit case - if dashing
             if (dashing) return;
             
-            if (fear.EmotionState == EmotionStates.ExhaustedFear)
+            if (emotionSystem.Fear.EmotionState == EmotionStates.ExhaustedFear)
             {
                 Move(0, 0,0);
                 return;
             }
 
-            if (anger.EmotionState == EmotionStates.Exhausted)
+            if (emotionSystem.Anger.EmotionState == EmotionStates.Exhausted)
             {
                 Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Anger.exhaustionMoveSpeed);
                 return;
             }
 
-            if (fear.EmotionState == EmotionStates.CrashingOut)
+            if (emotionSystem.Fear.EmotionState == EmotionStates.CrashingOut)
             {
                 Move(gameInputReader.NormMoveX, gameInputReader.NormMoveY, liveModifiers.Player.moveSpeed + liveModifiers.Fear.crashOutMoveSpeedIncrease);
                 return;

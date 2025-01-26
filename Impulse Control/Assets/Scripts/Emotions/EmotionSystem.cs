@@ -94,6 +94,7 @@ namespace ImpulseControl
                         break;
                     case EmotionType.Envy:
                         envy.ResetToNormal();
+                        EventBus<Event_EnvyExhaustedFinished>.Raise(new Event_EnvyExhaustedFinished());
                         break;
                     case EmotionType.Fear:
                         fear.ResetToNormal();
@@ -134,7 +135,6 @@ namespace ImpulseControl
                     currentCrashOut = EmotionType.Fear;
                     timer.Reset(liveModifiers.Fear.crashOutDuration);
                     timer.Start();
-                    Debug.Log(timer.CurrentTime);
                 }),
                 (envy, () =>
                 {
@@ -149,7 +149,6 @@ namespace ImpulseControl
                     currentCrashOut = EmotionType.Envy;
                     timer.Reset(liveModifiers.Envy.crashOutDuration);
                     timer.Start();
-                    Debug.Log(timer.CurrentTime);
                 })
             };
             

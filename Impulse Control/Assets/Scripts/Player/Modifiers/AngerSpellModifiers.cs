@@ -41,6 +41,8 @@ namespace ImpulseControl.Modifiers
         public float crashOutAttackSpeed;
         [Tooltip("The maximum range at which you can throw a spear")]
         public float crashOutRange;
+        [Tooltip("Percentage that is multiplied by the incoming damage from an enemy. Should reduce damage")]
+        public float crashOutDamageReduction;
         [Space]
         [Tooltip("The number of seconds that the exhaustion happens for")]
         public float exhaustionDuration;
