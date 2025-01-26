@@ -9,6 +9,7 @@ namespace ImpulseControl.AI
     public abstract class Enemy : MonoBehaviour, IEnemy
     {
         protected static GameObject player;
+        Vector3 dirToPlayer;
         protected Animator animator;
         protected Health enemyHealth;
         protected bool isDead;
@@ -57,18 +58,37 @@ namespace ImpulseControl.AI
 
         public virtual void MoveToPlayer() 
         {
-            Vector3 dirToPlayer = player.transform.position - this.transform.position;
+            //TODO: Pursue behavior
+            dirToPlayer = player.transform.position - this.transform.position;
             this.transform.position += dirToPlayer.normalized * Speed * Time.deltaTime;
-            CheckIfInAttackRange(dirToPlayer);
+
+            // Flip Sprite when necessary
+            if (dirToPlayer.x > 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else
+            {
+                this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
+
+        void FlipSprite()
+        {
+            this.transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y + 180f, 0f);
         }
         public virtual void Attack() 
         {
-            Vector3 dirToPlayer = player.transform.position - this.transform.position;
-            CheckIfInAttackRange(dirToPlayer);
+            dirToPlayer = player.transform.position - this.transform.position;
         }
-        void CheckIfInAttackRange(Vector3 dirToPlayer)
+        public void CheckIfInAttackRange()
         {
-            withinAttackRange = (dirToPlayer.sqrMagnitude <= StoppingDistance * StoppingDistance) ? true : false;
+            float tolerance = 20f;
+            float playerYUpperBound = player.transform.position.y + tolerance;
+            float playerYLowerBound = player.transform.position.y - tolerance;
+            float squrDistance = dirToPlayer.sqrMagnitude;
+            withinAttackRange = (squrDistance <= StoppingDistance * StoppingDistance
+                                  && this.transform.position.y <= playerYUpperBound && this.transform.position.y >= playerYLowerBound) ? true : false;
         }
         
         void ChangeDeathStatus()

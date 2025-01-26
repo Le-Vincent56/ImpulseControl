@@ -14,6 +14,7 @@ namespace ImpulseControl.AI
 
         public override void FixedUpdate()
         {
+            enemy.CheckIfInAttackRange();
             enemy.MoveToPlayer();
         }
     }
