@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AngerModifierPreset
   m_EditorClassIdentifier: 
   angerSpellModifiers:
-    angerFillPerSecond: 0.05
+    angerFillPerSecond: 0
     spellBaseDamage: 10
     spellDamagePercentageIncrease: 1
     spellDashDistance: 5
@@ -56,13 +56,13 @@ MonoBehaviour:
     exhaustionDuration: 0
     exhaustionEmotionFillPercentage: 0
   envySpellModifiers:
-    envyFillPerSecond: 0
+    envyFillPerSecond: 0.1
     spellBaseDamage: 5
     spellDamagePercentageIncrease: 1
     spellRadius: 1
     spellTickSpeed: 0
     spellHealingPercentage: 0
-    spellEnvyCostPerSecond: 0
+    spellEnvyCostPerSecond: 0.15
     spellCooldownTime: 0.2
     crashOutDuration: 5
     crashOutSpellBaseDamageIncrease: 3

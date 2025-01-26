@@ -10,15 +10,51 @@ namespace ImpulseControl.Spells.Strategies
     [CreateAssetMenu(fileName = "Envy Spell", menuName = "Spells/Envy Spell")]
     public class EnvySpellStrategy : SpellStrategy
     {
+        private HealthPlayer health;
         private EnvySpell spell;
+        private CountdownTimer costTimer;
         private bool activated;
-        
-        public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool)
+
+        protected override void OnDestroy()
         {
-            base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool);
+            base.OnDestroy();
+
+            costTimer.Dispose();
+        }
+
+        public override void Link(SpellSystem spellSystem, PlayerMovement playerMovement, EmotionSystem emotionSystem, LiveModifiers modifiers, SpellPool spellPool, HealthPlayer playerHealth)
+        {
+            base.Link(spellSystem, playerMovement, emotionSystem, modifiers, spellPool, playerHealth);
 
             // Set not activated
+            health = playerHealth;
             activated = false;
+
+            costTimer = new CountdownTimer(1f);
+
+            costTimer.OnTimerStop += () =>
+            {
+                // Remove bubbles
+                emotionSystem.Envy.RemoveBubbles(modifiers.Envy.spellEnvyCostPerSecond);
+
+                if(spell != null && emotionSystem.Envy.CurrentLevel <= 0f)
+                {
+                    // Nullify the spell's target
+                    spell.SetTarget(null);
+
+                    // Release the Spell
+                    spellPool.Pool.Release(spell);
+                    spell = null;
+
+                    // Set deactivated
+                    activated = false;
+
+                    return;
+                }
+
+                // Start the cost timer
+                costTimer.Start();
+            };
         }
 
         /// <summary>
@@ -54,8 +90,13 @@ namespace ImpulseControl.Spells.Strategies
                 // Release the Spell
                 spellPool.Pool.Release(spell);
 
+                spell = null;
+
                 // Set deactivated
                 activated = false;
+
+                // Stop the cost timer
+                costTimer.Pause(true);
             } 
             // Otherwise
             else
@@ -64,14 +105,24 @@ namespace ImpulseControl.Spells.Strategies
                 spell = (EnvySpell)spellPool.Pool.Get();
 
                 // Set the follow transform of the Envy Spell
-                spell.SetTarget(spellSystem.transform);
+                spell.SetTarget(health);
 
                 float damage = modifiers.Envy.spellBaseDamage * modifiers.Envy.spellDamagePercentageIncrease;
                 float crashDamage = modifiers.Envy.spellBaseDamage * modifiers.Envy.crashOutSpellBaseDamageIncrease;
-                spell.SetAttributes(emotionSystem.Envy, damage, modifiers.Envy.spellRadius, crashDamage, modifiers.Envy.crashOutSpellRadius);
+                spell.SetAttributes(
+                    emotionSystem.Envy, 
+                    damage, 
+                    modifiers.Envy.spellRadius, 
+                    crashDamage, 
+                    modifiers.Envy.crashOutSpellRadius, 
+                    modifiers.Envy.spellHealingPercentage
+                );
 
                 // Set activated
                 activated = true;
+
+                // Start the cost timer
+                costTimer.Start();
             }
 
             // Start the cooldown timer
@@ -80,12 +131,52 @@ namespace ImpulseControl.Spells.Strategies
 
         public override void CrashOut()
         {
+            // Set the spell to activate
+            if (activated) activated = false;
 
+            // Check if the spell exists
+            if (spell != null)
+            {
+                // Release the spell
+                spellPool.Pool.Release(spell);
+                spell = null;
+            }
+
+            // Get an envy spell
+            spell = (EnvySpell)spellPool.Pool.Get();
+
+            // Set the follow transform of the Envy Spell
+            spell.SetTarget(health);
+
+            float damage = modifiers.Envy.spellBaseDamage * modifiers.Envy.spellDamagePercentageIncrease;
+            float crashDamage = modifiers.Envy.spellBaseDamage * modifiers.Envy.crashOutSpellBaseDamageIncrease;
+            spell.SetAttributes(
+                emotionSystem.Envy,
+                damage,
+                modifiers.Envy.spellRadius,
+                crashDamage,
+                modifiers.Envy.crashOutSpellRadius,
+                modifiers.Envy.spellHealingPercentage
+            );
+
+            // Set activated
+            activated = true;
         }
 
         public override void Exhaust()
         {
+            // Nullify the spell's target
+            spell.SetTarget(null);
 
+            // Release the Spell
+            spellPool.Pool.Release(spell);
+            spell = null;
+
+            // Set deactivated
+            activated = false;
+
+            // Stop the cost timer
+            costTimer.Pause(true);
         }
     }
 }

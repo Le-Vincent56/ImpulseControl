@@ -32,10 +32,10 @@ namespace ImpulseControl
             currentHealth = startingHealth;
         }
 
-        public virtual void TakeDamage(float damage)
+        public virtual bool TakeDamage(float damage)
         {
             // Exit case - within the damage buffer
-            if (damageCooldownTimer.IsRunning) return;
+            if (damageCooldownTimer.IsRunning) return false;
 
             // Take damage
             currentHealth -= damage;
@@ -46,11 +46,13 @@ namespace ImpulseControl
                 Death?.Invoke();
                 if (this.transform.gameObject.tag == "Player") { Debug.Log("Player died a sussy death"); }
 
-                return;
+                return true;
             }
 
             // Start the damage coldown timer
             damageCooldownTimer.Start();
+
+            return true;
         }
     }
 }
