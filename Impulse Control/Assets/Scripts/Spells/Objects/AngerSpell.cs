@@ -24,10 +24,11 @@ namespace ImpulseControl.Spells.Objects
         
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.gameObject.layer == enemyLayer)
-            {
-                collision.gameObject.GetComponent<Health>().TakeDamage(damage);
-            }
+            if (!collision.gameObject.TryGetComponent(out Enemy enemy)) return;
+
+            Debug.Log($"Taking Damage: {damage}");
+
+            enemy.GetComponent<Health>().TakeDamage(damage);
         }
 
         /// <summary>
